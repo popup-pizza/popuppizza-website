@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pop Up Pizza</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #22201d;   /* deep charcoal-espresso, replaces bright purple-navy */
+      --cream:   #faf7f2;   /* soft warm cream */
+      --ember:   #a8532f;   /* muted terracotta, replaces bright ember-orange */
+      --ash:     #ece6db;   /* warm stone */
+      --smoke:   #6f6a63;   /* warm grey */
+      --white:   #ffffff;
+      --text:    #22201d;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(253, 246, 236, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(40, 11, 69, 0.08);
+    }
+
+    .nav-logo svg {
+      height: 36px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--navy);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ember); }
+
+    .nav-cta {
+      background: var(--ember);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 2px;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: #7d3d22 !important; color: var(--white) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 72px;
+    }
+
+    /* Flame / ember rings — the signature element */
+    .hero-rings {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 680px;
+      height: 680px;
+      pointer-events: none;
+    }
+
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 75, 18, 0.18);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .ring:nth-child(1) { width: 200px; height: 200px; border-color: rgba(201,75,18,0.55); }
+    .ring:nth-child(2) { width: 320px; height: 320px; border-color: rgba(201,75,18,0.35); }
+    .ring:nth-child(3) { width: 460px; height: 460px; border-color: rgba(201,75,18,0.22); }
+    .ring:nth-child(4) { width: 600px; height: 600px; border-color: rgba(201,75,18,0.10); }
+
+    .hero-center-mark {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--ember);
+    }
+
+    .hero-content {
+      padding: 80px 64px 80px 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 20px;
+    }
+
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 5vw, 68px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 28px;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: #c98a68;
+    }
+
+    .hero-body {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.7);
+      max-width: 460px;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--ember);
+      color: var(--white);
+      padding: 14px 30px;
+      border-radius: 2px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: #7d3d22; transform: translateY(-1px); }
+
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.35);
+      color: var(--white);
+      padding: 14px 30px;
+      border-radius: 2px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--ember);
+      background: rgba(201,75,18,0.08);
+      color: var(--white);
+    }
+
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      height: 100%;
+      min-height: 560px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      background: var(--ash);
+      padding: 100px 80px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ember);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-body {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--smoke);
+      max-width: 640px;
+      margin-bottom: 64px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .step {
+      background: var(--white);
+      padding: 48px 36px;
+      position: relative;
+    }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 700;
+      color: var(--ash);
+      line-height: 1;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .step-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .step h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--smoke);
+    }
+
+    .step-accent {
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 48px;
+      background: var(--ember);
+    }
+
+    /* ── MENU ── */
+    .menu {
+      padding: 100px 80px;
+      background: var(--cream);
+    }
+
+    .menu-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .menu-note {
+      font-size: 13px;
+      color: var(--smoke);
+      font-style: italic;
+      max-width: 300px;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+
+    .menu-item {
+      background: var(--white);
+      padding: 32px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 36px; right: 36px;
+      height: 1px;
+      background: var(--ash);
+    }
+
+    .menu-item:hover { background: #fdf3ea; }
+
+    .menu-item-info h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .menu-item-info p {
+      font-size: 13px;
+      color: var(--smoke);
+      font-style: italic;
+    }
+
+    .menu-item-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ember);
+      white-space: nowrap;
+    }
+
+    .menu-footer {
+      margin-top: 48px;
+      background: var(--navy);
+      padding: 32px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .menu-footer p {
+      color: rgba(255,255,255,0.75);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .menu-footer strong { color: var(--white); }
+
+    /* ── LOYALTY ── */
+    .loyalty {
+      padding: 90px 80px;
+      background: var(--ash);
+    }
+
+    .loyalty-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .loyalty-content .section-body { margin-bottom: 0; }
+
+    .loyalty-card {
+      background: var(--white);
+      border-radius: 4px;
+      padding: 40px;
+    }
+
+    .loyalty-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .loyalty-card-header h3 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    .loyalty-card-header span {
+      font-size: 12px;
+      color: var(--smoke);
+    }
+
+    .stamp-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .stamp {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(34,32,29,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: rgba(34,32,29,0.3);
+    }
+
+    .stamp.filled {
+      border: none;
+      background: var(--ember);
+      color: var(--white);
+    }
+
+    .stamp.reward {
+      border: 1.5px solid var(--ember);
+      color: var(--ember);
+      font-weight: 700;
+    }
+
+    .loyalty-note {
+      font-size: 13px;
+      color: var(--smoke);
+      line-height: 1.6;
+      border-top: 1px solid var(--ash);
+      padding-top: 20px;
+    }
+
+    /* ── BAKING ── */
+    .baking {
+      background: var(--ember);
+      padding: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .baking-content .section-label { color: rgba(255,255,255,0.6); }
+    .baking-content .section-title { color: var(--white); }
+    .baking-content .section-body { color: rgba(255,255,255,0.8); margin-bottom: 0; }
+
+    .baking-instructions {
+      background: rgba(0,0,0,0.15);
+      border-radius: 4px;
+      padding: 40px;
+    }
+
+    .baking-instructions h3 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 28px;
+    }
+
+    .baking-step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+
+    .baking-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--white);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .baking-step p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.65;
+    }
+
+    .baking-storage {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .storage-badge {
+      font-size: 12px;
+      color: rgba(255,255,255,0.75);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .storage-badge span { color: var(--white); font-weight: 600; }
+
+    /* ── CUSTOM ORDER ── */
+    .order {
+      background: var(--navy);
+      padding: 100px 80px;
+    }
+
+    .order-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .order-inner .section-label { display: block; margin-bottom: 12px; }
+    .order-inner .section-title { color: var(--white); margin-bottom: 16px; }
+    .order-inner .section-body { color: rgba(255,255,255,0.65); margin: 0 auto 48px; }
+
+    .order-form {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 48px;
+      text-align: left;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    input, select, textarea {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 2px;
+      padding: 12px 16px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.3); }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--ember);
+    }
+
+    select { cursor: pointer; }
+    select option { background: var(--navy); color: var(--white); }
+
+    textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+    }
+
+    .btn-submit {
+      background: var(--ember);
+      color: var(--white);
+      border: none;
+      padding: 14px 32px;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-submit:hover { background: #7d3d22; transform: translateY(-1px); }
+
+    /* ── CONTACT ── */
+    .contact {
+      background: var(--ash);
+      padding: 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .contact-card {
+      background: var(--white);
+      padding: 40px 36px;
+    }
+
+    .contact-card-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ember);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .contact-card a, .contact-card p {
+      font-size: 15px;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 500;
+      line-height: 1.6;
+      display: block;
+    }
+
+    .contact-card a:hover { color: var(--ember); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 40px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo svg { height: 28px; width: auto; }
+
+    footer p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--ember); }
+
+    /* Success message */
+    .success-msg {
+      display: none;
+      background: rgba(201,75,18,0.15);
+      border: 1px solid var(--ember);
+      border-radius: 2px;
+      padding: 20px 24px;
+      margin-top: 20px;
+      color: #c98a68;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+
+      .hero { grid-template-columns: 1fr; padding-top: 80px; }
+      .hero-content { padding: 60px 24px 40px; }
+      .hero-right { min-height: 280px; }
+      .hero-rings { width: 340px; height: 340px; right: -40px; }
+
+      .how, .menu, .order { padding: 64px 24px; }
+      .steps { grid-template-columns: 1fr; gap: 2px; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-header { flex-direction: column; align-items: flex-start; }
+      .menu-note { text-align: left; }
+
+      .loyalty { padding: 64px 24px; }
+      .loyalty-inner { grid-template-columns: 1fr; gap: 32px; }
+      .loyalty-card { padding: 28px; }
+      .stamp { font-size: 12px; }
+
+      .baking { grid-template-columns: 1fr; padding: 64px 24px; gap: 40px; }
+      .order-form { padding: 32px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+
+      .contact { grid-template-columns: 1fr; padding: 24px; }
+      footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <a href="index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="160" height="37" viewBox="0 0 3174.373518885549 739.3437200747267">
+        <g transform="scale(8.718675944277438) translate(10, 10)">
+          <defs id="SvgjsDefs2700"></defs>
+          <g id="SvgjsG2701" featureKey="nameLeftFeature-0" transform="matrix(3.0041722386090313,0,0,3.0041722386090313,0,-6.003614412126812)" fill="#280b45"><path d="M1.9 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M1.9 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M10.814499999999999 20.02 c-1.5 0 -2.7 -1.22 -2.7 -2.7 l0 -8.98 c0 -1.48 1.2 -2.68 2.7 -2.68 c1.48 0 2.68 1.2 2.68 2.68 l0 8.98 c0 1.48 -1.2 2.7 -2.68 2.7 z M10.814499999999999 7.5600000000000005 c-0.44 0 -0.78 0.36 -0.78 0.78 l0 8.98 c0 0.44 0.34 0.78 0.78 0.78 c0.42 0 0.78 -0.34 0.78 -0.78 l0 -8.98 c0 -0.42 -0.36 -0.78 -0.78 -0.78 z M18.168999999999997 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M18.168999999999997 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M29.783499999999997 11.86 l0 1.74 l-5.4 0 l0 -1.74 l5.4 0 z M35.498 20.04 c-1.62 0 -2.94 -1.32 -2.94 -2.94 l0 -11.36 l1.9 0 l0 11.36 c0 0.58 0.46 1.06 1.04 1.06 s1.04 -0.48 1.04 -1.06 l0 -11.36 l1.9 0 l0 11.36 c0 1.62 -1.32 2.94 -2.94 2.94 z M43.1125 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M43.1125 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z"></path></g>
+          <g id="SvgjsG2702" featureKey="inlineSymbolFeature-0" transform="matrix(0.6918150217527366,0,0,0.6918150217527366,153.70702709668004,-2.1907467991564116)" fill="#280b45"><title xmlns="http://www.w3.org/2000/svg">пицца</title><g xmlns="http://www.w3.org/2000/svg"><path d="M51.36588,51.89173C60.382,47.819,69.20929,43.83145,78.03632,39.84324c-0.303-2.48347.22421-3.7359,1.89479-4.50286,2.21124-1.01517,4.2301-.34891,5.39016,2.0593a76.91139,76.91139,0,0,1,4.66722,13.27845c2.1489,7.86755.06846,15.14549-1.6862,22.52077-1.13408,4.76681-3.99043,8.59681-7.33931,12.23767-3.24889,3.53217-7.32662,5.66-11.19369,8.19124a7.13683,7.13683,0,0,1-2.47261.90465c-2.511.50522-5.15392,0.59769-7.53577,1.44234-3.25653,1.15482-6.52588.78713-9.80042,0.85017-5.79728.11152-11.33464-1.39539-16.73659-3.23738a77.02685,77.02685,0,0,1-11.78076-5.02951c-4.756-2.57282-7.34024-7.01068-9.32909-11.98575-2.22957-5.5772-2.37491-11.438-2.97025-17.223-0.26818-2.606.67979-5.31642,0.84242-7.99363a11.94356,11.94356,0,0,1,1.80417-6.453,47.71967,47.71967,0,0,0,3.83147-7.19577c1.34606-2.94825,3.82806-4.86347,6.069-6.96542a60.108,60.108,0,0,1,6.569-5.18716,40.34173,40.34173,0,0,1,4.20484-2.16143c1.90939-1.02952,3.76058-2.16913,5.6868-3.16464,1.90369-.98387,2.93188-0.64574,4.79767,1.13213,1.36246,1.29821,2.134,2.6016.88681,4.41738a1.671,1.671,0,0,0-.12481,1.31961C44.57184,29.479,45.62161,31.797,46.392,34.20534c1.16818,3.65195,2.17735,7.3555,3.21918,11.047C50.21165,47.37992,50.7435,49.52691,51.36588,51.89173ZM14.67159,43.01088h2.7661c0.92043-1.17517,2.16224-2.80852,3.45686-4.39895a21.68681,21.68681,0,0,1,3.46711-3.97447,90.4974,90.4974,0,0,1,15.19244-9.31972c2.15581-1.01508,2.34335-2.34034.449-4.30008-6.58824,3.96721-14.4378,6.10907-19.07349,13.1641L21.548,35.2986a3.1457,3.1457,0,0,1-.805.24778c-1.426-.0453-3.36115,1.22961-3.18379,2.4953,0.2473,1.76478-.58517,2.372-1.89831,3.06912-0.51446.27313-.64586,1.26787-0.95173,1.934a1.06915,1.06915,0,0,0-.43361.25665c-1.21363,2.41526-2.74383,4.692-2.88481,7.54259-0.10239,2.07034-.42156,4.12921-0.61091,6.19625-0.11126,1.21461-.28956,2.4876,1.28905,3.00495a1.3412,1.3412,0,0,1,.12918.55309c-0.50856.165-.97691,0.317-1.40985,0.45752a66.3778,66.3778,0,0,0,.49272,7.662,59.84316,59.84316,0,0,0,2.13419,7.41572,21.4645,21.4645,0,0,0,8.41867,11.16919,15.65737,15.65737,0,0,0,2.5408,1.1703q4.6397,2.16228,9.2658,4.33321c0.853-1.81834.71249-2.0163-.98486-2.70373-3.20006-1.296-6.59283-2.26973-8.97718-5.02025-1.20646-1.39174-2.37651-2.81508-3.56122-4.22195-0.4763,1.19648-1.04708,1.25917-1.77033.11578,1.10193-.62565,1.07431-1.47365.66065-2.53291-1.14571-2.93369-2.17771-5.91186-3.32562-8.84468-0.34546-.88261-0.29753-2.19626-1.889-2.14039a6.699,6.699,0,0,1-.54693-1.92082,1.063,1.063,0,0,1,.1694-0.452l0.87956,0.79248c-0.21946-3.86325-.8601-7.50081-0.50524-11.0385,0.35616-3.55064,1.70462-7.00177,2.56735-10.302C14.85591,45.15384,15.21709,43.49384,14.67159,43.01088ZM83.58293,67.96326c3.0659-5.07316.23495-22.635-4.185-26.73085-1.60693.24948-1.26894,1.6896-1.66216,2.69939-0.49094,1.26074-.75749,2.81508-1.66262,3.66734-2.19489,2.0666-5.18422,1.871-8.02077.05739a3.70258,3.70258,0,0,0-2.50462-.649,20.85024,20.85024,0,0,0-3.59826,1.64474c-1.90864.874-3.84326,1.69191-5.7427,2.585-1.748.82187-3.46418,1.71152-5.53363,2.74-0.46811-1.86534-1.04224-4.14495-1.612-6.42564-0.58141-2.32752-1.15849-4.65612-1.75173-7.04159a8.39683,8.39683,0,0,1-9.19243-1.27278,4.89526,4.89526,0,0,1-1.25243-6.21059,7.97978,7.97978,0,0,1,2.53056-2.94386,16.77412,16.77412,0,0,1,3.508-1.54134c-0.83414-2.03273-1.024-2.17-3.28477-1.41926a12.53429,12.53429,0,0,0-2.45655,1.32148c-3.67543,2.23939-7.37262,4.44577-10.99616,6.76677-2.6541,1.7-3.9372,4.63568-5.93762,6.92146-2.86307,3.27147-4.09959,7.31433-4.88092,11.27045-0.96066,4.86421-.17254,9.93593,1.18171,14.72866a73.04,73.04,0,0,0,3.95087,10.1115c1.68409,3.72286,4.21188,6.89351,8.00458,8.59007,3.6283,1.623,7.20647,3.524,11.28452,3.91186,1.11073,0.10565,2.22246.22756,3.32323,0.40661,6.635,1.07913,13.20315,1.24034,19.62417-1.21491,4.58608-1.7536,9.64909-2.48478,13.33081-6.1599,1.03688-1.035,1.76708-2.41843,2.90037-3.30751,2.7548-2.16117,2.4827-5.6089,3.86523-8.41524a2.90049,2.90049,0,0,0-1.34308.75091c-4.046,3.34412-8.43265,3.7656-10.7795-1.95826-0.94587-2.30691-1.25567-4.93064.48994-6.95685,2.0319-2.35847,5.00327-2.483,8.16688-1.18582C81.76252,63.69392,82.853,65.60257,83.58293,67.96326Z"></path><path d="M47.04057,3.47293C51.72194,3.35606,55.91,3.11746,60.09391,3.17567c7.98971,0.11117,14.54093,3.92873,20.90068,8.28859,3.43886,2.35743,5.26744,6.0572,8.03433,8.96311,0.64555,0.678.82718,1.48965-.53655,2.09569-9.13415,4.0589-18.22229,8.22146-27.319,12.36432a8.4559,8.4559,0,0,0-1.981,1.12669c-1.17981.99848-1.81258,0.41274-2.295-.67317a25.2445,25.2445,0,0,1-1.00962-2.63765c-1.03684-3.28238-2.17992-6.54-3.02231-9.87276-1.04588-4.13782-1.80459-8.34742-2.74948-12.512a3.96753,3.96753,0,0,0-1.88607-3.0816C47.50448,6.82706,47.51334,5.11789,47.04057,3.47293Z"></path></g></g>
+          <g id="SvgjsG2703" featureKey="nameRightFeature-0" transform="matrix(3.0167598408269582,0,0,3.0167598408269582,219.57972062136943,-6.135195378035974)" fill="#280b45"><path d="M7.6745 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M7.6745 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M15.789 5.68 l0 14.24 l-1.9 0 l0 -14.24 l1.9 0 z M23.5235 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M31.258 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M39.3525 20 l-0.72 -4.94 l-2.02 0 l-0.66 4.94 l-1.92 0 l2.16 -14.3 l2.58 0 l2.5 14.3 l-1.92 0 z M36.8725 13.16 l1.48 0 l-0.76 -5.2 z"></path></g>
+        </g>
+      </svg>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#baking">Baking Guide</a></li>
+      <li><a href="#order" class="nav-cta">Order Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Stone-Baked · Take &amp; Bake · Handcrafted</span>
+      <h1 class="hero-headline">Fresh, Stone-Baked Pizza<br><em>Made Easy</em></h1>
+      <p class="hero-body">Enjoy the taste of our handcrafted stone-baked pizza at home with almost no effort. We partially bake each base, top it with your chosen ingredients, and package it fresh — ready for you to finish in your own oven.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn-primary">View the Menu</a>
+        <a href="#order" class="btn-ghost">Place a Custom Order</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-rings">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="hero-center-mark"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <span class="section-label">The Process</span>
+    <h2 class="section-title">From our oven<br>to yours</h2>
+    <p class="section-body">We do the hard work — you finish the job. It takes just 10 minutes and the result is a bubbling, golden pizza that tastes like it came straight from the fire.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-accent"></div>
+        <span class="step-num">01</span>
+        <h3>Stone-Baked &amp; Partially Baked</h3>
+        <p>We handcraft each base and partially bake it on a stone deck, locking in a crisp, authentic texture before we even begin topping it.</p>
+      </div>
+      <div class="step">
+        <div class="step-accent"></div>
+        <span class="step-num">02</span>
+        <h3>Topped &amp; Packaged Fresh</h3>
+        <p>Your chosen toppings are added generously and the pizza is sealed fresh — refrigerated or frozen until you're ready to eat.</p>
+      </div>
+      <div class="step">
+        <div class="step-accent"></div>
+        <span class="step-num">03</span>
+        <h3>Finish in 10 Minutes</h3>
+        <p>Slide it into a 200°C oven for around 10 minutes. When the cheese is melted, bubbling and lightly golden — it's ready. Slice, serve, enjoy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <div>
+        <span class="section-label">What's On</span>
+        <h2 class="section-title">The Menu</h2>
+      </div>
+      <p class="menu-note">Pre-order to guarantee availability. Message us at <strong>@pop_uppizza</strong> to arrange yours.</p>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <h3>Cheese</h3>
+          <p>Simple, classic, perfect</p>
+        </div>
+        <span class="menu-item-price">$13</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <h3>Cheese &amp; Confit Garlic</h3>
+          <p>Slow-roasted garlic, rich &amp; mellow</p>
+        </div>
+        <span class="menu-item-price">$15</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <h3>Pepperoni</h3>
+          <p>Classic American pepperoni</p>
+        </div>
+        <span class="menu-item-price">$15</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <h3>Meat Lovers</h3>
+          <p>Pepperoni, bacon &amp; ham</p>
+        </div>
+        <span class="menu-item-price">$20</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <h3>Vegetarian</h3>
+          <p>Zucchini, mushroom &amp; capsicum</p>
+        </div>
+        <span class="menu-item-price">$20</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <h3>BBQ Chicken</h3>
+          <p>Smoky BBQ base with tender chicken</p>
+        </div>
+        <span class="menu-item-price">$20</span>
+      </div>
+    </div>
+
+    <div class="menu-footer">
+      <p><strong>Allergen notice:</strong> This pizza base contains <strong>gluten</strong>. Please advise of any dietary requirements when ordering.</p>
+      <a href="#order" class="btn-primary">Order Now</a>
+    </div>
+  </section>
+
+  <!-- LOYALTY -->
+  <section class="loyalty">
+    <div class="loyalty-inner">
+      <div class="loyalty-content">
+        <span class="section-label">Reward Yourself</span>
+        <h2 class="section-title">Order six, the seventh is on us</h2>
+        <p class="section-body">Every pizza you order earns a stamp. Collect six and your next pizza is complimentary — our way of saying thank you for coming back. Just mention your loyalty card when you order, and we'll keep track for you.</p>
+      </div>
+      <div class="loyalty-card">
+        <div class="loyalty-card-header">
+          <h3>Pop Up Pizza Loyalty Card</h3>
+          <span>0 / 6</span>
+        </div>
+        <div class="stamp-row">
+          <div class="stamp"></div>
+          <div class="stamp"></div>
+          <div class="stamp"></div>
+          <div class="stamp"></div>
+          <div class="stamp"></div>
+          <div class="stamp reward">★</div>
+        </div>
+        <p class="loyalty-note">Available to all customers ordering directly through <strong style="color:var(--navy)">@pop_uppizza</strong> or via this website. Stamps do not expire.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BAKING -->
+  <section class="baking" id="baking">
+    <div class="baking-content">
+      <span class="section-label">Ready When You Are</span>
+      <h2 class="section-title" style="color:var(--white)">Not ready to eat?<br>No problem.</h2>
+      <p class="section-body" style="color:rgba(255,255,255,0.8); margin-bottom:0">Pop your pizza in the freezer and keep it on hand for a quick, delicious meal whenever you need it. Refrigerate for up to 5 days, or freeze for up to 2 weeks.</p>
+    </div>
+    <div class="baking-instructions">
+      <h3>Baking Instructions</h3>
+      <div class="baking-step">
+        <div class="baking-step-num">1</div>
+        <p><strong style="color:white">From frozen?</strong> Defrost your pizza for approximately 20 minutes before baking.</p>
+      </div>
+      <div class="baking-step">
+        <div class="baking-step-num">2</div>
+        <p>Pre-heat your oven to <strong style="color:white">200°C</strong>.</p>
+      </div>
+      <div class="baking-step">
+        <div class="baking-step-num">3</div>
+        <p>Slide the pizza directly onto an oven tray and bake for <strong style="color:white">10 to 15 minutes</strong>. Ovens vary — watch carefully!</p>
+      </div>
+      <div class="baking-step">
+        <div class="baking-step-num">4</div>
+        <p>Remove from the oven when the cheese is golden and bubbling. <strong style="color:white">Enjoy.</strong></p>
+      </div>
+      <div class="baking-storage">
+        <div class="storage-badge">Refrigerate <span>up to 5 days</span></div>
+        <div class="storage-badge">Freeze <span>up to 2 weeks</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOM ORDER -->
+  <section class="order" id="order">
+    <div class="order-inner">
+      <span class="section-label">Get in Touch</span>
+      <h2 class="section-title" style="color:var(--white)">Place a Custom Order</h2>
+      <p class="section-body">Have something specific in mind? Send us your details below and we will be in touch to confirm your order.</p>
+
+      <!-- Formspree: submissions post directly to the endpoint below.
+           Replace YOUR_FORM_ID with the ID Formspree issues for this form. -->
+      <div class="order-form" id="orderFormWrap">
+        <form
+          id="pizzaOrderForm"
+          action="https://formspree.io/f/mvzjlojn"
+          method="POST"
+          onsubmit="handleSubmit(event)"
+        >
+          <input type="hidden" name="_subject" value="New Pizza Order — Pop Up Pizza" />
+          <!-- Honeypot field: bots tend to fill hidden inputs, humans never see this -->
+          <p style="display:none"><label>Leave this field empty: <input name="_gotcha" /></label></p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="04xx xxx xxx" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="you@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="quantity">Number of Pizzas</label>
+              <select id="quantity" name="quantity" required>
+                <option value="">Select quantity</option>
+                <option value="1">1 pizza</option>
+                <option value="2">2 pizzas</option>
+                <option value="3">3 pizzas</option>
+                <option value="4">4 pizzas</option>
+                <option value="5+">5 or more</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <label for="pizzas">Pizza Selection</label>
+              <input type="text" id="pizzas" name="pizzas" placeholder="e.g. 2× Meat Lovers, 1× Vegetarian" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <label for="message">Special Requests or Dietary Requirements</label>
+              <textarea id="message" name="message" placeholder="Let us know about any dietary requirements, custom topping requests, or anything else we should know..."></textarea>
+            </div>
+          </div>
+          <div class="form-submit">
+            <p class="form-note">We'll confirm your order via email or phone within 24 hours.</p>
+            <button type="submit" class="btn-submit">Send Order Request</button>
+          </div>
+        </form>
+
+        <div class="success-msg" id="successMsg">
+          Your order has been received — thank you. We will be in touch within 24 hours to confirm the details. You can also reach us directly at <strong>@pop_uppizza</strong>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-card">
+      <span class="contact-card-label">Call Us</span>
+      <a href="tel:0429649812">0429 649 812</a>
+      <p style="font-size:12px; color:var(--smoke); margin-top:8px; font-weight:400">Happy to chat about your order</p>
+    </div>
+    <div class="contact-card">
+      <span class="contact-card-label">Email Us</span>
+      <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>
+      <p style="font-size:12px; color:var(--smoke); margin-top:8px; font-weight:400">We'll reply within 24 hours</p>
+    </div>
+    <div class="contact-card">
+      <span class="contact-card-label">Follow &amp; Message</span>
+      <a href="https://www.instagram.com/pop_uppizza" target="_blank">@pop_uppizza</a>
+      <p style="font-size:12px; color:var(--smoke); margin-top:8px; font-weight:400">Message us directly to place a pre-order</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="120" height="28" viewBox="0 0 3174.373518885549 739.3437200747267">
+        <g transform="scale(8.718675944277438) translate(10, 10)">
+          <g transform="matrix(3.0041722386090313,0,0,3.0041722386090313,0,-6.003614412126812)" fill="rgba(255,255,255,0.6)"><path d="M1.9 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M1.9 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M10.814499999999999 20.02 c-1.5 0 -2.7 -1.22 -2.7 -2.7 l0 -8.98 c0 -1.48 1.2 -2.68 2.7 -2.68 c1.48 0 2.68 1.2 2.68 2.68 l0 8.98 c0 1.48 -1.2 2.7 -2.68 2.7 z M10.814499999999999 7.5600000000000005 c-0.44 0 -0.78 0.36 -0.78 0.78 l0 8.98 c0 0.44 0.34 0.78 0.78 0.78 c0.42 0 0.78 -0.34 0.78 -0.78 l0 -8.98 c0 -0.42 -0.36 -0.78 -0.78 -0.78 z M18.168999999999997 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M18.168999999999997 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M29.783499999999997 11.86 l0 1.74 l-5.4 0 l0 -1.74 l5.4 0 z M35.498 20.04 c-1.62 0 -2.94 -1.32 -2.94 -2.94 l0 -11.36 l1.9 0 l0 11.36 c0 0.58 0.46 1.06 1.04 1.06 s1.04 -0.48 1.04 -1.06 l0 -11.36 l1.9 0 l0 11.36 c0 1.62 -1.32 2.94 -2.94 2.94 z M43.1125 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M43.1125 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z"></path></g>
+          <g transform="matrix(3.0167598408269582,0,0,3.0167598408269582,219.57972062136943,-6.135195378035974)" fill="rgba(255,255,255,0.6)"><path d="M7.6745 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M7.6745 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M15.789 5.68 l0 14.24 l-1.9 0 l0 -14.24 l1.9 0 z M23.5235 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M31.258 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M39.3525 20 l-0.72 -4.94 l-2.02 0 l-0.66 4.94 l-1.92 0 l2.16 -14.3 l2.58 0 l2.5 14.3 l-1.92 0 z M36.8725 13.16 l1.48 0 l-0.76 -5.2 z"></path></g>
+        </g>
+      </svg>
+    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="dough.html">Dough Balls</a></li>
+      <li><a href="market.html">Market Stall</a></li>
+      <li><a href="https://www.instagram.com/pop_uppizza" target="_blank">Instagram</a></li>
+    </ul>
+    <p>© 2025 Pop Up Pizza. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Formspree submission handler
+    // Posts as JSON to the form's Formspree endpoint; customer stays on page and sees the confirmation message.
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+
+      const payload = {
+        _subject: '_subject' in form ? form._subject.value : 'New Pizza Order — Pop Up Pizza',
+        name:     form.name.value,
+        email:    form.email.value,
+        phone:    form.phone.value,
+        quantity: form.quantity.value,
+        pizzas:   form.pizzas.value,
+        message:  form.message.value,
+      };
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+      .then((response) => {
+        if (response.ok) {
+          form.style.display = 'none';
+          document.getElementById('successMsg').style.display = 'block';
+        } else {
+          throw new Error('Submission failed');
+        }
+      })
+      .catch(() => {
+        alert('Something went wrong — please try again or contact us directly at popup.pizza.au@gmail.com');
+      });
+    }
+
+    // Smooth scroll with fixed nav offset
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const top = target.getBoundingClientRect().top + window.scrollY - 72;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

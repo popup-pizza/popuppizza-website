@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frozen Dough Balls — Pop Up Pizza</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #22201d;
+      --cream:   #faf7f2;
+      --ember:   #a8532f;
+      --ember-dark: #7d3d22;
+      --ash:     #ece6db;
+      --smoke:   #6f6a63;
+      --white:   #ffffff;
+      --text:    #22201d;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(250, 247, 242, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(34, 32, 29, 0.08);
+    }
+
+    .nav-logo svg { height: 36px; width: auto; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ember); }
+    .nav-cta {
+      background: var(--ember); color: var(--white) !important;
+      padding: 10px 22px; border-radius: 2px; transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--ember-dark) !important; }
+
+    .hero {
+      min-height: 60vh;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; padding-top: 72px; text-align: center;
+    }
+
+    .hero-rings { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 700px; height: 700px; pointer-events: none; }
+    .ring { position: absolute; border-radius: 50%; border: 1px solid rgba(168, 83, 47, 0.14); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .ring:nth-child(1) { width: 220px; height: 220px; border-color: rgba(168,83,47,0.35); }
+    .ring:nth-child(2) { width: 380px; height: 380px; border-color: rgba(168,83,47,0.22); }
+    .ring:nth-child(3) { width: 540px; height: 540px; border-color: rgba(168,83,47,0.12); }
+
+    .hero-content { position: relative; z-index: 2; max-width: 640px; padding: 0 32px; }
+    .hero-eyebrow {
+      display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ember); margin-bottom: 20px;
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero-body { font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto; }
+
+    .section { padding: 90px 80px; }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ember); display: block; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700; color: var(--navy); line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-body { font-size: 16px; line-height: 1.75; color: var(--smoke); max-width: 640px; }
+
+    /* ── ABOUT DOUGH ── */
+    .about-dough { background: var(--white); }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .feature-card { background: var(--ash); padding: 36px 32px; }
+    .feature-card h3 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+    .feature-card p { font-size: 14px; line-height: 1.7; color: var(--smoke); }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--ash); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .price-card {
+      background: var(--white);
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .price-card.featured {
+      background: var(--navy);
+    }
+
+    .price-card.featured .price-qty,
+    .price-card.featured .price-desc { color: var(--white); }
+    .price-card.featured .price-amount { color: #c98a68; }
+    .price-card.featured .price-per { color: rgba(255,255,255,0.5); }
+
+    .price-badge {
+      display: inline-block;
+      background: var(--ember);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .price-qty {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .price-desc {
+      font-size: 13px;
+      color: var(--smoke);
+      margin-bottom: 24px;
+    }
+
+    .price-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--ember);
+    }
+
+    .price-per {
+      font-size: 12px;
+      color: var(--smoke);
+      display: block;
+      margin-top: 4px;
+    }
+
+    /* ── ORDER FORM ── */
+    .order {
+      background: var(--navy);
+      padding: 100px 80px;
+    }
+
+    .order-inner { max-width: 680px; margin: 0 auto; text-align: center; }
+    .order-inner .section-label { display: block; margin-bottom: 12px; }
+    .order-inner .section-title { color: var(--white); margin-bottom: 16px; }
+    .order-inner .section-body { color: rgba(255,255,255,0.65); margin: 0 auto 48px; }
+
+    .order-form {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 48px;
+      text-align: left;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+    }
+
+    input, select, textarea {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 2px;
+      padding: 12px 16px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.3); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--ember); }
+    select { cursor: pointer; }
+    select option { background: var(--navy); color: var(--white); }
+    textarea { resize: vertical; min-height: 100px; }
+
+    .form-submit {
+      margin-top: 24px; display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+
+    .form-note { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+    .btn-submit {
+      background: var(--ember); color: var(--white); border: none; padding: 14px 32px;
+      border-radius: 2px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+      transition: background 0.2s, transform 0.15s; white-space: nowrap;
+    }
+    .btn-submit:hover { background: var(--ember-dark); transform: translateY(-1px); }
+
+    .success-msg {
+      display: none;
+      background: rgba(168,83,47,0.15);
+      border: 1px solid var(--ember);
+      border-radius: 2px;
+      padding: 20px 24px;
+      margin-top: 20px;
+      color: #c98a68;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    footer {
+      background: var(--navy);
+      padding: 32px 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-logo svg { height: 26px; width: auto; }
+    footer p { font-size: 12px; color: rgba(255,255,255,0.35); }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--ember); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 20px; }
+      .section, .order { padding: 64px 24px; }
+      .feature-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .order-form { padding: 32px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">
+      <a href="index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160" height="37" viewBox="0 0 3174.373518885549 739.3437200747267">
+        <g transform="scale(8.718675944277438) translate(10, 10)">
+          <g transform="matrix(3.0041722386090313,0,0,3.0041722386090313,0,-6.003614412126812)" fill="#22201d"><path d="M1.9 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M1.9 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M10.814499999999999 20.02 c-1.5 0 -2.7 -1.22 -2.7 -2.7 l0 -8.98 c0 -1.48 1.2 -2.68 2.7 -2.68 c1.48 0 2.68 1.2 2.68 2.68 l0 8.98 c0 1.48 -1.2 2.7 -2.68 2.7 z M10.814499999999999 7.5600000000000005 c-0.44 0 -0.78 0.36 -0.78 0.78 l0 8.98 c0 0.44 0.34 0.78 0.78 0.78 c0.42 0 0.78 -0.34 0.78 -0.78 l0 -8.98 c0 -0.42 -0.36 -0.78 -0.78 -0.78 z M18.168999999999997 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M18.168999999999997 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M29.783499999999997 11.86 l0 1.74 l-5.4 0 l0 -1.74 l5.4 0 z M35.498 20.04 c-1.62 0 -2.94 -1.32 -2.94 -2.94 l0 -11.36 l1.9 0 l0 11.36 c0 0.58 0.46 1.06 1.04 1.06 s1.04 -0.48 1.04 -1.06 l0 -11.36 l1.9 0 l0 11.36 c0 1.62 -1.32 2.94 -2.94 2.94 z M43.1125 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M43.1125 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z"></path></g>
+          <g transform="matrix(3.0167598408269582,0,0,3.0167598408269582,219.57972062136943,-6.135195378035974)" fill="#22201d"><path d="M7.6745 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M7.6745 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M15.789 5.68 l0 14.24 l-1.9 0 l0 -14.24 l1.9 0 z M23.5235 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M31.258 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M39.3525 20 l-0.72 -4.94 l-2.02 0 l-0.66 4.94 l-1.92 0 l2.16 -14.3 l2.58 0 l2.5 14.3 l-1.92 0 z M36.8725 13.16 l1.48 0 l-0.76 -5.2 z"></path></g>
+        </g>
+      </svg>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="pizza.html">Take &amp; Bake Pizza</a></li>
+      <li><a href="market.html">Market Stall</a></li>
+      <li><a href="#order" class="nav-cta">Order Now</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-rings">
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+    </div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">For Your Kitchen</span>
+      <h1 class="hero-headline">Frozen Dough Balls</h1>
+      <p class="hero-body">Our signature stone-baked dough, hand-portioned and frozen — so you can build your own pizza from scratch, whenever you like.</p>
+    </div>
+  </section>
+
+  <section class="section about-dough">
+    <span class="section-label">Made the Same Way</span>
+    <h2 class="section-title">The base of everything we make</h2>
+    <p class="section-body">Our dough balls are made from the same recipe we use for every pizza we sell — hand-portioned, individually frozen, and ready to defrost, prove and shape whenever you're ready to cook.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Individually Portioned</h3>
+        <p>Each ball is pre-portioned for a single pizza base — no measuring, no mess, no guesswork.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Freezer to Bench</h3>
+        <p>Defrost overnight in the fridge or a few hours at room temperature, then shape and top however you like.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Contains Gluten</h3>
+        <p>Made with quality wheat flour. Please advise us of any dietary requirements when ordering.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pricing">
+    <span class="section-label">Pricing</span>
+    <h2 class="section-title">Stock Your Freezer</h2>
+    <p class="section-body">Order individually or in bulk — perfect for a regular pizza night at home.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <span class="price-qty">Single</span>
+        <p class="price-desc">One dough ball</p>
+        <span class="price-amount">$6</span>
+        <span class="price-per">per ball</span>
+      </div>
+      <div class="price-card featured">
+        <span class="price-badge">Most Popular</span>
+        <span class="price-qty">Pack of 4</span>
+        <p class="price-desc">Four dough balls</p>
+        <span class="price-amount">$22</span>
+        <span class="price-per">$5.50 per ball</span>
+      </div>
+      <div class="price-card">
+        <span class="price-qty">Pack of 8</span>
+        <p class="price-desc">Eight dough balls</p>
+        <span class="price-amount">$40</span>
+        <span class="price-per">$5.00 per ball</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="order" id="order">
+    <div class="order-inner">
+      <span class="section-label">Place Your Order</span>
+      <h2 class="section-title">Order Dough Balls</h2>
+      <p class="section-body">Let us know how many you'd like and we'll be in touch to confirm pickup or delivery details.</p>
+
+      <!-- Formspree: submissions post directly to the endpoint below.
+           Replace YOUR_FORM_ID with the ID Formspree issues for this form. -->
+      <div class="order-form">
+        <form
+          id="doughOrderForm"
+          action="https://formspree.io/f/xjgqlvnk"
+          method="POST"
+          onsubmit="handleSubmit(event)"
+        >
+          <input type="hidden" name="_subject" value="New Dough Ball Order — Pop Up Pizza" />
+          <p style="display:none"><label>Leave this field empty: <input name="_gotcha" /></label></p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="04xx xxx xxx" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="you@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="pack">Pack Size</label>
+              <select id="pack" name="pack" required>
+                <option value="">Select pack size</option>
+                <option value="Single ($6)">Single — $6</option>
+                <option value="Pack of 4 ($22)">Pack of 4 — $22</option>
+                <option value="Pack of 8 ($40)">Pack of 8 — $40</option>
+                <option value="Other / bulk enquiry">Other / bulk enquiry</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <label for="message">Special Requests</label>
+              <textarea id="message" name="message" placeholder="Let us know about pickup preferences, quantities, or anything else we should know..."></textarea>
+            </div>
+          </div>
+          <div class="form-submit">
+            <p class="form-note">We'll confirm your order via email or phone within 24 hours.</p>
+            <button type="submit" class="btn-submit">Send Order Request</button>
+          </div>
+        </form>
+
+        <div class="success-msg" id="successMsg">
+          Your order has been received — thank you. We will be in touch within 24 hours to confirm the details. You can also reach us directly at <strong>@pop_uppizza</strong>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="120" height="28" viewBox="0 0 3174.373518885549 739.3437200747267">
+        <g transform="scale(8.718675944277438) translate(10, 10)">
+          <g transform="matrix(3.0041722386090313,0,0,3.0041722386090313,0,-6.003614412126812)" fill="rgba(255,255,255,0.6)"><path d="M1.9 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M1.9 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M10.814499999999999 20.02 c-1.5 0 -2.7 -1.22 -2.7 -2.7 l0 -8.98 c0 -1.48 1.2 -2.68 2.7 -2.68 c1.48 0 2.68 1.2 2.68 2.68 l0 8.98 c0 1.48 -1.2 2.7 -2.68 2.7 z M10.814499999999999 7.5600000000000005 c-0.44 0 -0.78 0.36 -0.78 0.78 l0 8.98 c0 0.44 0.34 0.78 0.78 0.78 c0.42 0 0.78 -0.34 0.78 -0.78 l0 -8.98 c0 -0.42 -0.36 -0.78 -0.78 -0.78 z M18.168999999999997 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M18.168999999999997 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M29.783499999999997 11.86 l0 1.74 l-5.4 0 l0 -1.74 l5.4 0 z M35.498 20.04 c-1.62 0 -2.94 -1.32 -2.94 -2.94 l0 -11.36 l1.9 0 l0 11.36 c0 0.58 0.46 1.06 1.04 1.06 s1.04 -0.48 1.04 -1.06 l0 -11.36 l1.9 0 l0 11.36 c0 1.62 -1.32 2.94 -2.94 2.94 z M43.1125 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M43.1125 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z"></path></g>
+          <g transform="matrix(3.0167598408269582,0,0,3.0167598408269582,219.57972062136943,-6.135195378035974)" fill="rgba(255,255,255,0.6)"><path d="M7.6745 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M7.6745 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M15.789 5.68 l0 14.24 l-1.9 0 l0 -14.24 l1.9 0 z M23.5235 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M31.258 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M39.3525 20 l-0.72 -4.94 l-2.02 0 l-0.66 4.94 l-1.92 0 l2.16 -14.3 l2.58 0 l2.5 14.3 l-1.92 0 z M36.8725 13.16 l1.48 0 l-0.76 -5.2 z"></path></g>
+        </g>
+      </svg>
+    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="pizza.html">Pizza</a></li>
+      <li><a href="market.html">Market Stall</a></li>
+      <li><a href="https://www.instagram.com/pop_uppizza" target="_blank">Instagram</a></li>
+    </ul>
+    <p>© 2025 Pop Up Pizza. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Formspree submission handler
+    // Posts as JSON to the form's Formspree endpoint; customer stays on page and sees the confirmation message.
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+
+      const payload = {
+        _subject: form._subject.value,
+        name:    form.name.value,
+        email:   form.email.value,
+        phone:   form.phone.value,
+        pack:    form.pack.value,
+        message: form.message.value,
+      };
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+      .then((response) => {
+        if (response.ok) {
+          form.style.display = 'none';
+          document.getElementById('successMsg').style.display = 'block';
+        } else {
+          throw new Error('Submission failed');
+        }
+      })
+      .catch(() => {
+        alert('Something went wrong — please try again or contact us directly at popup.pizza.au@gmail.com');
+      });
+    }
+  </script>
+</body>
+</html>
