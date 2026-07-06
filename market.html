@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Market Stall — Pop Up Pizza</title>
+  <title>Find Us — Pop Up Pizza</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -100,8 +100,16 @@
       padding: 28px 36px;
       display: grid;
       grid-template-columns: 140px 1fr auto;
-      align-items: center;
+      align-items: start;
       gap: 24px;
+    }
+
+    .schedule-details p { margin-top: 2px; }
+    .schedule-venue {
+      font-size: 13px;
+      color: var(--navy);
+      font-weight: 500;
+      margin-top: 2px;
     }
 
     .schedule-day {
@@ -259,41 +267,49 @@
     </div>
     <div class="hero-content">
       <span class="hero-eyebrow">Find Us In Person</span>
-      <h1 class="hero-headline">Catch Us at the Market</h1>
-      <p class="hero-body">Fresh, stone-baked pizza cooked while you wait — plus pizza and dough to take home. Come and say hello.</p>
+      <h1 class="hero-headline">Catch Us at an Event</h1>
+      <p class="hero-body">We pop up at select markets and events throughout the year — fresh, stone-baked pizza cooked while you wait, plus pizza and dough to take home. Come and say hello.</p>
     </div>
   </section>
 
   <section class="section schedule">
-    <span class="section-label">Where to Find Us</span>
-    <h2 class="section-title">This Week's Schedule</h2>
-    <p class="section-body">We move around, so check back regularly or follow us on Instagram for the most current schedule and any last-minute changes.</p>
+    <span class="section-label">Upcoming Events</span>
+    <h2 class="section-title">Where to Find Us</h2>
+    <p class="section-body">We attend a small number of markets and events throughout the year, rather than a regular weekly stall. Follow us on Instagram for the most current details and any last-minute changes.</p>
 
     <div class="schedule-list">
       <div class="schedule-item">
-        <span class="schedule-day">Saturday</span>
+        <span class="schedule-day">Sun<br>19 Jul</span>
         <div class="schedule-details">
-          <h4>Local Community Market</h4>
-          <p>Details of location to be confirmed — check our Instagram for the current stall location.</p>
+          <h4>Winter Wonderland Christmas in July Market</h4>
+          <p class="schedule-venue">Fitters Workshop, Kingston — behind the Old Bus Depot Markets</p>
         </div>
-        <span class="schedule-time">8:00 AM – 1:00 PM</span>
+        <span class="schedule-time">9:30 AM – 2:00 PM</span>
       </div>
       <div class="schedule-item">
-        <span class="schedule-day">Sunday</span>
+        <span class="schedule-day">Sat<br>1 Aug</span>
         <div class="schedule-details">
-          <h4>Farmers' Market</h4>
-          <p>Details of location to be confirmed — check our Instagram for the current stall location.</p>
+          <h4>Light Up Lyneham</h4>
+          <p class="schedule-venue">Lyneham</p>
         </div>
-        <span class="schedule-time">9:00 AM – 2:00 PM</span>
+        <span class="schedule-time">3:00 PM – 8:00 PM</span>
+      </div>
+      <div class="schedule-item">
+        <span class="schedule-day">Fri–Sat<br>3–4 Oct</span>
+        <div class="schedule-details">
+          <h4>Murrumbateman Moving Feast</h4>
+          <p class="schedule-venue">The Vintner's Daughter, Murrumbateman</p>
+        </div>
+        <span class="schedule-time">Details TBC</span>
       </div>
     </div>
-    <p class="schedule-note">Schedule subject to change due to weather and seasonal market calendars. Message us on Instagram for the latest confirmed dates and locations.</p>
+    <p class="schedule-note">Dates and times are subject to change. Message us on Instagram for the latest confirmed details ahead of each event.</p>
   </section>
 
   <section class="section expect">
     <span class="section-label">What to Expect</span>
     <h2 class="section-title">Fresh Off the Stone</h2>
-    <p class="section-body">Our stall brings the full Pop Up Pizza experience to you — cooked fresh, right in front of you.</p>
+    <p class="section-body">Wherever we pop up, you'll find the full Pop Up Pizza experience — cooked fresh, right in front of you.</p>
 
     <div class="expect-grid">
       <div class="expect-card">
@@ -316,8 +332,8 @@
 
   <section class="cta">
     <span class="section-label">Stay in the Loop</span>
-    <h2>Never miss a market date</h2>
-    <p>We post our schedule and any changes on Instagram first. Follow along so you always know where to find us.</p>
+    <h2>Never miss an event</h2>
+    <p>We post our upcoming events and any changes on Instagram first. Follow along so you always know where to find us next.</p>
     <a href="https://www.instagram.com/pop_uppizza" target="_blank" class="btn-primary">Follow @pop_uppizza</a>
   </section>
 
