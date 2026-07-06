@@ -382,6 +382,277 @@
 
     .menu-footer strong { color: var(--white); }
 
+    /* ── MENU ITEM: SHOP-STYLE CONTROLS ── */
+    .menu-item {
+      cursor: default;
+    }
+
+    .menu-item-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 20px;
+    }
+
+    .menu-item-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .qty-stepper {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--ash);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .qty-btn {
+      width: 34px;
+      height: 34px;
+      border: none;
+      background: var(--white);
+      color: var(--navy);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-btn:hover { background: var(--ash); }
+
+    .qty-value {
+      width: 32px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* ── STICKY CART BAR ── */
+    .cart-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 90;
+      background: var(--navy);
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    }
+
+    .cart-bar.visible { transform: translateY(0); }
+
+    .cart-bar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .cart-summary {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--white);
+      font-size: 14px;
+    }
+
+    .cart-count {
+      background: var(--ember);
+      color: var(--white);
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .cart-total {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #c98a68;
+    }
+
+    .btn-cart-checkout {
+      background: var(--ember);
+      color: var(--white);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-cart-checkout:hover { background: var(--ember-dark); }
+
+    /* ── ORDER SUMMARY PANEL (in checkout section) ── */
+    .order-summary {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+    }
+
+    .order-summary h3 {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 18px;
+    }
+
+    .order-summary-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .order-summary-line:last-of-type { border-bottom: none; }
+
+    .order-summary-empty {
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+      font-style: italic;
+      padding: 8px 0;
+    }
+
+    .order-summary-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      margin-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .order-summary-total span:first-child {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .order-summary-total span:last-child {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #c98a68;
+    }
+
+    /* ── ORDER TYPE TOGGLE ── */
+    .order-type-toggle {
+      display: flex;
+      gap: 2px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 3px;
+      padding: 3px;
+      margin-bottom: 32px;
+    }
+
+    .order-type-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 12px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.55);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .order-type-btn.active {
+      background: var(--ember);
+      color: var(--white);
+    }
+
+    .order-panel { display: none; }
+    .order-panel.active { display: block; }
+
+    /* ── ORDER CODE CONFIRMATION ── */
+    .order-confirmation {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .order-confirmation.visible { display: block; }
+
+    .order-code-badge {
+      display: inline-block;
+      background: rgba(168,83,47,0.15);
+      border: 1px solid var(--ember);
+      border-radius: 4px;
+      padding: 20px 40px;
+      margin: 24px 0;
+    }
+
+    .order-code-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .order-code-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #c98a68;
+      letter-spacing: 0.04em;
+    }
+
+    .order-receipt {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 24px 32px;
+      text-align: left;
+      max-width: 420px;
+      margin: 24px auto 0;
+    }
+
+    .order-receipt-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      padding: 6px 0;
+    }
+
     /* ── LOYALTY ── */
     .loyalty {
       padding: 90px 80px;
@@ -640,6 +911,11 @@
     }
 
     .btn-submit:hover { background: #7d3d22; transform: translateY(-1px); }
+    .btn-submit:disabled {
+      background: rgba(255,255,255,0.15);
+      cursor: not-allowed;
+      transform: none;
+    }
 
     /* ── CONTACT ── */
     .contact {
@@ -738,6 +1014,15 @@
       .menu-grid { grid-template-columns: 1fr; }
       .menu-header { flex-direction: column; align-items: flex-start; }
       .menu-note { text-align: left; }
+      .menu-item-main { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .menu-item-right { width: 100%; justify-content: space-between; }
+
+      .cart-bar-inner { padding: 14px 20px; }
+      .cart-summary { font-size: 13px; gap: 10px; }
+      .cart-total { font-size: 17px; }
+      .btn-cart-checkout { padding: 10px 20px; font-size: 12px; }
+
+      .order-type-toggle { flex-direction: column; }
 
       .loyalty { padding: 64px 24px; }
       .loyalty-inner { grid-template-columns: 1fr; gap: 32px; }
@@ -837,56 +1122,122 @@
       <p class="menu-note">Pre-order to guarantee availability. Message us at <strong>@pop_uppizza</strong> to arrange yours.</p>
     </div>
 
-    <div class="menu-grid">
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <h3>Cheese</h3>
-          <p>Simple, classic, perfect</p>
+    <div class="menu-grid" id="menuGrid">
+      <div class="menu-item" data-name="Cheese" data-price="13">
+        <div class="menu-item-main">
+          <div class="menu-item-info">
+            <h3>Cheese</h3>
+            <p>Simple, classic, perfect</p>
+          </div>
+          <div class="menu-item-right">
+            <span class="menu-item-price">$13</span>
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+            </div>
+          </div>
         </div>
-        <span class="menu-item-price">$13</span>
       </div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <h3>Cheese &amp; Confit Garlic</h3>
-          <p>Slow-roasted garlic, rich &amp; mellow</p>
+      <div class="menu-item" data-name="Cheese &amp; Confit Garlic" data-price="15">
+        <div class="menu-item-main">
+          <div class="menu-item-info">
+            <h3>Cheese &amp; Confit Garlic</h3>
+            <p>Slow-roasted garlic, rich &amp; mellow</p>
+          </div>
+          <div class="menu-item-right">
+            <span class="menu-item-price">$15</span>
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+            </div>
+          </div>
         </div>
-        <span class="menu-item-price">$15</span>
       </div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <h3>Pepperoni</h3>
-          <p>Classic American pepperoni</p>
+      <div class="menu-item" data-name="Pepperoni" data-price="15">
+        <div class="menu-item-main">
+          <div class="menu-item-info">
+            <h3>Pepperoni</h3>
+            <p>Classic American pepperoni</p>
+          </div>
+          <div class="menu-item-right">
+            <span class="menu-item-price">$15</span>
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+            </div>
+          </div>
         </div>
-        <span class="menu-item-price">$15</span>
       </div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <h3>Meat Lovers</h3>
-          <p>Pepperoni, bacon &amp; ham</p>
+      <div class="menu-item" data-name="Meat Lovers" data-price="20">
+        <div class="menu-item-main">
+          <div class="menu-item-info">
+            <h3>Meat Lovers</h3>
+            <p>Pepperoni, bacon &amp; ham</p>
+          </div>
+          <div class="menu-item-right">
+            <span class="menu-item-price">$20</span>
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+            </div>
+          </div>
         </div>
-        <span class="menu-item-price">$20</span>
       </div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <h3>Vegetarian</h3>
-          <p>Zucchini, mushroom &amp; capsicum</p>
+      <div class="menu-item" data-name="Vegetarian" data-price="20">
+        <div class="menu-item-main">
+          <div class="menu-item-info">
+            <h3>Vegetarian</h3>
+            <p>Zucchini, mushroom &amp; capsicum</p>
+          </div>
+          <div class="menu-item-right">
+            <span class="menu-item-price">$20</span>
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+            </div>
+          </div>
         </div>
-        <span class="menu-item-price">$20</span>
       </div>
-      <div class="menu-item">
-        <div class="menu-item-info">
-          <h3>BBQ Chicken</h3>
-          <p>Smoky BBQ base with tender chicken</p>
+      <div class="menu-item" data-name="BBQ Chicken" data-price="20">
+        <div class="menu-item-main">
+          <div class="menu-item-info">
+            <h3>BBQ Chicken</h3>
+            <p>Smoky BBQ base with tender chicken</p>
+          </div>
+          <div class="menu-item-right">
+            <span class="menu-item-price">$20</span>
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+            </div>
+          </div>
         </div>
-        <span class="menu-item-price">$20</span>
       </div>
     </div>
 
     <div class="menu-footer">
       <p><strong>Allergen notice:</strong> This pizza base contains <strong>gluten</strong>. Please advise of any dietary requirements when ordering.</p>
-      <a href="#order" class="btn-primary">Order Now</a>
+      <a href="#order" class="btn-primary">Go to Checkout</a>
     </div>
   </section>
+
+  <!-- STICKY CART BAR -->
+  <div class="cart-bar" id="cartBar">
+    <div class="cart-bar-inner">
+      <div class="cart-summary">
+        <span class="cart-count" id="cartCount">0</span>
+        <span>items selected</span>
+        <span class="cart-total" id="cartTotalBar">$0</span>
+      </div>
+      <button class="btn-cart-checkout" onclick="scrollToCheckout()">Review &amp; Checkout</button>
+    </div>
+  </div>
 
   <!-- LOYALTY -->
   <section class="loyalty">
@@ -946,74 +1297,152 @@
     </div>
   </section>
 
-  <!-- CUSTOM ORDER -->
+  <!-- CHECKOUT -->
   <section class="order" id="order">
     <div class="order-inner">
-      <span class="section-label">Get in Touch</span>
-      <h2 class="section-title" style="color:var(--white)">Place a Custom Order</h2>
-      <p class="section-body">Have something specific in mind? Send us your details below and we will be in touch to confirm your order.</p>
+      <span class="section-label">Checkout</span>
+      <h2 class="section-title" style="color:var(--white)">Complete Your Order</h2>
+      <p class="section-body">Review your selection below, or let us know if you have something custom in mind.</p>
 
-      <!-- Formspree: submissions post directly to the endpoint below.
-           Replace YOUR_FORM_ID with the ID Formspree issues for this form. -->
       <div class="order-form" id="orderFormWrap">
-        <form
-          id="pizzaOrderForm"
-          action="https://formspree.io/f/mvzjlojn"
-          method="POST"
-          onsubmit="handleSubmit(event)"
-        >
-          <input type="hidden" name="_subject" value="New Pizza Order — Pop Up Pizza" />
-          <!-- Honeypot field: bots tend to fill hidden inputs, humans never see this -->
-          <p style="display:none"><label>Leave this field empty: <input name="_gotcha" /></label></p>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Your Name</label>
-              <input type="text" id="name" name="name" placeholder="Jane Smith" required />
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" placeholder="04xx xxx xxx" />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" placeholder="you@email.com" required />
-            </div>
-            <div class="form-group">
-              <label for="quantity">Number of Pizzas</label>
-              <select id="quantity" name="quantity" required>
-                <option value="">Select quantity</option>
-                <option value="1">1 pizza</option>
-                <option value="2">2 pizzas</option>
-                <option value="3">3 pizzas</option>
-                <option value="4">4 pizzas</option>
-                <option value="5+">5 or more</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group full">
-              <label for="pizzas">Pizza Selection</label>
-              <input type="text" id="pizzas" name="pizzas" placeholder="e.g. 2× Meat Lovers, 1× Vegetarian" required />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group full">
-              <label for="message">Special Requests or Dietary Requirements</label>
-              <textarea id="message" name="message" placeholder="Let us know about any dietary requirements, custom topping requests, or anything else we should know..."></textarea>
-            </div>
-          </div>
-          <div class="form-submit">
-            <p class="form-note">We'll confirm your order via email or phone within 24 hours.</p>
-            <button type="submit" class="btn-submit">Send Order Request</button>
-          </div>
-        </form>
-
-        <div class="success-msg" id="successMsg">
-          Your order has been received — thank you. We will be in touch within 24 hours to confirm the details. You can also reach us directly at <strong>@pop_uppizza</strong>.
+        <div class="order-type-toggle">
+          <button type="button" class="order-type-btn active" id="tabMenuOrder" onclick="switchOrderTab('menu')">Order From Menu</button>
+          <button type="button" class="order-type-btn" id="tabCustomOrder" onclick="switchOrderTab('custom')">Custom Order</button>
         </div>
+
+        <!-- MENU ORDER PANEL -->
+        <div class="order-panel active" id="panelMenu">
+          <div class="order-summary">
+            <h3>Your Order</h3>
+            <div id="summaryLines">
+              <p class="order-summary-empty">No items selected yet — add pizzas from the menu above.</p>
+            </div>
+            <div class="order-summary-total" id="summaryTotalRow" style="display:none">
+              <span>Total</span>
+              <span id="summaryTotal">$0</span>
+            </div>
+          </div>
+
+          <form
+            id="pizzaOrderForm"
+            action="https://formspree.io/f/mvzjlojn"
+            method="POST"
+            onsubmit="handleSubmit(event, 'menu')"
+          >
+            <input type="hidden" name="_subject" value="New Pizza Order — Pop Up Pizza" />
+            <input type="hidden" name="order_code" id="orderCodeField_menu" />
+            <input type="hidden" name="order_items" id="orderItemsField" />
+            <input type="hidden" name="order_total" id="orderTotalField" />
+            <p style="display:none"><label>Leave this field empty: <input name="_gotcha" /></label></p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="04xx xxx xxx" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@email.com" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="message">Special Requests or Dietary Requirements</label>
+                <textarea id="message" name="message" placeholder="Let us know about any dietary requirements or anything else we should know..."></textarea>
+              </div>
+            </div>
+            <div class="form-submit">
+              <p class="form-note">We'll confirm your order via email or phone within 24 hours.</p>
+              <button type="submit" class="btn-submit" id="menuSubmitBtn">Place Order</button>
+            </div>
+          </form>
+
+          <div class="order-confirmation" id="menuConfirmation">
+            <p class="section-body" style="margin:0 auto">Thank you — your order has been received.</p>
+            <div class="order-code-badge">
+              <span class="order-code-label">Your Order Code</span>
+              <span class="order-code-value" id="menuOrderCode">PZA-0000</span>
+            </div>
+            <div class="order-receipt" id="menuReceipt"></div>
+            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll be in touch within 24 hours to confirm pickup, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+          </div>
+        </div>
+
+        <!-- CUSTOM ORDER PANEL -->
+        <div class="order-panel" id="panelCustom">
+          <p class="section-body" style="margin-bottom:28px">Have something specific in mind — a large group order, an unusual topping combination, or a special occasion? Tell us the details and we'll get back to you directly.</p>
+
+          <form
+            id="customOrderForm"
+            action="https://formspree.io/f/mvzjlojn"
+            method="POST"
+            onsubmit="handleSubmit(event, 'custom')"
+          >
+            <input type="hidden" name="_subject" value="New Custom Pizza Order — Pop Up Pizza" />
+            <input type="hidden" name="order_code" id="orderCodeField_custom" />
+            <p style="display:none"><label>Leave this field empty: <input name="_gotcha" /></label></p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="custom-name">Your Name</label>
+                <input type="text" id="custom-name" name="name" placeholder="Jane Smith" required />
+              </div>
+              <div class="form-group">
+                <label for="custom-phone">Phone Number</label>
+                <input type="tel" id="custom-phone" name="phone" placeholder="04xx xxx xxx" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="custom-email">Email Address</label>
+                <input type="email" id="custom-email" name="email" placeholder="you@email.com" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="custom-quantity">Approximate Quantity</label>
+                <select id="custom-quantity" name="quantity" required>
+                  <option value="">Select quantity</option>
+                  <option value="1-2">1–2 pizzas</option>
+                  <option value="3-5">3–5 pizzas</option>
+                  <option value="6-10">6–10 pizzas</option>
+                  <option value="10+">10 or more (group / event)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="custom-date">Preferred Date</label>
+                <input type="date" id="custom-date" name="preferred_date" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="custom-details">Tell Us What You Have in Mind</label>
+                <textarea id="custom-details" name="message" placeholder="e.g. custom toppings, dietary requirements, group order for an event, bulk pricing enquiry..." required></textarea>
+              </div>
+            </div>
+            <div class="form-submit">
+              <p class="form-note">We'll respond within 24 hours to discuss and confirm your custom order.</p>
+              <button type="submit" class="btn-submit">Send Custom Order Enquiry</button>
+            </div>
+          </form>
+
+          <div class="order-confirmation" id="customConfirmation">
+            <p class="section-body" style="margin:0 auto">Thank you — your custom order enquiry has been received.</p>
+            <div class="order-code-badge">
+              <span class="order-code-label">Your Reference Code</span>
+              <span class="order-code-value" id="customOrderCode">PZA-C000</span>
+            </div>
+            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll be in touch within 24 hours, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1058,21 +1487,96 @@
   </footer>
 
   <script>
-    // Formspree submission handler
-    // Posts as JSON to the form's Formspree endpoint; customer stays on page and sees the confirmation message.
-    function handleSubmit(e) {
+    // ── CART STATE ──
+    const cart = {};
+
+    function adjustQty(button, delta) {
+      const item = button.closest('.menu-item');
+      const name = item.dataset.name;
+      const price = parseFloat(item.dataset.price);
+      const valueEl = item.querySelector('.qty-value');
+      let qty = parseInt(valueEl.textContent, 10);
+
+      qty = Math.max(0, qty + delta);
+      valueEl.textContent = qty;
+
+      if (qty > 0) {
+        cart[name] = { qty, price };
+      } else {
+        delete cart[name];
+      }
+
+      renderCart();
+    }
+
+    function renderCart() {
+      const names = Object.keys(cart);
+      const totalItems = names.reduce((sum, n) => sum + cart[n].qty, 0);
+      const totalPrice = names.reduce((sum, n) => sum + cart[n].qty * cart[n].price, 0);
+
+      // Sticky cart bar
+      const cartBar = document.getElementById('cartBar');
+      document.getElementById('cartCount').textContent = totalItems;
+      document.getElementById('cartTotalBar').textContent = '$' + totalPrice.toFixed(0);
+      cartBar.classList.toggle('visible', totalItems > 0);
+
+      // Checkout summary panel
+      const summaryLines = document.getElementById('summaryLines');
+      const totalRow = document.getElementById('summaryTotalRow');
+
+      if (names.length === 0) {
+        summaryLines.innerHTML = '<p class="order-summary-empty">No items selected yet — add pizzas from the menu above.</p>';
+        totalRow.style.display = 'none';
+      } else {
+        summaryLines.innerHTML = names.map(n => {
+          const line = cart[n];
+          return '<div class="order-summary-line"><span>' + line.qty + '× ' + n + '</span><span>$' + (line.qty * line.price).toFixed(0) + '</span></div>';
+        }).join('');
+        totalRow.style.display = 'flex';
+        document.getElementById('summaryTotal').textContent = '$' + totalPrice.toFixed(0);
+      }
+
+      // Hidden fields for Formspree submission
+      const itemsSummary = names.map(n => cart[n].qty + '× ' + n).join(', ');
+      document.getElementById('orderItemsField').value = itemsSummary;
+      document.getElementById('orderTotalField').value = '$' + totalPrice.toFixed(0);
+
+      // Disable submit until at least one item is selected
+      document.getElementById('menuSubmitBtn').disabled = names.length === 0;
+    }
+
+    function scrollToCheckout() {
+      switchOrderTab('menu');
+      const target = document.getElementById('order');
+      const top = target.getBoundingClientRect().top + window.scrollY - 72;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+
+    // ── ORDER TYPE TOGGLE ──
+    function switchOrderTab(tab) {
+      document.getElementById('panelMenu').classList.toggle('active', tab === 'menu');
+      document.getElementById('panelCustom').classList.toggle('active', tab === 'custom');
+      document.getElementById('tabMenuOrder').classList.toggle('active', tab === 'menu');
+      document.getElementById('tabCustomOrder').classList.toggle('active', tab === 'custom');
+    }
+
+    // ── ORDER CODE GENERATION ──
+    // Format: PZA-#### for menu orders, PZA-C### for custom enquiries
+    function generateOrderCode(prefix) {
+      const num = Math.floor(1000 + Math.random() * 9000);
+      return prefix + '-' + num;
+    }
+
+    // ── FORM SUBMISSION ──
+    function handleSubmit(e, type) {
       e.preventDefault();
       const form = e.target;
 
-      const payload = {
-        _subject: '_subject' in form ? form._subject.value : 'New Pizza Order — Pop Up Pizza',
-        name:     form.name.value,
-        email:    form.email.value,
-        phone:    form.phone.value,
-        quantity: form.quantity.value,
-        pizzas:   form.pizzas.value,
-        message:  form.message.value,
-      };
+      const orderCode = type === 'menu' ? generateOrderCode('PZA') : generateOrderCode('PZA-C');
+      form.querySelector('input[name="order_code"]').value = orderCode;
+
+      const payload = {};
+      new FormData(form).forEach((value, key) => { payload[key] = value; });
 
       fetch(form.action, {
         method: 'POST',
@@ -1083,11 +1587,27 @@
         body: JSON.stringify(payload),
       })
       .then((response) => {
-        if (response.ok) {
+        if (!response.ok) throw new Error('Submission failed');
+
+        if (type === 'menu') {
           form.style.display = 'none';
-          document.getElementById('successMsg').style.display = 'block';
+          document.querySelector('#panelMenu .order-summary').style.display = 'none';
+          document.getElementById('menuOrderCode').textContent = orderCode;
+
+          const receipt = document.getElementById('menuReceipt');
+          const names = Object.keys(cart);
+          const totalPrice = names.reduce((sum, n) => sum + cart[n].qty * cart[n].price, 0);
+          receipt.innerHTML = names.map(n => {
+            const line = cart[n];
+            return '<div class="order-receipt-line"><span>' + line.qty + '× ' + n + '</span><span>$' + (line.qty * line.price).toFixed(0) + '</span></div>';
+          }).join('') + '<div class="order-receipt-line" style="border-top:1px solid rgba(255,255,255,0.15); margin-top:8px; padding-top:12px; font-weight:600; color:#fff"><span>Total</span><span>$' + totalPrice.toFixed(0) + '</span></div>';
+
+          document.getElementById('menuConfirmation').classList.add('visible');
+          document.getElementById('cartBar').classList.remove('visible');
         } else {
-          throw new Error('Submission failed');
+          form.style.display = 'none';
+          document.getElementById('customOrderCode').textContent = orderCode;
+          document.getElementById('customConfirmation').classList.add('visible');
         }
       })
       .catch(() => {
@@ -1098,7 +1618,8 @@
     // Smooth scroll with fixed nav offset
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
         if (target) {
           e.preventDefault();
           const top = target.getBoundingClientRect().top + window.scrollY - 72;
