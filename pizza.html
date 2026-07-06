@@ -894,6 +894,108 @@
       line-height: 1.6;
     }
 
+    .privacy-note {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.6;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .privacy-note a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: underline;
+    }
+
+    .privacy-note a:hover { color: #c98a68; }
+
+    /* ── AVAILABILITY BANNER ── */
+    .availability-banner {
+      background: var(--ash);
+      border-bottom: 1px solid rgba(34,32,29,0.08);
+      padding: 16px 48px;
+      text-align: center;
+    }
+
+    .availability-banner-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .availability-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .availability-banner.open .availability-dot { background: #4a7c3f; }
+    .availability-banner.closed .availability-dot { background: var(--ember); }
+
+    .availability-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--navy);
+    }
+
+    .availability-text strong { font-weight: 700; }
+
+    .availability-cta {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ember);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ember);
+      padding-bottom: 1px;
+    }
+
+    .availability-cta:hover { color: var(--ember-dark, #7d3d22); }
+
+    /* ── CLOSED MENU STATE ── */
+    .menu-item.closed-state .qty-stepper { opacity: 0.35; pointer-events: none; }
+    .menu-item.closed-state .menu-item-price { opacity: 0.5; }
+
+    /* ── NOTIFY SIGNUP (replaces checkout when closed) ── */
+    .notify-panel {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .notify-panel .order-code-badge {
+      background: rgba(168,83,47,0.1);
+    }
+
+    .notify-form {
+      display: flex;
+      gap: 12px;
+      max-width: 420px;
+      margin: 28px auto 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .notify-form input[type="email"] {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .notify-confirmation {
+      display: none;
+      margin-top: 20px;
+      color: #c98a68;
+      font-size: 14px;
+    }
+
+    .notify-confirmation.visible { display: block; }
+
     .btn-submit {
       background: var(--ember);
       color: var(--white);
@@ -999,6 +1101,100 @@
       text-align: center;
     }
 
+    /* ── EVENT DETAILS PANEL ── */
+    .event-details {
+      background: var(--ash);
+      padding: 56px 80px;
+    }
+
+    .event-details-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--white);
+      border: 1px solid var(--white);
+    }
+
+    .event-detail-card {
+      background: var(--white);
+      padding: 32px 28px;
+      text-align: center;
+    }
+
+    .event-detail-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ember);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .event-detail-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+
+    .event-detail-sub {
+      font-size: 13px;
+      color: var(--smoke);
+      margin-top: 6px;
+    }
+
+    /* ── OUTSIDE-HOURS PICKUP NOTE ── */
+    .outside-hours {
+      background: var(--white);
+      border: 1px solid var(--ash);
+      border-radius: 4px;
+      padding: 24px 28px;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .outside-hours-text {
+      font-size: 14px;
+      color: var(--smoke);
+      line-height: 1.6;
+    }
+
+    .outside-hours-text strong { color: var(--navy); }
+
+    .outside-hours-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-outline {
+      border: 1px solid var(--ember);
+      color: var(--ember);
+      padding: 10px 22px;
+      border-radius: 2px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .btn-outline:hover { background: var(--ember); color: var(--white); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
@@ -1008,6 +1204,12 @@
       .hero-content { padding: 60px 24px 40px; }
       .hero-right { min-height: 280px; }
       .hero-rings { width: 340px; height: 340px; right: -40px; }
+
+      .event-details { padding: 40px 24px; }
+      .event-details-inner { grid-template-columns: 1fr; }
+      .outside-hours { flex-direction: column; align-items: flex-start; text-align: left; margin-top: 20px; }
+      .outside-hours-actions { width: 100%; }
+      .outside-hours-actions .btn-outline { flex: 1; text-align: center; }
 
       .how, .menu, .order { padding: 64px 24px; }
       .steps { grid-template-columns: 1fr; gap: 2px; }
@@ -1063,12 +1265,22 @@
     </ul>
   </nav>
 
+  <!-- AVAILABILITY BANNER -->
+  <!-- To update: edit the availabilityConfig object near the bottom of this file (search "AVAILABILITY CONFIG"). -->
+  <div class="availability-banner" id="availabilityBanner">
+    <div class="availability-banner-inner">
+      <span class="availability-dot"></span>
+      <span class="availability-text" id="availabilityText">Checking availability…</span>
+      <a href="#order" class="availability-cta" id="availabilityCta" style="display:none">Order Now</a>
+    </div>
+  </div>
+
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <span class="hero-eyebrow">Stone-Baked · Take &amp; Bake · Handcrafted</span>
-      <h1 class="hero-headline">Fresh, Stone-Baked Pizza<br><em>Made Easy</em></h1>
-      <p class="hero-body">Enjoy the taste of our handcrafted stone-baked pizza at home with almost no effort. We partially bake each base, top it with your chosen ingredients, and package it fresh — ready for you to finish in your own oven.</p>
+      <span class="hero-eyebrow">Kanga Cup · 13–16 July · Dickson Playing Fields</span>
+      <h1 class="hero-headline">Take &amp; Bake Pizza<br><em>for Kanga Cup Week</em></h1>
+      <p class="hero-body">We're preparing a limited batch of stone-baked take-and-bake pizzas for pickup at Dickson Playing Fields, Monday 13 July to Thursday 16 July. Order ahead and collect yours between matches.</p>
       <div class="hero-actions">
         <a href="#menu" class="btn-primary">View the Menu</a>
         <a href="#order" class="btn-ghost">Place a Custom Order</a>
@@ -1081,6 +1293,37 @@
         <div class="ring"></div>
         <div class="ring"></div>
         <div class="hero-center-mark"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENT DETAILS -->
+  <section class="event-details">
+    <div class="event-details-inner">
+      <div class="event-detail-card">
+        <span class="event-detail-label">Where</span>
+        <span class="event-detail-value">Dickson Playing Fields</span>
+        <p class="event-detail-sub">Kanga Cup pickup point</p>
+      </div>
+      <div class="event-detail-card">
+        <span class="event-detail-label">When</span>
+        <span class="event-detail-value">13 – 16 July</span>
+        <p class="event-detail-sub">Monday to Thursday, Kanga Cup week</p>
+      </div>
+      <div class="event-detail-card">
+        <span class="event-detail-label">Pickup Time</span>
+        <span class="event-detail-value">2:00 PM – 4:00 PM</span>
+        <p class="event-detail-sub">Each day, 13–16 July</p>
+      </div>
+    </div>
+
+    <div class="outside-hours">
+      <p class="outside-hours-text">
+        <strong>Need pickup outside 2–4pm?</strong> Get in touch and we'll do our best to arrange a time that works around your match schedule.
+      </p>
+      <div class="outside-hours-actions">
+        <a href="tel:0429649812" class="btn-outline">Call 0429 649 812</a>
+        <a href="https://www.instagram.com/pop_uppizza" target="_blank" class="btn-outline">Message @pop_uppizza</a>
       </div>
     </div>
   </section>
@@ -1302,13 +1545,31 @@
     <div class="order-inner">
       <span class="section-label">Checkout</span>
       <h2 class="section-title" style="color:var(--white)">Complete Your Order</h2>
-      <p class="section-body">Review your selection below, or let us know if you have something custom in mind.</p>
+      <p class="section-body">Pickup is available at Dickson Playing Fields, Monday 13 July to Thursday 16 July, between 2:00pm and 4:00pm. Review your selection below, or let us know if you have something custom in mind.</p>
 
       <div class="order-form" id="orderFormWrap">
 
         <div class="order-type-toggle">
           <button type="button" class="order-type-btn active" id="tabMenuOrder" onclick="switchOrderTab('menu')">Order From Menu</button>
           <button type="button" class="order-type-btn" id="tabCustomOrder" onclick="switchOrderTab('custom')">Custom Order</button>
+        </div>
+
+        <!-- NOTIFY PANEL: shown in place of the menu order form when ordering is closed -->
+        <div class="order-panel" id="panelNotify">
+          <div class="notify-panel">
+            <p class="section-body" style="margin:0 auto">Ordering is currently closed. Leave your email and we'll let you know the moment our next batch opens.</p>
+            <div class="order-code-badge" id="notifyNextDateBadge">
+              <span class="order-code-label">Next Ordering Window</span>
+              <span class="order-code-value" id="notifyNextDate">To be announced</span>
+            </div>
+            <form id="notifyForm" onsubmit="handleNotifySubmit(event)">
+              <div class="notify-form">
+                <input type="email" id="notify-email" name="email" placeholder="you@email.com" required />
+                <button type="submit" class="btn-submit">Notify Me</button>
+              </div>
+            </form>
+            <p class="notify-confirmation" id="notifyConfirmation">Thanks — we'll email you as soon as ordering reopens. In the meantime, follow <strong style="color:#c98a68">@pop_uppizza</strong> for the earliest word.</p>
+          </div>
         </div>
 
         <!-- MENU ORDER PANEL -->
@@ -1362,6 +1623,7 @@
               <p class="form-note">We'll confirm your order via email or phone within 24 hours.</p>
               <button type="submit" class="btn-submit" id="menuSubmitBtn">Place Order</button>
             </div>
+            <p class="privacy-note">We only collect what's needed to prepare and confirm your order. Your details are used solely for order fulfilment and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
           </form>
 
           <div class="order-confirmation" id="menuConfirmation">
@@ -1371,7 +1633,7 @@
               <span class="order-code-value" id="menuOrderCode">PZA-0000</span>
             </div>
             <div class="order-receipt" id="menuReceipt"></div>
-            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll be in touch within 24 hours to confirm pickup, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+            <p class="form-note" style="margin-top:20px">Please keep this code for reference. Pickup is at Dickson Playing Fields, Monday 13 July to Thursday 16 July, between 2:00pm and 4:00pm. Need a different time? Call 0429 649 812 or message us at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
           </div>
         </div>
 
@@ -1431,6 +1693,7 @@
               <p class="form-note">We'll respond within 24 hours to discuss and confirm your custom order.</p>
               <button type="submit" class="btn-submit">Send Custom Order Enquiry</button>
             </div>
+            <p class="privacy-note">We only collect what's needed to prepare and confirm your order. Your details are used solely for order fulfilment and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
           </form>
 
           <div class="order-confirmation" id="customConfirmation">
@@ -1487,10 +1750,57 @@
   </footer>
 
   <script>
+    // ══════════════════════════════════════════════════════════════
+    // AVAILABILITY CONFIG
+    // Update these two lines each time you open or close an ordering window.
+    // isOpen: true while accepting orders, false between batches.
+    // nextDate: shown to customers when isOpen is false. Use a friendly
+    //           format like "Saturday 26 July" or leave as "To be announced".
+    // ══════════════════════════════════════════════════════════════
+    const availabilityConfig = {
+      isOpen: true,
+      nextDate: "To be announced"
+    };
+
+    function applyAvailability() {
+      const banner = document.getElementById('availabilityBanner');
+      const text = document.getElementById('availabilityText');
+      const cta = document.getElementById('availabilityCta');
+      const menuGrid = document.getElementById('menuGrid');
+
+      if (availabilityConfig.isOpen) {
+        banner.classList.add('open');
+        banner.classList.remove('closed');
+        text.innerHTML = '<strong>Ordering is open</strong> — pickup at Dickson Playing Fields, 13–16 July, 2:00pm–4:00pm.';
+        cta.style.display = 'inline-block';
+
+        switchOrderTab('menu', true);
+      } else {
+        banner.classList.add('closed');
+        banner.classList.remove('open');
+        text.innerHTML = '<strong>Ordering is currently closed</strong> — next batch: ' + availabilityConfig.nextDate;
+        cta.style.display = 'none';
+
+        // Disable quantity steppers across the menu so browsing remains possible
+        // without implying an order can be placed right now.
+        document.querySelectorAll('#menuGrid .menu-item').forEach(item => {
+          item.classList.add('closed-state');
+        });
+
+        document.getElementById('notifyNextDate').textContent = availabilityConfig.nextDate;
+
+        // Swap the default checkout tab to the notify panel.
+        document.getElementById('tabMenuOrder').textContent = 'Notify Me';
+        switchOrderTab('notify', true);
+      }
+    }
+
     // ── CART STATE ──
     const cart = {};
 
     function adjustQty(button, delta) {
+      if (!availabilityConfig.isOpen) return;
+
       const item = button.closest('.menu-item');
       const name = item.dataset.name;
       const price = parseFloat(item.dataset.price);
@@ -1546,18 +1856,28 @@
     }
 
     function scrollToCheckout() {
-      switchOrderTab('menu');
+      switchOrderTab(availabilityConfig.isOpen ? 'menu' : 'notify');
       const target = document.getElementById('order');
       const top = target.getBoundingClientRect().top + window.scrollY - 72;
       window.scrollTo({ top, behavior: 'smooth' });
     }
 
     // ── ORDER TYPE TOGGLE ──
-    function switchOrderTab(tab) {
+    function switchOrderTab(tab, isInitial) {
       document.getElementById('panelMenu').classList.toggle('active', tab === 'menu');
+      document.getElementById('panelNotify').classList.toggle('active', tab === 'notify');
       document.getElementById('panelCustom').classList.toggle('active', tab === 'custom');
-      document.getElementById('tabMenuOrder').classList.toggle('active', tab === 'menu');
+
+      const menuTabActive = tab === 'menu' || tab === 'notify';
+      document.getElementById('tabMenuOrder').classList.toggle('active', menuTabActive);
       document.getElementById('tabCustomOrder').classList.toggle('active', tab === 'custom');
+
+      // Prevent manually switching back to the live menu-order panel while closed,
+      // unless this call originates from applyAvailability() itself.
+      if (!isInitial && tab === 'menu' && !availabilityConfig.isOpen) {
+        document.getElementById('panelMenu').classList.remove('active');
+        document.getElementById('panelNotify').classList.add('active');
+      }
     }
 
     // ── ORDER CODE GENERATION ──
@@ -1627,6 +1947,37 @@
         }
       });
     });
+
+    // ── NOTIFY SIGNUP (shown when ordering is closed) ──
+    // Submits to the same pizza orders Formspree endpoint, tagged with a distinct
+    // subject line so it's easy to tell apart from a completed order in your inbox.
+    function handleNotifySubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('notify-email').value;
+
+      fetch('https://formspree.io/f/mvzjlojn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: 'New Ordering-Window Notify Signup — Pop Up Pizza',
+          email: email,
+        }),
+      })
+      .then((response) => {
+        if (!response.ok) throw new Error('Submission failed');
+        document.getElementById('notifyForm').style.display = 'none';
+        document.getElementById('notifyConfirmation').classList.add('visible');
+      })
+      .catch(() => {
+        alert('Something went wrong — please try again or message us directly at @pop_uppizza.');
+      });
+    }
+
+    // Apply the current availability state as soon as the page loads.
+    applyAvailability();
   </script>
 </body>
 </html>

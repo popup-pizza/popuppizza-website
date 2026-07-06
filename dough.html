@@ -522,6 +522,22 @@
 
     .form-note { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; }
 
+    .privacy-note {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.6;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .privacy-note a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: underline;
+    }
+
+    .privacy-note a:hover { color: #c98a68; }
+
     .btn-submit {
       background: var(--ember); color: var(--white); border: none; padding: 14px 32px;
       border-radius: 2px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
@@ -754,6 +770,7 @@
               <p class="form-note">We'll confirm your order via email or phone within 24 hours.</p>
               <button type="submit" class="btn-submit" id="menuSubmitBtn" disabled>Place Order</button>
             </div>
+            <p class="privacy-note">We only collect what's needed to prepare and confirm your order. Your details are used solely for order fulfilment and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
           </form>
 
           <div class="order-confirmation" id="menuConfirmation">
@@ -822,6 +839,7 @@
               <p class="form-note">We'll respond within 24 hours to discuss and confirm your order.</p>
               <button type="submit" class="btn-submit">Send Bulk Order Enquiry</button>
             </div>
+            <p class="privacy-note">We only collect what's needed to prepare and confirm your order. Your details are used solely for order fulfilment and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
           </form>
 
           <div class="order-confirmation" id="customConfirmation">
