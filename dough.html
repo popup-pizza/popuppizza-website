@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Frozen Dough Balls — Pop Up Pizza</title>
+  <title>Frozen Dough Balls, Pop-Up Pizza</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -622,19 +622,19 @@
     <div class="hero-content">
       <span class="hero-eyebrow">For Your Kitchen</span>
       <h1 class="hero-headline">Frozen Dough Balls</h1>
-      <p class="hero-body">Our signature stone-baked dough, hand-portioned and frozen — so you can build your own pizza from scratch, whenever you like.</p>
+      <p class="hero-body">Our signature stone-baked dough, hand-portioned and frozen, so you can build your own pizza from scratch, whenever you like.</p>
     </div>
   </section>
 
   <section class="section about-dough">
     <span class="section-label">Made the Same Way</span>
     <h2 class="section-title">The base of everything we make</h2>
-    <p class="section-body">Our dough balls are made from the same recipe we use for every pizza we sell — hand-portioned, individually frozen, and ready to defrost, prove and shape whenever you're ready to cook.</p>
+    <p class="section-body">Our dough balls are made from the same recipe we use for every pizza we sell, hand-portioned, individually frozen, and ready to defrost, prove and shape whenever you're ready to cook.</p>
 
     <div class="feature-grid">
       <div class="feature-card">
         <h3>Individually Portioned</h3>
-        <p>Each ball is pre-portioned for a single pizza base — no measuring, no mess, no guesswork.</p>
+        <p>Each ball is pre-portioned for a single pizza base, no measuring, no mess, no guesswork.</p>
       </div>
       <div class="feature-card">
         <h3>Freezer to Bench</h3>
@@ -650,14 +650,14 @@
   <section class="section pricing">
     <span class="section-label">Pricing</span>
     <h2 class="section-title">Stock Your Freezer</h2>
-    <p class="section-body">Order individually or in bulk — perfect for a regular pizza night at home.</p>
+    <p class="section-body">Order individually or in bulk, perfect for a regular pizza night at home.</p>
 
     <div class="pricing-grid" id="pricingGrid">
-      <div class="price-card" data-name="Single" data-price="6" onclick="selectPack(this)">
+      <div class="price-card" data-name="Single" data-price="5" onclick="selectPack(this)">
         <div class="price-check">✓</div>
         <span class="price-qty">Single</span>
         <p class="price-desc">One dough ball</p>
-        <span class="price-amount">$6</span>
+        <span class="price-amount">$5</span>
         <span class="price-per">per ball</span>
         <div class="price-qty-stepper" onclick="event.stopPropagation()">
           <button type="button" class="pack-qty-btn" onclick="adjustPackQty(this, -1)">−</button>
@@ -665,25 +665,25 @@
           <button type="button" class="pack-qty-btn" onclick="adjustPackQty(this, 1)">+</button>
         </div>
       </div>
-      <div class="price-card featured" data-name="Pack of 4" data-price="22" onclick="selectPack(this)">
+      <div class="price-card featured" data-name="Pack of 4" data-price="18" onclick="selectPack(this)">
         <div class="price-check">✓</div>
         <span class="price-badge">Most Popular</span>
         <span class="price-qty">Pack of 4</span>
         <p class="price-desc">Four dough balls</p>
-        <span class="price-amount">$22</span>
-        <span class="price-per">$5.50 per ball</span>
+        <span class="price-amount">$18</span>
+        <span class="price-per">$4.50 per ball</span>
         <div class="price-qty-stepper" onclick="event.stopPropagation()">
           <button type="button" class="pack-qty-btn" onclick="adjustPackQty(this, -1)">−</button>
           <span class="pack-qty-value">1</span>
           <button type="button" class="pack-qty-btn" onclick="adjustPackQty(this, 1)">+</button>
         </div>
       </div>
-      <div class="price-card" data-name="Pack of 8" data-price="40" onclick="selectPack(this)">
+      <div class="price-card" data-name="Pack of 8" data-price="32" onclick="selectPack(this)">
         <div class="price-check">✓</div>
         <span class="price-qty">Pack of 8</span>
         <p class="price-desc">Eight dough balls</p>
-        <span class="price-amount">$40</span>
-        <span class="price-per">$5.00 per ball</span>
+        <span class="price-amount">$32</span>
+        <span class="price-per">$4.00 per ball</span>
         <div class="price-qty-stepper" onclick="event.stopPropagation()">
           <button type="button" class="pack-qty-btn" onclick="adjustPackQty(this, -1)">−</button>
           <span class="pack-qty-value">1</span>
@@ -724,7 +724,7 @@
           <div class="order-summary">
             <h3>Your Order</h3>
             <div id="summaryLines">
-              <p class="order-summary-empty">No packs selected yet — choose a pack size above.</p>
+              <p class="order-summary-empty">No packs selected yet, choose a pack size above.</p>
             </div>
             <div class="order-summary-total" id="summaryTotalRow" style="display:none">
               <span>Total</span>
@@ -738,7 +738,7 @@
             method="POST"
             onsubmit="handleSubmit(event, 'menu')"
           >
-            <input type="hidden" name="_subject" value="New Dough Ball Order — Pop Up Pizza" />
+            <input type="hidden" name="_subject" value="New Dough Ball Order, Pop-Up Pizza" />
             <input type="hidden" name="order_code" id="orderCodeField_menu" />
             <input type="hidden" name="order_items" id="orderItemsField" />
             <input type="hidden" name="order_total" id="orderTotalField" />
@@ -767,20 +767,20 @@
               </div>
             </div>
             <div class="form-submit">
-              <p class="form-note">We'll confirm your order via email or phone within 24 hours.</p>
+              <p class="form-note">We'll contact you to confirm your order and send a payment link.</p>
               <button type="submit" class="btn-submit" id="menuSubmitBtn" disabled>Place Order</button>
             </div>
             <p class="privacy-note">We only collect what's needed to prepare and confirm your order. Your details are used solely for order fulfilment and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
           </form>
 
           <div class="order-confirmation" id="menuConfirmation">
-            <p class="section-body" style="margin:0 auto">Thank you — your order has been received.</p>
+            <p class="section-body" style="margin:0 auto">Thank you, your order has been received.</p>
             <div class="order-code-badge">
               <span class="order-code-label">Your Order Code</span>
               <span class="order-code-value" id="menuOrderCode">DGH-0000</span>
             </div>
             <div class="order-receipt" id="menuReceipt"></div>
-            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll be in touch within 24 hours to confirm pickup, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
           </div>
         </div>
 
@@ -794,7 +794,7 @@
             method="POST"
             onsubmit="handleSubmit(event, 'custom')"
           >
-            <input type="hidden" name="_subject" value="New Bulk Dough Ball Enquiry — Pop Up Pizza" />
+            <input type="hidden" name="_subject" value="New Bulk Dough Ball Enquiry, Pop-Up Pizza" />
             <input type="hidden" name="order_code" id="orderCodeField_custom" />
             <p style="display:none"><label>Leave this field empty: <input name="_gotcha" /></label></p>
 
@@ -836,19 +836,19 @@
               </div>
             </div>
             <div class="form-submit">
-              <p class="form-note">We'll respond within 24 hours to discuss and confirm your order.</p>
+              <p class="form-note">We'll contact you to confirm your order and send a payment link.</p>
               <button type="submit" class="btn-submit">Send Bulk Order Enquiry</button>
             </div>
             <p class="privacy-note">We only collect what's needed to prepare and confirm your order. Your details are used solely for order fulfilment and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
           </form>
 
           <div class="order-confirmation" id="customConfirmation">
-            <p class="section-body" style="margin:0 auto">Thank you — your bulk order enquiry has been received.</p>
+            <p class="section-body" style="margin:0 auto">Thank you, your bulk order enquiry has been received.</p>
             <div class="order-code-badge">
               <span class="order-code-label">Your Reference Code</span>
               <span class="order-code-value" id="customOrderCode">DGH-C000</span>
             </div>
-            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll be in touch within 24 hours, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
           </div>
         </div>
 
@@ -871,7 +871,7 @@
       <li><a href="market.html">Events</a></li>
       <li><a href="https://www.instagram.com/pop_uppizza" target="_blank">Instagram</a></li>
     </ul>
-    <p>© 2025 Pop Up Pizza. All rights reserved.</p>
+    <p>© 2025 Pop-Up Pizza. All rights reserved.</p>
   </footer>
 
   <script>
@@ -925,7 +925,7 @@
       const totalRow = document.getElementById('summaryTotalRow');
 
       if (names.length === 0) {
-        summaryLines.innerHTML = '<p class="order-summary-empty">No packs selected yet — choose a pack size above.</p>';
+        summaryLines.innerHTML = '<p class="order-summary-empty">No packs selected yet, choose a pack size above.</p>';
         totalRow.style.display = 'none';
       } else {
         summaryLines.innerHTML = names.map(n => {
@@ -1009,7 +1009,7 @@
         }
       })
       .catch(() => {
-        alert('Something went wrong — please try again or contact us directly at popup.pizza.au@gmail.com');
+        alert('Something went wrong, please try again or contact us directly at popup.pizza.au@gmail.com');
       });
     }
 
