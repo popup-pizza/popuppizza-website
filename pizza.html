@@ -1172,6 +1172,37 @@
 
     .outside-hours-text strong { color: var(--navy); }
 
+    /* ── PICKUP MAP ── */
+    .pickup-map {
+      max-width: 1000px;
+      margin: 32px auto 0;
+    }
+
+    .pickup-map-frame {
+      width: 100%;
+      height: 340px;
+      border: none;
+      border-radius: 4px;
+      display: block;
+      filter: grayscale(0.15);
+    }
+
+    .pickup-map-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .pickup-map-address {
+      font-size: 13px;
+      color: var(--smoke);
+    }
+
+    .pickup-map-address strong { color: var(--navy); }
+
     .outside-hours-actions {
       display: flex;
       gap: 12px;
@@ -1207,6 +1238,8 @@
 
       .event-details { padding: 40px 24px; }
       .event-details-inner { grid-template-columns: 1fr; }
+      .pickup-map-frame { height: 260px; }
+      .pickup-map-footer { flex-direction: column; align-items: flex-start; }
       .outside-hours { flex-direction: column; align-items: flex-start; text-align: left; margin-top: 20px; }
       .outside-hours-actions { width: 100%; }
       .outside-hours-actions .btn-outline { flex: 1; text-align: center; }
@@ -1239,6 +1272,61 @@
       footer { padding: 32px 24px; flex-direction: column; text-align: center; }
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://pop-uppizza.com.au/#business",
+    "name": "Pop-Up Pizza",
+    "url": "https://pop-uppizza.com.au/pizza.html",
+    "telephone": "+61429649812",
+    "email": "popup.pizza.au@gmail.com",
+    "priceRange": "$$",
+    "servesCuisine": "Pizza",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Canberra",
+      "addressRegion": "ACT",
+      "addressCountry": "AU"
+    },
+    "sameAs": [
+      "https://www.instagram.com/pop_uppizza"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Pop-Up Pizza Take & Bake Pickup, Kanga Cup",
+    "startDate": "2026-07-13",
+    "endDate": "2026-07-16",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": {
+      "@type": "Place",
+      "name": "Dickson Playing Fields",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "120-152 Antill St",
+        "addressLocality": "Dickson",
+        "addressRegion": "ACT",
+        "postalCode": "2602",
+        "addressCountry": "AU"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -35.2492,
+        "longitude": 149.1492
+      }
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "Pop-Up Pizza",
+      "url": "https://pop-uppizza.com.au"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -1326,6 +1414,21 @@
         <a href="https://www.instagram.com/pop_uppizza" target="_blank" class="btn-outline">Message @pop_uppizza</a>
       </div>
     </div>
+
+    <div class="pickup-map">
+      <iframe
+        class="pickup-map-frame"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://maps.google.com/maps?q=Dickson%20Playing%20Fields%2C%20120-152%20Antill%20St%2C%20Dickson%20ACT%202602&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        title="Map showing Dickson Playing Fields pickup location">
+      </iframe>
+      <div class="pickup-map-footer">
+        <p class="pickup-map-address"><strong>Dickson Playing Fields</strong>, 120&ndash;152 Antill St, Dickson ACT 2602</p>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Dickson+Playing+Fields+120-152+Antill+St+Dickson+ACT+2602" target="_blank" class="btn-outline">Get Directions</a>
+      </div>
+    </div>
   </section>
 
   <!-- HOW IT WORKS -->
@@ -1366,14 +1469,30 @@
     </div>
 
     <div class="menu-grid" id="menuGrid">
-      <div class="menu-item" data-name="Cheese" data-price="13">
+      <div class="menu-item" data-name="Base with Tomato" data-price="8.50">
+        <div class="menu-item-main">
+          <div class="menu-item-info">
+            <h3>Base with Tomato</h3>
+            <p>Our stone-baked base with tomato sauce</p>
+          </div>
+          <div class="menu-item-right">
+            <span class="menu-item-price">$8.50</span>
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item" data-name="Cheese" data-price="11">
         <div class="menu-item-main">
           <div class="menu-item-info">
             <h3>Cheese</h3>
             <p>Simple, classic, perfect</p>
           </div>
           <div class="menu-item-right">
-            <span class="menu-item-price">$13</span>
+            <span class="menu-item-price">$11</span>
             <div class="qty-stepper">
               <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
               <span class="qty-value">0</span>
@@ -1382,14 +1501,14 @@
           </div>
         </div>
       </div>
-      <div class="menu-item" data-name="Cheese &amp; Confit Garlic" data-price="15">
+      <div class="menu-item" data-name="Cheese &amp; Confit Garlic" data-price="14">
         <div class="menu-item-main">
           <div class="menu-item-info">
             <h3>Cheese &amp; Confit Garlic</h3>
             <p>Slow-roasted garlic, rich &amp; mellow</p>
           </div>
           <div class="menu-item-right">
-            <span class="menu-item-price">$15</span>
+            <span class="menu-item-price">$14</span>
             <div class="qty-stepper">
               <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
               <span class="qty-value">0</span>
@@ -1398,14 +1517,30 @@
           </div>
         </div>
       </div>
-      <div class="menu-item" data-name="Pepperoni" data-price="15">
+      <div class="menu-item" data-name="Margherita" data-price="14">
+        <div class="menu-item-main">
+          <div class="menu-item-info">
+            <h3>Margherita</h3>
+            <p>Tomato base, basil &amp; mozzarella</p>
+          </div>
+          <div class="menu-item-right">
+            <span class="menu-item-price">$14</span>
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item" data-name="Pepperoni" data-price="14">
         <div class="menu-item-main">
           <div class="menu-item-info">
             <h3>Pepperoni</h3>
-            <p>Classic American pepperoni</p>
+            <p>Tomato base, pepperoni &amp; cheese</p>
           </div>
           <div class="menu-item-right">
-            <span class="menu-item-price">$15</span>
+            <span class="menu-item-price">$14</span>
             <div class="qty-stepper">
               <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
               <span class="qty-value">0</span>
@@ -1414,43 +1549,11 @@
           </div>
         </div>
       </div>
-      <div class="menu-item" data-name="Meat Lovers" data-price="20">
+      <div class="menu-item" data-name="Meatlovers" data-price="20">
         <div class="menu-item-main">
           <div class="menu-item-info">
-            <h3>Meat Lovers</h3>
-            <p>Pepperoni, bacon &amp; ham</p>
-          </div>
-          <div class="menu-item-right">
-            <span class="menu-item-price">$20</span>
-            <div class="qty-stepper">
-              <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
-              <span class="qty-value">0</span>
-              <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="menu-item" data-name="Vegetarian" data-price="20">
-        <div class="menu-item-main">
-          <div class="menu-item-info">
-            <h3>Vegetarian</h3>
-            <p>Zucchini, mushroom &amp; capsicum</p>
-          </div>
-          <div class="menu-item-right">
-            <span class="menu-item-price">$20</span>
-            <div class="qty-stepper">
-              <button type="button" class="qty-btn" onclick="adjustQty(this, -1)">−</button>
-              <span class="qty-value">0</span>
-              <button type="button" class="qty-btn" onclick="adjustQty(this, 1)">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="menu-item" data-name="BBQ Chicken" data-price="20">
-        <div class="menu-item-main">
-          <div class="menu-item-info">
-            <h3>BBQ Chicken</h3>
-            <p>Smoky BBQ base with tender chicken</p>
+            <h3>Meatlovers</h3>
+            <p>Tomato base, pepperoni, bacon, chorizo &amp; cheese</p>
           </div>
           <div class="menu-item-right">
             <span class="menu-item-price">$20</span>
@@ -1827,7 +1930,7 @@
       // Sticky cart bar
       const cartBar = document.getElementById('cartBar');
       document.getElementById('cartCount').textContent = totalItems;
-      document.getElementById('cartTotalBar').textContent = '$' + totalPrice.toFixed(0);
+      document.getElementById('cartTotalBar').textContent = '$' + totalPrice.toFixed(2);
       cartBar.classList.toggle('visible', totalItems > 0);
 
       // Checkout summary panel
@@ -1840,16 +1943,16 @@
       } else {
         summaryLines.innerHTML = names.map(n => {
           const line = cart[n];
-          return '<div class="order-summary-line"><span>' + line.qty + '× ' + n + '</span><span>$' + (line.qty * line.price).toFixed(0) + '</span></div>';
+          return '<div class="order-summary-line"><span>' + line.qty + '× ' + n + '</span><span>$' + (line.qty * line.price).toFixed(2) + '</span></div>';
         }).join('');
         totalRow.style.display = 'flex';
-        document.getElementById('summaryTotal').textContent = '$' + totalPrice.toFixed(0);
+        document.getElementById('summaryTotal').textContent = '$' + totalPrice.toFixed(2);
       }
 
       // Hidden fields for Formspree submission
       const itemsSummary = names.map(n => cart[n].qty + '× ' + n).join(', ');
       document.getElementById('orderItemsField').value = itemsSummary;
-      document.getElementById('orderTotalField').value = '$' + totalPrice.toFixed(0);
+      document.getElementById('orderTotalField').value = '$' + totalPrice.toFixed(2);
 
       // Disable submit until at least one item is selected
       document.getElementById('menuSubmitBtn').disabled = names.length === 0;
@@ -1919,8 +2022,8 @@
           const totalPrice = names.reduce((sum, n) => sum + cart[n].qty * cart[n].price, 0);
           receipt.innerHTML = names.map(n => {
             const line = cart[n];
-            return '<div class="order-receipt-line"><span>' + line.qty + '× ' + n + '</span><span>$' + (line.qty * line.price).toFixed(0) + '</span></div>';
-          }).join('') + '<div class="order-receipt-line" style="border-top:1px solid rgba(255,255,255,0.15); margin-top:8px; padding-top:12px; font-weight:600; color:#fff"><span>Total</span><span>$' + totalPrice.toFixed(0) + '</span></div>';
+            return '<div class="order-receipt-line"><span>' + line.qty + '× ' + n + '</span><span>$' + (line.qty * line.price).toFixed(2) + '</span></div>';
+          }).join('') + '<div class="order-receipt-line" style="border-top:1px solid rgba(255,255,255,0.15); margin-top:8px; padding-top:12px; font-weight:600; color:#fff"><span>Total</span><span>$' + totalPrice.toFixed(2) + '</span></div>';
 
           document.getElementById('menuConfirmation').classList.add('visible');
           document.getElementById('cartBar').classList.remove('visible');

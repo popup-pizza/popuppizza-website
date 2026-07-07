@@ -246,28 +246,23 @@
     .about {
       background: var(--ash);
       padding: 90px 80px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
     }
 
-    .about-body p { font-size: 16px; line-height: 1.8; color: var(--smoke); margin-bottom: 20px; }
+    .about-body {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
 
-    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .about-body p { font-size: 16px; line-height: 1.8; color: var(--smoke); margin-bottom: 20px; text-align: left; }
 
-    .stat { background: var(--white); padding: 32px; }
-
-    .stat-num {
+    .about-body p:first-of-type {
       font-family: 'Playfair Display', serif;
-      font-size: 40px;
-      font-weight: 700;
-      color: var(--ember);
-      display: block;
-      margin-bottom: 6px;
+      font-size: 20px;
+      font-style: italic;
+      color: var(--navy);
+      text-align: center;
     }
-
-    .stat-label { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--smoke); }
 
     .contact {
       background: var(--navy);
@@ -316,12 +311,53 @@
       .hero-content { padding: 0 20px; }
       .offerings, .about, .contact { padding: 64px 24px; }
       .offering-grid { grid-template-columns: 1fr; }
-      .about { grid-template-columns: 1fr; }
-      .about-stats { grid-template-columns: 1fr 1fr; }
       .contact { grid-template-columns: 1fr; }
       footer { padding: 32px 24px; flex-direction: column; text-align: center; }
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://pop-uppizza.com.au/#business",
+    "name": "Pop-Up Pizza",
+    "image": "https://pop-uppizza.com.au/logo.png",
+    "url": "https://pop-uppizza.com.au",
+    "telephone": "+61429649812",
+    "email": "popup.pizza.au@gmail.com",
+    "priceRange": "$$",
+    "servesCuisine": "Pizza",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Canberra",
+      "addressRegion": "ACT",
+      "addressCountry": "AU"
+    },
+    "areaServed": {
+      "@type": "State",
+      "name": "Australian Capital Territory"
+    },
+    "sameAs": [
+      "https://www.instagram.com/pop_uppizza"
+    ],
+    "makesOffer": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Take & Bake Pizza"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Frozen Dough Balls"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -378,7 +414,7 @@
         <div class="offering-card-accent"></div>
         <span class="offering-tag">In Your Kitchen</span>
         <h3>Frozen Dough Balls</h3>
-        <p>Our signature stone-baked dough, portioned and frozen, so you can build your own pizza from scratch whenever you like.</p>
+        <p>Our signature 36 hr fermented dough, portioned and frozen, so you can build your own pizza from scratch whenever you like.</p>
         <span class="offering-link">Order Dough Balls</span>
       </a>
       <a href="market.html" class="offering-card">
@@ -400,12 +436,6 @@
       <p>Choose it Freshly Cooked, and we'll bake it to perfection, ready to enjoy straight away. Choose Take & Bake, and we'll prepare it so you can finish it in your own oven in around 10 minutes, enjoying that fresh-from-the-oven experience whenever it suits you.</p>
       <p>Different experiences. The same commitment to quality.</p>
       <p>Because at Pop-Up Pizza, we believe great pizza is about craftsmanship, quality ingredients, and doing things properly, never shortcuts or mass production.</p>
-    </div>
-    <div class="about-stats">
-      <div class="stat"><span class="stat-num">6</span><span class="stat-label">Menu Varieties</span></div>
-      <div class="stat"><span class="stat-num">10</span><span class="stat-label">Minutes to Bake</span></div>
-      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Months Freezer Life</span></div>
-      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Handcrafted</span></div>
     </div>
   </section>
 
