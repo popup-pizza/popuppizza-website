@@ -351,6 +351,16 @@
 
 <main>
   <div class="add-order">
+    <h2>Bulk add orders</h2>
+    <p style="font-size:12px;color:var(--charcoal-soft);margin:0 0 10px;">Paste a block of orders below (I'll give you this format when you ask me to check Gmail), then click Add all.</p>
+    <textarea id="bulk-input" placeholder="CODE: PZA-1234&#10;NAME: Jane Smith&#10;CONTACT: 0412 345 678&#10;TOTAL: 25.00&#10;ITEMS:&#10;1x Cheese&#10;1x Pepperoni&#10;---&#10;CODE: PZA-5678&#10;NAME: ...&#10;..." style="width:100%;min-height:110px;font-family:monospace;font-size:12.5px;"></textarea>
+    <div style="margin-top:10px;">
+      <button class="btn btn-primary" id="bulk-add-btn">Add all</button>
+      <span id="bulk-status" style="font-size:12px;color:var(--charcoal-soft);margin-left:10px;"></span>
+    </div>
+  </div>
+
+  <div class="add-order">
     <h2>Add an order</h2>
     <div class="add-grid">
       <div class="field">
@@ -391,7 +401,7 @@
 <script>
 (function(){
   // Replace this with your Worker URL once deployed, e.g. 'https://order-board-api.yourname.workers.dev'
-  const WORKER_URL = 'https://order-board-api.popup-pizza-au.workers.dev';
+  const WORKER_URL = 'https://order-board-api.YOUR-SUBDOMAIN.workers.dev';
   const STAGES = ['received','link_sent','paid','complete','delivered'];
   const STAGE_LABELS = {received:'Received', link_sent:'Payment link sent', paid:'Payment received', complete:'Order complete', delivered:'Delivered'};
 
@@ -560,6 +570,55 @@
       });
     });
   }
+
+  document.getElementById('bulk-add-btn').addEventListener('click', () => {
+    const raw = document.getElementById('bulk-input').value.trim();
+    const statusEl = document.getElementById('bulk-status');
+    if (!raw) { statusEl.textContent = 'Paste some orders first.'; return; }
+
+    const blocks = raw.split(/\n---\n|\n---\r?\n/).map(b => b.trim()).filter(Boolean);
+    let added = 0;
+    let skipped = 0;
+
+    blocks.forEach(block => {
+      const lines = block.split('\n').map(l => l.trim()).filter(Boolean);
+      let code = '', name = '', contact = '', total = 0;
+      let items = [];
+      let inItems = false;
+
+      lines.forEach(line => {
+        const upper = line.toUpperCase();
+        if (upper.startsWith('CODE:')) { code = line.slice(5).trim(); inItems = false; }
+        else if (upper.startsWith('NAME:')) { name = line.slice(5).trim(); inItems = false; }
+        else if (upper.startsWith('CONTACT:')) { contact = line.slice(8).trim(); inItems = false; }
+        else if (upper.startsWith('TOTAL:')) { total = parseFloat(line.slice(6).replace(/[^0-9.]/g, '')) || 0; inItems = false; }
+        else if (upper.startsWith('ITEMS:')) { inItems = true; }
+        else if (inItems && line) { items.push({ name: line, checked: false }); }
+      });
+
+      if (!code || items.length === 0) { skipped++; return; }
+
+      orders.push({
+        id: code + '-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+        code,
+        customer: name || 'Walk-up',
+        contact,
+        items,
+        total,
+        stage: 'received'
+      });
+      added++;
+    });
+
+    if (added > 0) {
+      save();
+      render();
+      document.getElementById('bulk-input').value = '';
+    }
+    statusEl.textContent = added > 0
+      ? `Added ${added} order${added > 1 ? 's' : ''}${skipped > 0 ? `, skipped ${skipped} (missing code/items)` : ''}.`
+      : 'Nothing added — check the format.';
+  });
 
   document.getElementById('add-btn').addEventListener('click', () => {
     const code = document.getElementById('in-code').value.trim();
