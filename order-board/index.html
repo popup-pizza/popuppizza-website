@@ -390,7 +390,8 @@
 
 <script>
 (function(){
-  const STORAGE_KEY = 'popuppizza-order-board';
+  // Replace this with your Worker URL once deployed, e.g. 'https://order-board-api.yourname.workers.dev'
+  const WORKER_URL = 'https://order-board-api.YOUR-SUBDOMAIN.workers.dev';
   const STAGES = ['received','link_sent','paid','complete','delivered'];
   const STAGE_LABELS = {received:'Received', link_sent:'Payment link sent', paid:'Payment received', complete:'Order complete', delivered:'Delivered'};
 
@@ -437,9 +438,11 @@
 
   async function load(){
     try{
-      const result = await window.storage.get(STORAGE_KEY, true);
-      orders = result && result.value ? JSON.parse(result.value) : seedOrders;
+      const res = await fetch(WORKER_URL + '/orders');
+      const data = await res.json();
+      orders = (data && data.length) ? data : seedOrders;
     }catch(e){
+      console.error('Could not load board, using starting data', e);
       orders = seedOrders;
     }
     render();
@@ -447,7 +450,11 @@
 
   async function save(){
     try{
-      await window.storage.set(STORAGE_KEY, JSON.stringify(orders), true);
+      await fetch(WORKER_URL + '/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orders)
+      });
     }catch(e){
       console.error('Could not save board', e);
     }
