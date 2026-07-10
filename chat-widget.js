@@ -16,6 +16,28 @@
 (function () {
   "use strict";
 
+  /* ── BASE PATH ──────────────────────────────────────────────────
+     Detects if this page is one folder deep (e.g. /dough-calculator/)
+     so links in the knowledge base resolve correctly either way.
+     Add "../" prefixes automatically rather than hardcoding two
+     versions of every answer. ───────────────────────────────────── */
+  var basePath = (function () {
+    var path = window.location.pathname;
+    // Root pages: "/", "/index.html", "/pizza.html" etc, no extra folder.
+    // Subpages: "/dough-calculator/", "/dough-calculator/index.html" etc.
+    var segments = path.split("/").filter(Boolean);
+    var lastSegment = segments[segments.length - 1] || "";
+    var looksLikeFile = lastSegment.indexOf(".") !== -1;
+    var depth = looksLikeFile ? segments.length - 1 : segments.length;
+    return depth > 0 ? "../".repeat(depth) : "";
+  })();
+
+  function withBase(html) {
+    // Rewrites href='xxx' to href='<basePath>xxx' for any link that
+    // isn't already absolute (http, mailto, tel) or already relative (../, ./).
+    return html.replace(/href='(?!https?:|mailto:|tel:|\.\.\/|\.\/|#)([^']*)'/g, "href='" + basePath + "$1'");
+  }
+
   /* ── KNOWLEDGE BASE ─────────────────────────────────────────── */
   var knowledgeBase = [
     {
@@ -52,6 +74,10 @@
         "&bull; Pack of 4, $18 ($4.50 each)<br>" +
         "&bull; Pack of 8, $32 ($4.00 each)<br><br>" +
         "Order on the <a href='dough.html'>Dough Balls page</a>."
+    },
+    {
+      keywords: ["dough calculator", "calculator", "baker's percentage", "bakers percentage", "hydration", "how much yeast", "how much salt", "recipe", "make my own dough", "make dough at home", "diy dough"],
+      answer: "Try our free <a href='dough-calculator/'>Dough Calculator</a>. Enter how many pizzas you want to make and it works out exact ingredient weights, or pick a style preset like Neapolitan, New York or Roman. It also tells you the right water temperature to mix with."
     },
     {
       keywords: ["how much", "price", "prices", "cost", "pricing"],
@@ -165,11 +191,11 @@
       var entry = knowledgeBase[i];
       for (var j = 0; j < entry.keywords.length; j++) {
         if (q.indexOf(entry.keywords[j]) !== -1) {
-          return entry.answer;
+          return withBase(entry.answer);
         }
       }
     }
-    return fallbackAnswer;
+    return withBase(fallbackAnswer);
   }
 
   /* ── STYLES ─────────────────────────────────────────────────── */
