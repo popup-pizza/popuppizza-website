@@ -45,6 +45,54 @@
     }
     .nav-cta:hover { background: var(--ember-dark) !important; }
 
+    /* ── MOBILE MENU (ellipsis button + dropdown) ── */
+    .nav-mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--navy);
+      cursor: pointer;
+      padding: 6px 10px;
+      letter-spacing: 2px;
+    }
+
+    .nav-mobile-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 16px;
+      background: var(--white);
+      border: 1px solid rgba(34,32,29,0.1);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      min-width: 200px;
+      padding: 8px 0;
+      z-index: 200;
+    }
+
+    .nav-mobile-dropdown.open { display: block; }
+
+    .nav-mobile-dropdown a {
+      display: block;
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .nav-mobile-dropdown a:hover { background: var(--ash); }
+
+    .nav-mobile-dropdown a.nav-cta-mobile {
+      color: var(--ember);
+      font-weight: 700;
+    }
+
     .hero {
       min-height: 60vh;
       background: var(--navy);
@@ -376,6 +424,14 @@
       color: #c98a68;
     }
 
+    .surcharge-note {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      text-align: right;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
     /* ── ORDER TYPE TOGGLE ── */
     .order-type-toggle {
       display: flex;
@@ -573,8 +629,9 @@
     .footer-links a:hover { color: var(--ember); }
 
     @media (max-width: 900px) {
-      nav { padding: 16px 24px; }
+      nav { padding: 16px 24px; position: fixed; }
       .nav-links { display: none; }
+      .nav-mobile-toggle { display: block; }
       .hero-content { padding: 0 20px; }
       .section, .order { padding: 64px 24px; }
       .feature-grid, .pricing-grid { grid-template-columns: 1fr; }
@@ -608,10 +665,20 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="pizza.html">Take &amp; Bake Pizza</a></li>
+      <li><a href="catering.html">Catering</a></li>
       <li><a href="market.html">Events</a></li>
       <li><a href="dough-calculator/">Dough Calculator</a></li>
       <li><a href="#order" class="nav-cta">Order Now</a></li>
     </ul>
+    <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Open menu" aria-expanded="false">&#8942;</button>
+    <div class="nav-mobile-dropdown" id="navMobileDropdown">
+      <a href="index.html">Home</a>
+      <a href="pizza.html">Take &amp; Bake Pizza</a>
+      <a href="catering.html">Catering</a>
+      <a href="market.html">Events</a>
+      <a href="dough-calculator/">Dough Calculator</a>
+      <a href="#order" class="nav-cta-mobile">Order Now</a>
+    </div>
   </nav>
 
   <section class="hero">
@@ -623,14 +690,14 @@
     <div class="hero-content">
       <span class="hero-eyebrow">For Your Kitchen</span>
       <h1 class="hero-headline">Frozen Dough Balls</h1>
-      <p class="hero-body">Our signature 36 hr fermented dough, hand-portioned and frozen, so you can build your own pizza from scratch, whenever you like.</p>
+      <p class="hero-body">Our signature 72 hr fermented dough, hand-portioned and frozen, so you can build your own pizza from scratch, whenever you like.</p>
     </div>
   </section>
 
   <section class="section about-dough">
     <span class="section-label">Made the Same Way</span>
     <h2 class="section-title">The base of everything we make</h2>
-    <p class="section-body">Our dough balls are made from the same 36 hr fermented recipe we use for every pizza we sell, hand-portioned, individually frozen, and ready to defrost, prove and shape whenever you're ready to cook.</p>
+    <p class="section-body">Our dough balls are made from the same 72 hr fermented recipe we use for every pizza we sell, hand-portioned, individually frozen, and ready to defrost, prove and shape whenever you're ready to cook.</p>
 
     <div class="feature-grid">
       <div class="feature-card">
@@ -642,8 +709,8 @@
         <p>Defrost overnight in the fridge or a few hours at room temperature, then shape and top however you like.</p>
       </div>
       <div class="feature-card">
-        <h3>36 Hr Fermented</h3>
-        <p>Slow-fermented for 36 hours for better flavour and texture. Just flour, water, salt and yeast, nothing else. Contains gluten, please advise us of any dietary requirements when ordering.</p>
+        <h3>72 Hr Fermented</h3>
+        <p>Slow-fermented for 72 hours for better flavour and texture. Just flour, water, salt and yeast, nothing else. Contains gluten, please advise us of any dietary requirements when ordering.</p>
       </div>
     </div>
   </section>
@@ -731,6 +798,7 @@
               <span>Total</span>
               <span id="summaryTotal">$0</span>
             </div>
+            <p class="surcharge-note">A 1.6% card surcharge applies to online orders, reflecting the cost of card processing.</p>
           </div>
 
           <form
@@ -768,7 +836,7 @@
               </div>
             </div>
             <div class="form-submit">
-              <p class="form-note">We'll contact you to confirm your order and send a payment link.</p>
+              <p class="form-note">We'll contact you to confirm your order and send a payment link. A 1.6% card surcharge applies.</p>
               <button type="submit" class="btn-submit" id="menuSubmitBtn" disabled>Place Order</button>
             </div>
             <p class="privacy-note">We only collect what's needed to prepare and confirm your order. Your details are used solely for order fulfilment and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
@@ -781,7 +849,7 @@
               <span class="order-code-value" id="menuOrderCode">DGH-0000</span>
             </div>
             <div class="order-receipt" id="menuReceipt"></div>
-            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link. A 1.6% card surcharge applies, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
           </div>
         </div>
 
@@ -837,7 +905,7 @@
               </div>
             </div>
             <div class="form-submit">
-              <p class="form-note">We'll contact you to confirm your order and send a payment link.</p>
+              <p class="form-note">We'll contact you to confirm your order and send a payment link. A 1.6% card surcharge applies.</p>
               <button type="submit" class="btn-submit">Send Bulk Order Enquiry</button>
             </div>
             <p class="privacy-note">We only collect what's needed to prepare and confirm your order. Your details are used solely for order fulfilment and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
@@ -849,7 +917,7 @@
               <span class="order-code-label">Your Reference Code</span>
               <span class="order-code-value" id="customOrderCode">DGH-C000</span>
             </div>
-            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link. A 1.6% card surcharge applies, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
           </div>
         </div>
 
@@ -1027,5 +1095,25 @@
     });
   </script>
   <script src="chat-widget.js"></script>
+  <script>
+    (function () {
+      var toggle = document.getElementById('navMobileToggle');
+      var dropdown = document.getElementById('navMobileDropdown');
+      if (!toggle || !dropdown) return;
+
+      toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen);
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target) && e.target !== toggle) {
+          dropdown.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -45,6 +45,54 @@
     }
     .nav-cta:hover { background: var(--ember-dark) !important; }
 
+    /* ── MOBILE MENU (ellipsis button + dropdown) ── */
+    .nav-mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--navy);
+      cursor: pointer;
+      padding: 6px 10px;
+      letter-spacing: 2px;
+    }
+
+    .nav-mobile-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 16px;
+      background: var(--white);
+      border: 1px solid rgba(34,32,29,0.1);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      min-width: 200px;
+      padding: 8px 0;
+      z-index: 200;
+    }
+
+    .nav-mobile-dropdown.open { display: block; }
+
+    .nav-mobile-dropdown a {
+      display: block;
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .nav-mobile-dropdown a:hover { background: var(--ash); }
+
+    .nav-mobile-dropdown a.nav-cta-mobile {
+      color: var(--ember);
+      font-weight: 700;
+    }
+
     .hero {
       min-height: 60vh;
       background: var(--navy);
@@ -227,8 +275,9 @@
     .footer-links a:hover { color: var(--ember); }
 
     @media (max-width: 900px) {
-      nav { padding: 16px 24px; }
+      nav { padding: 16px 24px; position: fixed; }
       .nav-links { display: none; }
+      .nav-mobile-toggle { display: block; }
       .hero-content { padding: 0 20px; }
       .section, .cta { padding: 64px 24px; }
       .schedule-item { grid-template-columns: 1fr; gap: 6px; text-align: left; }
@@ -255,9 +304,19 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="pizza.html">Take &amp; Bake Pizza</a></li>
       <li><a href="dough.html">Dough Balls</a></li>
+      <li><a href="catering.html">Catering</a></li>
       <li><a href="dough-calculator/">Dough Calculator</a></li>
       <li><a href="pizza.html#order" class="nav-cta">Order Now</a></li>
     </ul>
+    <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Open menu" aria-expanded="false">&#8942;</button>
+    <div class="nav-mobile-dropdown" id="navMobileDropdown">
+      <a href="index.html">Home</a>
+      <a href="pizza.html">Take &amp; Bake Pizza</a>
+      <a href="dough.html">Dough Balls</a>
+      <a href="catering.html">Catering</a>
+      <a href="dough-calculator/">Dough Calculator</a>
+      <a href="pizza.html#order" class="nav-cta-mobile">Order Now</a>
+    </div>
   </nav>
 
   <section class="hero">
@@ -357,5 +416,25 @@
   </footer>
 
   <script src="chat-widget.js"></script>
+  <script>
+    (function () {
+      var toggle = document.getElementById('navMobileToggle');
+      var dropdown = document.getElementById('navMobileDropdown');
+      if (!toggle || !dropdown) return;
+
+      toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen);
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target) && e.target !== toggle) {
+          dropdown.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catering, Pop-Up Pizza</title>
+  <meta name="description" content="Book Pop-Up Pizza to cater your next event. Fresh, stone-baked pizza made on site for parties, corporate functions and celebrations across Canberra. Or self-cater with our take-and-bake pizzas." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #22201d;
+      --cream:   #faf7f2;
+      --ember:   #a8532f;
+      --ember-dark: #7d3d22;
+      --ash:     #ece6db;
+      --smoke:   #6f6a63;
+      --white:   #ffffff;
+      --text:    #22201d;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(250, 247, 242, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(34, 32, 29, 0.08);
+    }
+
+    .nav-logo svg { height: 36px; width: auto; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ember); }
+    .nav-cta {
+      background: var(--ember); color: var(--white) !important;
+      padding: 10px 22px; border-radius: 2px; transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--ember-dark) !important; }
+
+    /* ── MOBILE MENU ── */
+    .nav-mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--navy);
+      cursor: pointer;
+      padding: 6px 10px;
+      letter-spacing: 2px;
+    }
+
+    .nav-mobile-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 16px;
+      background: var(--white);
+      border: 1px solid rgba(34,32,29,0.1);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      min-width: 200px;
+      padding: 8px 0;
+      z-index: 200;
+    }
+
+    .nav-mobile-dropdown.open { display: block; }
+
+    .nav-mobile-dropdown a {
+      display: block;
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .nav-mobile-dropdown a:hover { background: var(--ash); }
+    .nav-mobile-dropdown a.nav-cta-mobile { color: var(--ember); font-weight: 700; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 66vh;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; padding-top: 72px; text-align: center;
+    }
+
+    .hero-rings { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 760px; height: 760px; pointer-events: none; }
+    .ring { position: absolute; border-radius: 50%; border: 1px solid rgba(168, 83, 47, 0.14); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .ring:nth-child(1) { width: 240px; height: 240px; border-color: rgba(168,83,47,0.35); }
+    .ring:nth-child(2) { width: 400px; height: 400px; border-color: rgba(168,83,47,0.22); }
+    .ring:nth-child(3) { width: 580px; height: 580px; border-color: rgba(168,83,47,0.12); }
+
+    .hero-content { position: relative; z-index: 2; max-width: 680px; padding: 0 32px; }
+    .hero-eyebrow {
+      display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ember); margin-bottom: 20px;
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', serif; font-size: clamp(38px, 5.5vw, 60px);
+      font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero-headline em { font-style: italic; color: #c98a68; }
+    .hero-body { font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.7); max-width: 520px; margin: 0 auto 32px; }
+
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+    .btn-primary {
+      background: var(--ember); color: var(--white); padding: 14px 30px; border-radius: 2px;
+      text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; transition: background 0.2s, transform 0.15s; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--ember-dark); transform: translateY(-1px); }
+
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.35); color: var(--white); padding: 14px 30px; border-radius: 2px;
+      text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; transition: border-color 0.2s, background 0.2s; display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--ember); background: rgba(168,83,47,0.1); }
+
+    .section { padding: 90px 80px; }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ember); display: block; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700; color: var(--navy); line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-body { font-size: 16px; line-height: 1.75; color: var(--smoke); max-width: 680px; }
+
+    /* ── HOW CATERING WORKS ── */
+    .how-it-works { background: var(--white); }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .step-card { background: var(--ash); padding: 36px 32px; position: relative; }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--white);
+      display: block;
+      margin-bottom: 16px;
+    }
+    .step-card h3 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+    .step-card p { font-size: 14px; line-height: 1.7; color: var(--smoke); }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--ash); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .price-card {
+      background: var(--white);
+      padding: 40px 32px;
+    }
+
+    .price-card.featured { background: var(--navy); }
+    .price-card.featured .price-qty,
+    .price-card.featured .price-desc { color: var(--white); }
+    .price-card.featured .price-amount { color: #c98a68; }
+    .price-card.featured .price-per,
+    .price-card.featured .price-includes li { color: rgba(255,255,255,0.65); }
+
+    .price-badge {
+      display: inline-block; background: var(--ember); color: var(--white);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 20px; margin-bottom: 20px;
+    }
+
+    .price-qty {
+      font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
+      color: var(--navy); margin-bottom: 4px;
+    }
+    .price-desc { font-size: 13px; color: var(--smoke); margin-bottom: 20px; }
+    .price-amount {
+      font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: var(--ember);
+    }
+    .price-per { font-size: 12px; color: var(--smoke); display: block; margin-top: 4px; margin-bottom: 20px; }
+
+    .price-includes {
+      list-style: none;
+      font-size: 13px;
+      line-height: 2;
+      color: var(--smoke);
+      border-top: 1px solid var(--ash);
+      padding-top: 16px;
+    }
+    .price-card.featured .price-includes { border-top-color: rgba(255,255,255,0.15); }
+    .price-includes li::before { content: '✓ '; color: var(--ember); font-weight: 700; }
+
+    .pricing-note {
+      font-size: 13px;
+      color: var(--smoke);
+      font-style: italic;
+      margin-top: 28px;
+      text-align: center;
+    }
+
+    /* ── WHAT'S INCLUDED ── */
+    .included { background: var(--white); }
+
+    .included-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .included-list { list-style: none; }
+    .included-list li {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--smoke);
+      padding-left: 26px;
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .included-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--ember);
+      font-weight: 700;
+    }
+
+    /* ── SELF-CATERING PROMO ── */
+    .self-cater {
+      background: var(--ember);
+      padding: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .self-cater .section-label { color: rgba(255,255,255,0.65); }
+    .self-cater .section-title { color: var(--white); }
+    .self-cater .section-body { color: rgba(255,255,255,0.85); }
+
+    .self-cater-card {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 32px;
+    }
+
+    .self-cater-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .self-cater-card p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 20px;
+    }
+
+    .self-cater-price {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+    }
+
+    .self-cater-price strong { color: var(--white); font-family: 'Playfair Display', serif; font-size: 18px; }
+
+    /* ── ENQUIRY FORM ── */
+    .enquiry {
+      background: var(--navy);
+      padding: 100px 80px;
+    }
+
+    .enquiry-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .enquiry-inner .section-label { display: block; margin-bottom: 12px; }
+    .enquiry-inner .section-title { color: var(--white); margin-bottom: 16px; }
+    .enquiry-inner .section-body { color: rgba(255,255,255,0.65); margin: 0 auto 48px; }
+
+    .enquiry-form {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 48px;
+      text-align: left;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+    }
+
+    input, select, textarea {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 2px;
+      padding: 12px 16px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.3); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--ember); }
+    select { cursor: pointer; }
+    select option { background: var(--navy); color: var(--white); }
+    textarea { resize: vertical; min-height: 110px; }
+
+    .form-submit {
+      margin-top: 24px; display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+
+    .form-note { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+    .btn-submit {
+      background: var(--ember); color: var(--white); border: none; padding: 14px 32px;
+      border-radius: 2px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+      transition: background 0.2s, transform 0.15s; white-space: nowrap;
+    }
+    .btn-submit:hover { background: var(--ember-dark); transform: translateY(-1px); }
+    .btn-submit:disabled { background: rgba(255,255,255,0.15); cursor: not-allowed; transform: none; }
+
+    .privacy-note {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.6;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .privacy-note a { color: rgba(255,255,255,0.5); text-decoration: underline; }
+    .privacy-note a:hover { color: #c98a68; }
+
+    .enquiry-confirmation {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .enquiry-confirmation.visible { display: block; }
+
+    .enquiry-code-badge {
+      display: inline-block;
+      background: rgba(168,83,47,0.15);
+      border: 1px solid var(--ember);
+      border-radius: 4px;
+      padding: 20px 40px;
+      margin: 24px 0;
+    }
+    .enquiry-code-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5); display: block; margin-bottom: 8px;
+    }
+    .enquiry-code-value {
+      font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700;
+      color: #c98a68; letter-spacing: 0.04em;
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      background: var(--ash);
+      padding: 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .contact-card { background: var(--white); padding: 40px 36px; }
+    .contact-card-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ember); display: block; margin-bottom: 16px;
+    }
+    .contact-card a, .contact-card p {
+      font-size: 15px; color: var(--navy); text-decoration: none; font-weight: 500;
+      line-height: 1.6; display: block;
+    }
+    .contact-card a:hover { color: var(--ember); }
+
+    footer {
+      background: var(--navy);
+      padding: 32px 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-logo svg { height: 26px; width: auto; }
+    footer p { font-size: 12px; color: rgba(255,255,255,0.35); }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--ember); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; position: fixed; }
+      .nav-links { display: none; }
+      .nav-mobile-toggle { display: block; }
+      .hero-content { padding: 0 20px; }
+      .section, .enquiry { padding: 64px 24px; }
+      .steps-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .included-grid { grid-template-columns: 1fr; gap: 8px; }
+      .self-cater { grid-template-columns: 1fr; padding: 56px 24px; gap: 32px; }
+      .enquiry-form { padding: 32px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact { grid-template-columns: 1fr; padding: 24px; }
+      footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">
+      <a href="index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160" height="37" viewBox="0 0 3174.373518885549 739.3437200747267">
+        <g transform="scale(8.718675944277438) translate(10, 10)">
+          <g transform="matrix(3.0041722386090313,0,0,3.0041722386090313,0,-6.003614412126812)" fill="#22201d"><path d="M1.9 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M1.9 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M10.814499999999999 20.02 c-1.5 0 -2.7 -1.22 -2.7 -2.7 l0 -8.98 c0 -1.48 1.2 -2.68 2.7 -2.68 c1.48 0 2.68 1.2 2.68 2.68 l0 8.98 c0 1.48 -1.2 2.7 -2.68 2.7 z M10.814499999999999 7.5600000000000005 c-0.44 0 -0.78 0.36 -0.78 0.78 l0 8.98 c0 0.44 0.34 0.78 0.78 0.78 c0.42 0 0.78 -0.34 0.78 -0.78 l0 -8.98 c0 -0.42 -0.36 -0.78 -0.78 -0.78 z M18.168999999999997 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M18.168999999999997 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M29.783499999999997 11.86 l0 1.74 l-5.4 0 l0 -1.74 l5.4 0 z M35.498 20.04 c-1.62 0 -2.94 -1.32 -2.94 -2.94 l0 -11.36 l1.9 0 l0 11.36 c0 0.58 0.46 1.06 1.04 1.06 s1.04 -0.48 1.04 -1.06 l0 -11.36 l1.9 0 l0 11.36 c0 1.62 -1.32 2.94 -2.94 2.94 z M43.1125 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M43.1125 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z"></path></g>
+          <g transform="matrix(3.0167598408269582,0,0,3.0167598408269582,219.57972062136943,-6.135195378035974)" fill="#22201d"><path d="M7.6745 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M7.6745 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M15.789 5.68 l0 14.24 l-1.9 0 l0 -14.24 l1.9 0 z M23.5235 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M31.258 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M39.3525 20 l-0.72 -4.94 l-2.02 0 l-0.66 4.94 l-1.92 0 l2.16 -14.3 l2.58 0 l2.5 14.3 l-1.92 0 z M36.8725 13.16 l1.48 0 l-0.76 -5.2 z"></path></g>
+        </g>
+      </svg>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="pizza.html">Take &amp; Bake Pizza</a></li>
+      <li><a href="dough.html">Dough Balls</a></li>
+      <li><a href="market.html">Events</a></li>
+      <li><a href="#enquire" class="nav-cta">Enquire Now</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Open menu" aria-expanded="false">&#8942;</button>
+    <div class="nav-mobile-dropdown" id="navMobileDropdown">
+      <a href="index.html">Home</a>
+      <a href="pizza.html">Take &amp; Bake Pizza</a>
+      <a href="dough.html">Dough Balls</a>
+      <a href="market.html">Events</a>
+      <a href="dough-calculator/">Dough Calculator</a>
+      <a href="#enquire" class="nav-cta-mobile">Enquire Now</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-rings">
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+    </div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Book Us For Your Event</span>
+      <h1 class="hero-headline">Stone-Baked Pizza,<br><em>Cooked at Your Event</em></h1>
+      <p class="hero-body">We bring our oven, our dough, and our ingredients to you, cooking fresh, stone-baked pizza on site for parties, corporate functions, and celebrations of all sizes.</p>
+      <div class="hero-actions">
+        <a href="#enquire" class="btn-primary">Enquire About Catering</a>
+        <a href="#self-cater" class="btn-ghost">Or Self-Cater Instead</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section how-it-works">
+    <span class="section-label">How It Works</span>
+    <h2 class="section-title">Book, confirm, enjoy</h2>
+    <p class="section-body">Booking Pop-Up Pizza for your event is straightforward, from first enquiry to the last slice.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-num">01</span>
+        <h3>Tell Us About Your Event</h3>
+        <p>Send us your date, guest numbers, and location using the form below. We'll get back to you within 48 hours with availability and a quote.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">02</span>
+        <h3>Confirm the Details</h3>
+        <p>Once you're happy with the quote, we'll confirm your booking with a deposit and lock in your date, menu, and any dietary requirements.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">03</span>
+        <h3>We Bring the Oven</h3>
+        <p>On the day, we set up on site and cook fresh, stone-baked pizza for your guests, hot, fresh, and made to order.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section pricing">
+    <span class="section-label">Pricing</span>
+    <h2 class="section-title">Catering Packages</h2>
+    <p class="section-body">Pricing below is a guide only, every event is quoted individually based on guest numbers, location, and requirements. A minimum booking value of $1,200 applies to all catering bookings.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <span class="price-qty">Small Gathering</span>
+        <p class="price-desc">Up to 30 guests</p>
+        <span class="price-amount">From $1,200</span>
+        <span class="price-per">Approx. $40 per head</span>
+        <ul class="price-includes">
+          <li>Unlimited pizza, cooked fresh on site</li>
+          <li>Choice from our set menu</li>
+          <li>Oven, staffing, and setup included</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <span class="price-badge">Most Popular</span>
+        <span class="price-qty">Medium Event</span>
+        <p class="price-desc">31–60 guests</p>
+        <span class="price-amount">From $1,800</span>
+        <span class="price-per">Approx. $30–$36 per head</span>
+        <ul class="price-includes">
+          <li>Unlimited pizza, cooked fresh on site</li>
+          <li>Choice from our set menu, plus one custom option</li>
+          <li>Oven, staffing, and setup included</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <span class="price-qty">Large Event</span>
+        <p class="price-desc">61–100 guests</p>
+        <span class="price-amount">From $2,600</span>
+        <span class="price-per">Approx. $26–$30 per head</span>
+        <ul class="price-includes">
+          <li>Unlimited pizza, cooked fresh on site</li>
+          <li>Full menu, including custom toppings</li>
+          <li>Oven, staffing, and setup included</li>
+        </ul>
+      </div>
+    </div>
+    <p class="pricing-note">More than 100 guests, or a smaller, more intimate event? Get in touch, we're happy to quote outside these ranges. Travel fees may apply outside the Canberra region.</p>
+  </section>
+
+  <!-- WHAT'S INCLUDED -->
+  <section class="section included">
+    <span class="section-label">What's Included</span>
+    <h2 class="section-title">Everything We Bring</h2>
+    <p class="section-body">Our catering packages are designed to be genuinely all-inclusive, no hidden extras, no surprises on the day.</p>
+    <div class="included-grid">
+      <ul class="included-list">
+        <li>Our own gas-fired stone oven, set up on site</li>
+        <li>Fresh, hand-stretched dough, made from our 72 hr fermented recipe</li>
+        <li>Unlimited pizza for the duration of your event</li>
+        <li>A choice of our house menu varieties</li>
+      </ul>
+      <ul class="included-list">
+        <li>On-site cooking staff for the full event</li>
+        <li>Full setup and pack-down</li>
+        <li>Gluten-free and dietary options on request</li>
+        <li>Public liability insurance</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SELF-CATERING PROMO -->
+  <section class="self-cater" id="self-cater">
+    <div>
+      <span class="section-label">A Simpler Option</span>
+      <h2 class="section-title">Prefer to Self-Cater?</h2>
+      <p class="section-body">Not every event needs an on-site oven. Our take-and-bake pizzas give you the same handcrafted, stone-baked quality, ready to finish in your own oven in around 10 minutes, at a fraction of the cost and with none of the booking lead time.</p>
+    </div>
+    <div class="self-cater-card">
+      <h3>Take &amp; Bake Pizza</h3>
+      <p>Order ahead, pick up on our next bake day, and bake to perfection at home. Ideal for smaller gatherings, office lunches, or whenever hiring a full catering setup isn't necessary.</p>
+      <p class="self-cater-price">From <strong>$8.50</strong> per base</p>
+      <a href="pizza.html" class="btn-primary">Order Take &amp; Bake Pizza</a>
+    </div>
+  </section>
+
+  <!-- ENQUIRY FORM -->
+  <section class="enquiry" id="enquire">
+    <div class="enquiry-inner">
+      <span class="section-label">Book Your Event</span>
+      <h2 class="section-title">Enquire About Catering</h2>
+      <p class="section-body">Tell us about your event and we'll get back to you within 48 hours with availability and a quote.</p>
+
+      <div class="enquiry-form" id="enquiryFormWrap">
+        <form
+          id="cateringEnquiryForm"
+          action="https://formspree.io/f/mvzjlojn"
+          method="POST"
+          onsubmit="handleCateringSubmit(event)"
+        >
+          <input type="hidden" name="_subject" value="New Catering Enquiry, Pop-Up Pizza" />
+          <input type="hidden" name="enquiry_code" id="enquiryCodeField" />
+          <p style="display:none"><label>Leave this field empty: <input name="_gotcha" /></label></p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="04xx xxx xxx" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="you@email.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="event-date">Event Date</label>
+              <input type="date" id="event-date" name="event_date" required />
+            </div>
+            <div class="form-group">
+              <label for="guest-count">Approximate Guest Count</label>
+              <select id="guest-count" name="guest_count" required>
+                <option value="">Select guest count</option>
+                <option value="Up to 30">Up to 30</option>
+                <option value="31-60">31–60</option>
+                <option value="61-100">61–100</option>
+                <option value="100+">100 or more</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <label for="location">Event Location</label>
+              <input type="text" id="location" name="location" placeholder="Suburb or venue name" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <label for="details">Tell Us About Your Event</label>
+              <textarea id="details" name="message" placeholder="Event type, dietary requirements, timing, or anything else we should know..."></textarea>
+            </div>
+          </div>
+          <div class="form-submit">
+            <p class="form-note">We'll respond within 48 hours with availability and a quote. A minimum booking value of $1,200 applies.</p>
+            <button type="submit" class="btn-submit">Send Enquiry</button>
+          </div>
+          <p class="privacy-note">We only collect what's needed to prepare your quote and confirm your booking. Your details are used solely for that purpose and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
+        </form>
+
+        <div class="enquiry-confirmation" id="enquiryConfirmation">
+          <p class="section-body" style="margin:0 auto; color:rgba(255,255,255,0.85)">Thank you, your catering enquiry has been received.</p>
+          <div class="enquiry-code-badge">
+            <span class="enquiry-code-label">Your Reference Code</span>
+            <span class="enquiry-code-value" id="enquiryCode">CAT-0000</span>
+          </div>
+          <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll be in touch within 48 hours with availability and a quote, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="contact-card">
+      <span class="contact-card-label">Call Us</span>
+      <a href="tel:0429649812">0429 649 812</a>
+      <p style="font-size:12px; color:var(--smoke); margin-top:8px; font-weight:400">Happy to chat about your event</p>
+    </div>
+    <div class="contact-card">
+      <span class="contact-card-label">Email Us</span>
+      <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>
+      <p style="font-size:12px; color:var(--smoke); margin-top:8px; font-weight:400">We'll reply within 48 hours</p>
+    </div>
+    <div class="contact-card">
+      <span class="contact-card-label">Follow &amp; Message</span>
+      <a href="https://www.instagram.com/pop_uppizza" target="_blank">@pop_uppizza</a>
+      <p style="font-size:12px; color:var(--smoke); margin-top:8px; font-weight:400">Message us to discuss your event</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="120" height="28" viewBox="0 0 3174.373518885549 739.3437200747267">
+        <g transform="scale(8.718675944277438) translate(10, 10)">
+          <g transform="matrix(3.0041722386090313,0,0,3.0041722386090313,0,-6.003614412126812)" fill="rgba(255,255,255,0.6)"><path d="M1.9 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M1.9 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M10.814499999999999 20.02 c-1.5 0 -2.7 -1.22 -2.7 -2.7 l0 -8.98 c0 -1.48 1.2 -2.68 2.7 -2.68 c1.48 0 2.68 1.2 2.68 2.68 l0 8.98 c0 1.48 -1.2 2.7 -2.68 2.7 z M10.814499999999999 7.5600000000000005 c-0.44 0 -0.78 0.36 -0.78 0.78 l0 8.98 c0 0.44 0.34 0.78 0.78 0.78 c0.42 0 0.78 -0.34 0.78 -0.78 l0 -8.98 c0 -0.42 -0.36 -0.78 -0.78 -0.78 z M18.168999999999997 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M18.168999999999997 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M29.783499999999997 11.86 l0 1.74 l-5.4 0 l0 -1.74 l5.4 0 z M35.498 20.04 c-1.62 0 -2.94 -1.32 -2.94 -2.94 l0 -11.36 l1.9 0 l0 11.36 c0 0.58 0.46 1.06 1.04 1.06 s1.04 -0.48 1.04 -1.06 l0 -11.36 l1.9 0 l0 11.36 c0 1.62 -1.32 2.94 -2.94 2.94 z M43.1125 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M43.1125 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z"></path></g>
+          <g transform="matrix(3.0167598408269582,0,0,3.0167598408269582,219.57972062136943,-6.135195378035974)" fill="rgba(255,255,255,0.6)"><path d="M7.6745 17 l0 2.98 l-1.9 0 l0 -14.26 l2.96 0 c1.32 0 2.38 1.08 2.38 2.4 l0 6.5 c0 1.32 -1.06 2.38 -2.38 2.38 l-1.06 0 z M7.6745 7.619999999999999 l0 7.48 l1.06 0 c0.28 0 0.48 -0.2 0.48 -0.48 l0 -6.5 c0 -0.28 -0.2 -0.5 -0.48 -0.5 l-1.06 0 z M15.789 5.68 l0 14.24 l-1.9 0 l0 -14.24 l1.9 0 z M23.5235 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M31.258 18.14 l-0.04 1.86 l-4.92 0 l2.08 -12.42 l-2.04 0 l0 -1.86 l4.28 0 l-2.08 12.42 l2.72 0 z M39.3525 20 l-0.72 -4.94 l-2.02 0 l-0.66 4.94 l-1.92 0 l2.16 -14.3 l2.58 0 l2.5 14.3 l-1.92 0 z M36.8725 13.16 l1.48 0 l-0.76 -5.2 z"></path></g>
+        </g>
+      </svg>
+    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="pizza.html">Pizza</a></li>
+      <li><a href="dough.html">Dough Balls</a></li>
+      <li><a href="market.html">Events</a></li>
+      <li><a href="https://www.instagram.com/pop_uppizza" target="_blank">Instagram</a></li>
+    </ul>
+    <p>© 2025 Pop-Up Pizza. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function generateEnquiryCode() {
+      var num = Math.floor(1000 + Math.random() * 9000);
+      return 'CAT-' + num;
+    }
+
+    function handleCateringSubmit(e) {
+      e.preventDefault();
+      var form = e.target;
+      var code = generateEnquiryCode();
+      form.querySelector('input[name="enquiry_code"]').value = code;
+
+      var payload = {};
+      new FormData(form).forEach(function (value, key) { payload[key] = value; });
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      .then(function (response) {
+        if (!response.ok) throw new Error('Submission failed');
+        form.style.display = 'none';
+        document.getElementById('enquiryCode').textContent = code;
+        document.getElementById('enquiryConfirmation').classList.add('visible');
+      })
+      .catch(function () {
+        alert('Something went wrong, please try again or contact us directly at popup.pizza.au@gmail.com');
+      });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        var target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          var top = target.getBoundingClientRect().top + window.scrollY - 72;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    (function () {
+      var toggle = document.getElementById('navMobileToggle');
+      var dropdown = document.getElementById('navMobileDropdown');
+      if (!toggle || !dropdown) return;
+
+      toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen);
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target) && e.target !== toggle) {
+          dropdown.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
+
+  <script src="chat-widget.js"></script>
+</body>
+</html>

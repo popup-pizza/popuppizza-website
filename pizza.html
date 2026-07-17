@@ -74,6 +74,54 @@
 
     .nav-cta:hover { background: #7d3d22 !important; color: var(--white) !important; }
 
+    /* ── MOBILE MENU (ellipsis button + dropdown) ── */
+    .nav-mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--navy);
+      cursor: pointer;
+      padding: 6px 10px;
+      letter-spacing: 2px;
+    }
+
+    .nav-mobile-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 16px;
+      background: var(--white);
+      border: 1px solid rgba(34,32,29,0.1);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      min-width: 200px;
+      padding: 8px 0;
+      z-index: 200;
+    }
+
+    .nav-mobile-dropdown.open { display: block; }
+
+    .nav-mobile-dropdown a {
+      display: block;
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .nav-mobile-dropdown a:hover { background: var(--ash); }
+
+    .nav-mobile-dropdown a.nav-cta-mobile {
+      color: var(--ember);
+      font-weight: 700;
+    }
+
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
@@ -564,6 +612,14 @@
       font-size: 24px;
       font-weight: 700;
       color: #c98a68;
+    }
+
+    .surcharge-note {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      text-align: right;
+      margin-top: 6px;
+      line-height: 1.5;
     }
 
     /* ── ORDER TYPE TOGGLE ── */
@@ -1228,8 +1284,9 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      nav { padding: 16px 24px; }
+      nav { padding: 16px 24px; position: fixed; }
       .nav-links { display: none; }
+      .nav-mobile-toggle { display: block; }
 
       .hero { grid-template-columns: 1fr; padding-top: 80px; }
       .hero-content { padding: 60px 24px 40px; }
@@ -1298,26 +1355,21 @@
   {
     "@context": "https://schema.org",
     "@type": "Event",
-    "name": "Pop-Up Pizza Take & Bake Pickup, Kanga Cup",
-    "startDate": "2026-07-13",
-    "endDate": "2026-07-16",
+    "name": "Pop-Up Pizza Take & Bake Pickup, Winter Wonderland Christmas in July Market",
+    "startDate": "2026-07-19T09:30",
+    "endDate": "2026-07-19T14:00",
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     "eventStatus": "https://schema.org/EventScheduled",
     "location": {
       "@type": "Place",
-      "name": "Dickson Playing Fields",
+      "name": "Fitters Workshop",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "120-152 Antill St",
-        "addressLocality": "Dickson",
+        "streetAddress": "21 Wentworth Avenue",
+        "addressLocality": "Kingston",
         "addressRegion": "ACT",
-        "postalCode": "2602",
+        "postalCode": "2604",
         "addressCountry": "AU"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -35.2492,
-        "longitude": 149.1492
       }
     },
     "organizer": {
@@ -1346,12 +1398,24 @@
     </div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="#how">How It Works</a></li>
       <li><a href="#menu">Menu</a></li>
-      <li><a href="#baking">Baking Guide</a></li>
+      <li><a href="dough.html">Dough Balls</a></li>
+      <li><a href="catering.html">Catering</a></li>
+      <li><a href="market.html">Events</a></li>
       <li><a href="dough-calculator/">Dough Calculator</a></li>
       <li><a href="#order" class="nav-cta">Order Now</a></li>
     </ul>
+    <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Open menu" aria-expanded="false">&#8942;</button>
+    <div class="nav-mobile-dropdown" id="navMobileDropdown">
+      <a href="index.html">Home</a>
+      <a href="#how">How It Works</a>
+      <a href="#menu">Menu</a>
+      <a href="dough.html">Dough Balls</a>
+      <a href="catering.html">Catering</a>
+      <a href="market.html">Events</a>
+      <a href="dough-calculator/">Dough Calculator</a>
+      <a href="#order" class="nav-cta-mobile">Order Now</a>
+    </div>
   </nav>
 
   <!-- AVAILABILITY BANNER -->
@@ -1367,9 +1431,9 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <span class="hero-eyebrow">Kanga Cup · 13–16 July · Dickson Playing Fields</span>
-      <h1 class="hero-headline">Take &amp; Bake Pizza<br><em>for Kanga Cup Week</em></h1>
-      <p class="hero-body">We're preparing a limited batch of stone-baked take-and-bake pizzas for pickup at Dickson Playing Fields, Monday 13 July to Thursday 16 July. Order ahead and collect yours between matches.</p>
+      <span class="hero-eyebrow">Sunday 19 July · Winter Wonderland Christmas in July Market</span>
+      <h1 class="hero-headline">Take &amp; Bake Pizza<br><em>Next Bake Day</em></h1>
+      <p class="hero-body">We're preparing a limited batch of stone-baked take-and-bake pizzas for pickup at the Winter Wonderland Christmas in July Market, Fitters Workshop, Kingston. Order ahead and collect yours on the day.</p>
       <div class="hero-actions">
         <a href="#menu" class="btn-primary">View the Menu</a>
         <a href="#order" class="btn-ghost">Place a Custom Order</a>
@@ -1391,24 +1455,28 @@
     <div class="event-details-inner">
       <div class="event-detail-card">
         <span class="event-detail-label">Where</span>
-        <span class="event-detail-value">Dickson Playing Fields</span>
-        <p class="event-detail-sub">Kanga Cup pickup point</p>
+        <span class="event-detail-value">Fitters Workshop</span>
+        <p class="event-detail-sub">Winter Wonderland Christmas in July Market</p>
       </div>
       <div class="event-detail-card">
         <span class="event-detail-label">When</span>
-        <span class="event-detail-value">13 – 16 July</span>
-        <p class="event-detail-sub">Monday to Thursday, Kanga Cup week</p>
+        <span class="event-detail-value">Sunday 19 July</span>
+        <p class="event-detail-sub">Next bake day</p>
       </div>
       <div class="event-detail-card">
         <span class="event-detail-label">Pickup Time</span>
-        <span class="event-detail-value">2:00 PM – 4:00 PM</span>
-        <p class="event-detail-sub">Each day, 13–16 July</p>
+        <span class="event-detail-value">9:30 AM – 2:00 PM</span>
+        <p class="event-detail-sub">On the day</p>
       </div>
     </div>
 
+    <p style="text-align:center; margin-top:20px">
+      <a href="https://facebook.com/events/s/winter-wonderland-christmas-in/1442936073741010/" target="_blank" class="btn-outline">View Event on Facebook</a>
+    </p>
+
     <div class="outside-hours">
       <p class="outside-hours-text">
-        <strong>Need pickup outside 2–4pm?</strong> Get in touch and we'll do our best to arrange a time that works around your match schedule.
+        <strong>Need pickup outside 9:30am&ndash;2pm?</strong> Get in touch and we'll do our best to arrange a time that works for you.
       </p>
       <div class="outside-hours-actions">
         <a href="tel:0429649812" class="btn-outline">Call 0429 649 812</a>
@@ -1422,12 +1490,12 @@
         loading="lazy"
         allowfullscreen
         referrerpolicy="no-referrer-when-downgrade"
-        src="https://maps.google.com/maps?q=Dickson%20Playing%20Fields%2C%20120-152%20Antill%20St%2C%20Dickson%20ACT%202602&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        title="Map showing Dickson Playing Fields pickup location">
+        src="https://maps.google.com/maps?q=Fitters%20Workshop%2C%2021%20Wentworth%20Avenue%2C%20Kingston%20ACT%202604&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        title="Map showing Fitters Workshop pickup location">
       </iframe>
       <div class="pickup-map-footer">
-        <p class="pickup-map-address"><strong>Dickson Playing Fields</strong>, 120&ndash;152 Antill St, Dickson ACT 2602</p>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=Dickson+Playing+Fields+120-152+Antill+St+Dickson+ACT+2602" target="_blank" class="btn-outline">Get Directions</a>
+        <p class="pickup-map-address"><strong>Fitters Workshop</strong>, 21 Wentworth Avenue, Kingston ACT 2604</p>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Fitters+Workshop+21+Wentworth+Avenue+Kingston+ACT+2604" target="_blank" class="btn-outline">Get Directions</a>
       </div>
     </div>
   </section>
@@ -1649,7 +1717,7 @@
     <div class="order-inner">
       <span class="section-label">Checkout</span>
       <h2 class="section-title" style="color:var(--white)">Complete Your Order</h2>
-      <p class="section-body">Pickup is available at Dickson Playing Fields, Monday 13 July to Thursday 16 July, between 2:00pm and 4:00pm. Review your selection below, or let us know if you have something custom in mind.</p>
+      <p class="section-body">Pickup is available at the Winter Wonderland Christmas in July Market, Fitters Workshop, Kingston, on Sunday 19 July, between 9:30am and 2:00pm. Review your selection below, or let us know if you have something custom in mind.</p>
 
       <div class="order-form" id="orderFormWrap">
 
@@ -1687,6 +1755,7 @@
               <span>Total</span>
               <span id="summaryTotal">$0</span>
             </div>
+            <p class="surcharge-note">A 1.6% card surcharge applies to online orders, reflecting the cost of card processing.</p>
           </div>
 
           <form
@@ -1724,7 +1793,7 @@
               </div>
             </div>
             <div class="form-submit">
-              <p class="form-note">We'll contact you to confirm your order and send a payment link.</p>
+              <p class="form-note">We'll contact you to confirm your order and send a payment link. A 1.6% card surcharge applies.</p>
               <button type="submit" class="btn-submit" id="menuSubmitBtn">Place Order</button>
             </div>
             <p class="privacy-note">We only collect what's needed to prepare and confirm your order. Your details are used solely for order fulfilment and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
@@ -1737,7 +1806,7 @@
               <span class="order-code-value" id="menuOrderCode">PZA-0000</span>
             </div>
             <div class="order-receipt" id="menuReceipt"></div>
-            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link. Pickup is at Dickson Playing Fields, Monday 13 July to Thursday 16 July, between 2:00pm and 4:00pm. Need a different time? Call 0429 649 812 or message us at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link. A 1.6% card surcharge applies. Pickup is at the Winter Wonderland Christmas in July Market, Fitters Workshop, Kingston, on Sunday 19 July, between 9:30am and 2:00pm. Need a different time? Call 0429 649 812 or message us at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
           </div>
         </div>
 
@@ -1794,7 +1863,7 @@
               </div>
             </div>
             <div class="form-submit">
-              <p class="form-note">We'll contact you to confirm your order and send a payment link.</p>
+              <p class="form-note">We'll contact you to confirm your order and send a payment link. A 1.6% card surcharge applies.</p>
               <button type="submit" class="btn-submit">Send Custom Order Enquiry</button>
             </div>
             <p class="privacy-note">We only collect what's needed to prepare and confirm your order. Your details are used solely for order fulfilment and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
@@ -1806,7 +1875,7 @@
               <span class="order-code-label">Your Reference Code</span>
               <span class="order-code-value" id="customOrderCode">PZA-C000</span>
             </div>
-            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link. A 1.6% card surcharge applies, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
           </div>
         </div>
 
@@ -1875,7 +1944,7 @@
       if (availabilityConfig.isOpen) {
         banner.classList.add('open');
         banner.classList.remove('closed');
-        text.innerHTML = '<strong>Ordering is open</strong>, pickup at Dickson Playing Fields, 13–16 July, 2:00pm–4:00pm.';
+        text.innerHTML = '<strong>Ordering is open</strong>, pickup Sunday 19 July, 9:30am&ndash;2pm, Fitters Workshop, Kingston.';
         cta.style.display = 'inline-block';
 
         switchOrderTab('menu', true);
@@ -2084,5 +2153,25 @@
     applyAvailability();
   </script>
   <script src="chat-widget.js"></script>
+  <script>
+    (function () {
+      var toggle = document.getElementById('navMobileToggle');
+      var dropdown = document.getElementById('navMobileDropdown');
+      if (!toggle || !dropdown) return;
+
+      toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen);
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target) && e.target !== toggle) {
+          dropdown.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

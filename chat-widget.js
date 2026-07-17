@@ -69,7 +69,7 @@
     },
     {
       keywords: ["dough ball", "dough balls", "doughball"],
-      answer: "Our frozen dough balls are 36 hr fermented, made with just flour, water, salt and yeast. Pricing:<br><br>" +
+      answer: "Our frozen dough balls are 72 hr fermented, made with just flour, water, salt and yeast. Pricing:<br><br>" +
         "&bull; Single, $5<br>" +
         "&bull; Pack of 4, $18 ($4.50 each)<br>" +
         "&bull; Pack of 8, $32 ($4.00 each)<br><br>" +
@@ -84,12 +84,12 @@
       answer: "Take &amp; bake pizzas range from $8.50 (Base with Tomato) to $20 (Meatlovers). Frozen dough balls are $5 single, $18 for 4, or $32 for 8. See the <a href='pizza.html'>pizza menu</a> or <a href='dough.html'>dough balls</a> for details."
     },
     {
-      keywords: ["kanga cup", "kanga", "dickson", "pickup location", "where do i pick up", "where to pick up", "collect"],
-      answer: "During Kanga Cup week, pickup is at <strong>Dickson Playing Fields</strong>, 120&ndash;152 Antill St, Dickson ACT 2602, from <strong>Monday 13 July to Thursday 16 July, 2:00pm&ndash;4:00pm</strong> each day. Need a different time? Call 0429 649 812 or message @pop_uppizza."
+      keywords: ["pickup location", "where do i pick up", "where to pick up", "collect my order", "next bake day", "where is pickup"],
+      answer: "Our next bake day is <strong>Sunday 19 July</strong>, pickup at the <strong>Winter Wonderland Christmas in July Market</strong>, Fitters Workshop, 21 Wentworth Avenue, Kingston ACT 2604, between <strong>9:30am and 2:00pm</strong>. Need a different time? Call 0429 649 812 or message @pop_uppizza."
     },
     {
       keywords: ["pickup time", "pick up time", "what time", "when can i", "collection time", "hours"],
-      answer: "Kanga Cup pickup runs <strong>2:00pm&ndash;4:00pm</strong>, Monday 13 July to Thursday 16 July, at Dickson Playing Fields. If those hours don't suit, call 0429 649 812 or message @pop_uppizza and we'll try to arrange something."
+      answer: "Pickup runs <strong>9:30am&ndash;2:00pm</strong> on Sunday 19 July, at Fitters Workshop, Kingston, as part of the Winter Wonderland Christmas in July Market. If those hours don't suit, call 0429 649 812 or message @pop_uppizza and we'll try to arrange something."
     },
     {
       keywords: ["how do i cook", "how to cook", "how do i bake", "how to bake", "baking instructions", "cooking instructions", "oven", "how long", "temperature"],
@@ -110,19 +110,23 @@
     },
     {
       keywords: ["ingredients", "what's in", "whats in", "made of", "made from"],
-      answer: "Our dough is 36 hr fermented and made from just <strong>flour, water, salt and yeast</strong>. Toppings vary by pizza, check the <a href='pizza.html#menu'>menu</a> for each pizza's ingredients. Note: contains gluten."
+      answer: "Our dough is 72 hr fermented and made from just <strong>flour, water, salt and yeast</strong>. Toppings vary by pizza, check the <a href='pizza.html#menu'>menu</a> for each pizza's ingredients. Note: contains gluten."
     },
     {
       keywords: ["how do i order", "how to order", "place an order", "ordering", "order online"],
-      answer: "Order online via the <a href='pizza.html#order'>Take &amp; Bake page</a> or <a href='dough.html#order'>Dough Balls page</a>. Add items to your order, enter your details, and you'll get an order code. We'll then contact you to confirm and send a payment link."
+      answer: "Order online via the <a href='pizza.html#order'>Take &amp; Bake page</a> or <a href='dough.html#order'>Dough Balls page</a>. Add items to your order, enter your details, and you'll get an order code. We'll then contact you to confirm and send a payment link. A 1.6% card surcharge applies to online orders."
     },
     {
-      keywords: ["payment", "pay", "card", "cash", "eftpos"],
-      answer: "After you place an order online, we'll contact you to confirm it and send a payment link. If you have payment questions, call 0429 649 812 or message @pop_uppizza."
+      keywords: ["payment", "pay", "card", "cash", "eftpos", "surcharge"],
+      answer: "After you place an order online, we'll contact you to confirm it and send a payment link. A 1.6% card surcharge applies to online orders, reflecting the cost of card processing. If you have payment questions, call 0429 649 812 or message @pop_uppizza."
     },
     {
-      keywords: ["custom order", "custom", "special order", "group order", "bulk", "catering", "event order", "party"],
-      answer: "We take custom and bulk orders. Use the <strong>Custom Order</strong> tab on the <a href='pizza.html#order'>Take &amp; Bake page</a>, or the <strong>Bulk / Custom Order</strong> tab on the <a href='dough.html#order'>Dough Balls page</a>, and we'll get back to you directly."
+      keywords: ["custom order", "special order", "group order", "bulk"],
+      answer: "We take custom and bulk orders for pizza and dough balls. Use the <strong>Custom Order</strong> tab on the <a href='pizza.html#order'>Take &amp; Bake page</a>, or the <strong>Bulk / Custom Order</strong> tab on the <a href='dough.html#order'>Dough Balls page</a>, and we'll get back to you directly."
+    },
+    {
+      keywords: ["catering", "cater my event", "event catering", "book you for", "book pop-up pizza", "wedding", "corporate event", "function", "party catering"],
+      answer: "We cater events of all sizes, bringing our stone oven on site to cook fresh pizza for your guests. Packages start from $1,200 for up to 30 guests. Visit our <a href='catering.html'>Catering page</a> to see pricing and enquire. Prefer to self-cater instead? Our <a href='pizza.html'>Take &amp; Bake pizzas</a> start from just $8.50."
     },
     {
       keywords: ["loyalty", "stamp", "reward", "free pizza"],
@@ -157,7 +161,7 @@
     },
     {
       keywords: ["delivery", "deliver", "ship", "post"],
-      answer: "We don't offer delivery at this stage, orders are for pickup. During Kanga Cup week, pickup is at Dickson Playing Fields, 2&ndash;4pm daily. For anything else, message <a href='https://www.instagram.com/pop_uppizza' target='_blank'>@pop_uppizza</a> and we'll see what we can do."
+      answer: "We don't offer delivery at this stage, orders are for pickup. Our next bake day is Sunday 19 July, pickup at Fitters Workshop, Kingston, 9:30am&ndash;2pm. For anything else, message <a href='https://www.instagram.com/pop_uppizza' target='_blank'>@pop_uppizza</a> and we'll see what we can do."
     },
     {
       keywords: ["gas", "wood", "woodfired", "wood fired", "stone", "how is it cooked", "how are they cooked"],
