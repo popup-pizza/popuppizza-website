@@ -72,6 +72,55 @@
       .nav-links { display: none; }
     }
 
+    /* ── MOBILE MENU (ellipsis button + dropdown) ── */
+    .nav-mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--charcoal);
+      cursor: pointer;
+      padding: 6px 10px;
+      letter-spacing: 2px;
+    }
+
+    .nav-mobile-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 16px;
+      background: var(--paper);
+      border: 1px solid rgba(43,37,35,0.12);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      min-width: 200px;
+      padding: 8px 0;
+      z-index: 200;
+    }
+
+    .nav-mobile-dropdown.open { display: block; }
+
+    .nav-mobile-dropdown a {
+      display: block;
+      padding: 12px 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .nav-mobile-dropdown a:hover { background: var(--cream); }
+
+    .nav-mobile-dropdown a.nav-cta-mobile { color: var(--terracotta); }
+
+    @media (max-width: 720px) {
+      .nav-mobile-toggle { display: block; }
+    }
+
     .page-body { padding: 32px 20px 80px; }
 
     /* ── EXPLAINER NOTES ── */
@@ -493,9 +542,19 @@
     <ul class="nav-links">
       <li><a href="../pizza.html">Take &amp; Bake Pizza</a></li>
       <li><a href="../dough.html">Dough Balls</a></li>
+      <li><a href="../catering.html">Catering</a></li>
       <li><a href="../market.html">Events</a></li>
       <li><a href="./" class="current">Dough Calculator</a></li>
     </ul>
+    <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Open menu" aria-expanded="false">&#8942;</button>
+    <div class="nav-mobile-dropdown" id="navMobileDropdown">
+      <a href="../index.html">Home</a>
+      <a href="../pizza.html">Take &amp; Bake Pizza</a>
+      <a href="../dough.html">Dough Balls</a>
+      <a href="../catering.html">Catering</a>
+      <a href="../market.html">Events</a>
+      <a href="./" class="nav-cta-mobile">Dough Calculator (this page)</a>
+    </div>
   </nav>
 
   <div class="page-body">
@@ -536,8 +595,8 @@
       <div class="field" style="margin-bottom:18px">
         <label for="hydrationSlider">Hydration (water, % of flour)</label>
         <div class="slider-row">
-          <input type="range" id="hydrationSlider" min="50" max="85" step="0.5" value="65" />
-          <span class="slider-value"><input type="number" id="hydrationInput" min="50" max="85" step="0.5" value="65" />%</span>
+          <input type="range" id="hydrationSlider" min="50" max="85" step="0.5" value="64" />
+          <span class="slider-value"><input type="number" id="hydrationInput" min="50" max="85" step="0.5" value="64" />%</span>
         </div>
         <p class="explainer">This is the single biggest lever for how your dough feels and bakes. <strong>Lower (55&ndash;62%)</strong> gives a firmer, easier-to-handle dough and a crispier base, good for beginners and thin styles. <strong>Higher (70%+)</strong> gives an airier, more open crumb but the dough is wetter and stickier to work with, that's the trade-off Neapolitan and Roman pizzerias accept for the texture.</p>
       </div>
@@ -545,14 +604,14 @@
       <div class="field-grid">
         <div class="field">
           <label for="saltPct">Salt <span class="unit-hint">% of flour</span></label>
-          <input type="number" id="saltPct" value="2.8" min="0" step="0.1" />
+          <input type="number" id="saltPct" value="2" min="0" step="0.1" />
         </div>
         <div class="field">
           <label for="yeastPct"><select id="yeastType" aria-label="Yeast type">
             <option value="fresh" selected>Fresh yeast</option>
             <option value="instant">Instant yeast</option>
           </select> <span class="unit-hint">% of flour</span></label>
-          <input type="number" id="yeastPct" value="1.0" min="0" step="0.05" />
+          <input type="number" id="yeastPct" value="0.05" min="0" step="0.05" />
         </div>
         <div class="field">
           <label for="oilPct">Oil <span class="unit-hint">% of flour</span></label>
@@ -600,7 +659,7 @@
     <!-- DDT -->
     <div class="card">
       <h2>Water Temperature (Desired Dough Temp)</h2>
-      <p class="explainer" style="margin-top:0; margin-bottom:18px"><strong>Why this matters:</strong> yeast is sensitive to temperature, and the temperature your dough ends up at after mixing has a big effect on how it ferments. The only variable you can easily control on the day is the temperature of the water you mix with, everything else (room, flour, your mixer's own heat) is fixed. This calculator works backwards from your target dough temperature to tell you exactly what water temperature to use.</p>
+      <p class="explainer" style="margin-top:0; margin-bottom:18px"><strong>Why this matters:</strong> yeast is sensitive to temperature, and the temperature your dough ends up at right after mixing has a big effect on how it ferments from that point on. The only variable you can easily control on the day is the temperature of the water you mix with, everything else (room, flour, your mixer's own heat) is fixed. This calculator works backwards from your target dough temperature to tell you exactly what water temperature to use.</p>
       <div class="field-grid">
         <div class="field">
           <label for="targetTemp">Target dough temp <span class="unit-hint">°C</span></label>
@@ -619,7 +678,15 @@
           <input type="number" id="frictionFactor" value="14" step="0.5" />
         </div>
       </div>
-      <p class="explainer"><strong>Target dough temp</strong> is usually 22&ndash;26°C for a normal room-temperature rise. <strong>Room temp</strong> and <strong>flour temp</strong> are simply what they say, flour is usually close to room temperature unless it's been in a cold pantry. <strong>Friction factor</strong> is the heat your mixer adds while kneading, hand-mixing barely warms the dough, while a stand mixer running for several minutes adds noticeably more heat. If you're not sure what to use, the friction factor helper below will estimate it from a batch you've already made.</p>
+      <p class="explainer"><strong>Target dough temp</strong> is the temperature you want the dough to be immediately after mixing, before it goes anywhere, usually 22&ndash;26°C. This is separate from where the dough ferments afterwards: our own house recipe is mixed to around 24°C, then moved into the fridge to cold-ferment at <strong>8°C for 72 hours</strong>. A long, cold ferment like this develops flavour slowly without needing much yeast at all, which is why our house recipe uses just 0.05% fresh yeast. <strong>Friction factor</strong> is the heat your mixer adds while kneading, hand-mixing barely warms the dough, while a stand mixer running for several minutes adds noticeably more heat. If you're not sure what to use, the friction factor helper below will estimate it from a batch you've already made.</p>
+
+      <p class="explainer"><strong>What counts as "room temperature"?</strong> This varies a lot more than people expect, a kitchen in summer can easily be 28°C&ndash;30°C, while the same room in winter might sit at 16°C&ndash;18°C. Since this number directly changes your water temperature result, it's worth actually measuring your kitchen rather than guessing. A few reasonable starting points if you can't measure it right now:</p>
+      <table class="ref-table" style="margin-bottom:18px">
+        <tr><td>Air-conditioned kitchen, most of the year</td><td>20&ndash;22°C</td></tr>
+        <tr><td>Unconditioned kitchen, mild weather</td><td>18&ndash;24°C</td></tr>
+        <tr><td>Unconditioned kitchen, Australian summer</td><td>26&ndash;30°C+</td></tr>
+        <tr><td>Unconditioned kitchen, Australian winter</td><td>14&ndash;18°C</td></tr>
+      </table>
 
       <div class="water-temp-display">
         <span class="water-temp-label">Mix with water at</span>
@@ -804,8 +871,8 @@
     var presets = [
       {
         name: "House (Pop-Up Pizza)",
-        desc: "Our standard recipe: 65% hydration, 2.8% salt, 1% fresh yeast, no oil.",
-        hydration: 65, salt: 2.8, yeast: 1.0, oil: 0, oilOn: false, ballWeight: 250
+        desc: "Our standard recipe: 64% hydration, 2% salt, 0.05% fresh yeast, no oil. A long, cold ferment, we target 8°C for 72 hours.",
+        hydration: 64, salt: 2, yeast: 0.05, oil: 0, oilOn: false, ballWeight: 250
       },
       {
         name: "Neapolitan",
@@ -899,5 +966,25 @@
     presetDesc.textContent = presets[0].desc;
   </script>
   <script src="../chat-widget.js"></script>
+  <script>
+    (function () {
+      var toggle = document.getElementById('navMobileToggle');
+      var dropdown = document.getElementById('navMobileDropdown');
+      if (!toggle || !dropdown) return;
+
+      toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen);
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target) && e.target !== toggle) {
+          dropdown.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
