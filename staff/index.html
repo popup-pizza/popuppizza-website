@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Tools, Pop-Up Pizza</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --cream:      #F4EEE2;
+      --charcoal:   #2B2523;
+      --terracotta: #C1613F;
+      --terra-dark: #A44E30;
+      --paper:      #FFFDF8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+      padding: 48px 20px 80px;
+    }
+
+    .wrap { max-width: 640px; margin: 0 auto; }
+
+    header { margin-bottom: 8px; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 38px); }
+    .suite-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--terracotta);
+    }
+    .header-sub {
+      font-size: 13px; color: rgba(43,37,35,0.6);
+      margin: 10px 0 36px; line-height: 1.6;
+    }
+
+    .tool-list { list-style: none; }
+
+    .tool-item {
+      background: var(--paper);
+      border: 1px solid rgba(43,37,35,0.12);
+      border-radius: 6px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .tool-item a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 15px;
+      font-weight: 500;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .tool-item a:hover {
+      background: var(--terracotta);
+      color: #fff;
+    }
+
+    .tool-item a::after {
+      content: '→';
+      font-size: 16px;
+      transition: transform 0.15s;
+    }
+
+    .tool-item a:hover::after { transform: translateX(3px); }
+
+    footer {
+      text-align: center;
+      font-size: 11px;
+      color: rgba(43,37,35,0.4);
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(43,37,35,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <span class="suite-tag">Pop-Up Pizza</span>
+      <h1>Staff Tools</h1>
+    </header>
+    <p class="header-sub">Internal tools, not linked from the public site.</p>
+
+    <ul class="tool-list">
+      <li class="tool-item"><a href="../dough-calculator/">Dough Calculator</a></li>
+      <li class="tool-item"><a href="../flavour-lab/">Flavour Lab</a></li>
+      <li class="tool-item"><a href="../event-pricing/">Event Pricing</a></li>
+      <li class="tool-item"><a href="../menu-pricing/">Menu Pricing</a></li>
+    </ul>
+
+    <footer>Sits behind Cloudflare Access. Not intended for public visitors.</footer>
+  </div>
+</body>
+</html>
