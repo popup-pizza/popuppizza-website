@@ -1,1 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu Pricing, Pop-Up Pizza</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --cream:      #F4EEE2;
+      --charcoal:   #2B2523;
+      --terracotta: #C1613F;
+      --terra-dark: #A44E30;
+      --sage:       #6E7A5E;
+      --amber:      #D9A441;
+      --paper:      #FFFDF8;
+      --red:        #A63D2F;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+      padding: 32px 20px 80px;
+    }
+    .wrap { max-width: 1060px; margin: 0 auto; }
+
+    header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 36px); }
+    .suite-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); }
+    .header-sub { font-size: 13px; color: rgba(43,37,35,0.65); margin-bottom: 26px; line-height: 1.65; max-width: 680px; }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid rgba(43,37,35,0.12);
+      border-radius: 6px;
+      padding: 22px 24px;
+      margin-bottom: 18px;
+    }
+    .card h2 {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--terracotta); margin-bottom: 6px;
+    }
+    .card-hint { font-size: 12px; color: rgba(43,37,35,0.55); line-height: 1.6; margin-bottom: 16px; }
+
+    label { display: block; font-size: 12px; font-weight: 500; color: rgba(43,37,35,0.7); margin-bottom: 6px; }
+    input, select {
+      width: 100%; padding: 9px 11px;
+      border: 1px solid rgba(43,37,35,0.25); border-radius: 4px;
+      background: #fff; font-size: 13.5px; color: var(--charcoal);
+      font-family: 'Space Mono', monospace;
+    }
+    input[type="text"], select { font-family: 'Inter', sans-serif; }
+    select { cursor: pointer; }
+    input:focus, select:focus { outline: none; border-color: var(--terracotta); }
+    .unit { font-size: 11px; color: rgba(43,37,35,0.45); font-weight: 400; }
+
+    .btn {
+      background: var(--terracotta); color: #fff; border: none;
+      padding: 10px 20px; border-radius: 4px;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
+      transition: background 0.2s; white-space: nowrap;
+    }
+    .btn:hover { background: var(--terra-dark); }
+    .btn:disabled { background: rgba(43,37,35,0.2); cursor: not-allowed; }
+
+    .btn-outline {
+      background: transparent; color: var(--terracotta); border: 1px solid var(--terracotta);
+      padding: 9px 18px; border-radius: 4px;
+      font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-outline:hover { background: var(--terracotta); color: #fff; }
+
+    .btn-text {
+      background: none; border: none; color: rgba(43,37,35,0.45);
+      font-family: 'Inter', sans-serif; font-size: 11.5px;
+      text-decoration: underline; cursor: pointer; padding: 3px;
+    }
+    .btn-text:hover { color: var(--red); }
+
+    /* ── INGREDIENT LIBRARY ── */
+    .ing-add {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr auto;
+      gap: 10px; align-items: end;
+    }
+    .ing-list { margin-top: 18px; }
+    .ing-row {
+      display: grid;
+      grid-template-columns: 2fr 1.6fr 1.2fr auto;
+      gap: 12px; align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(43,37,35,0.08);
+      font-size: 13px;
+    }
+    .ing-row:last-child { border-bottom: none; }
+    .ing-name { font-weight: 500; }
+    .ing-purchase { color: rgba(43,37,35,0.55); font-size: 12px; font-family: 'Space Mono', monospace; }
+    .ing-unit-cost { font-family: 'Space Mono', monospace; color: var(--terra-dark); font-size: 12.5px; }
+
+    /* ── RECIPE BUILDER ── */
+    .recipe-add { display: grid; grid-template-columns: 2.4fr 1fr auto; gap: 10px; align-items: end; }
+
+    .recipe-row {
+      display: grid;
+      grid-template-columns: 2.4fr 1fr 1fr auto;
+      gap: 12px; align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(43,37,35,0.08);
+      font-size: 13px;
+    }
+    .recipe-row:last-of-type { border-bottom: none; }
+    .recipe-qty, .recipe-cost { font-family: 'Space Mono', monospace; font-size: 12.5px; }
+    .recipe-cost { color: var(--terra-dark); }
+
+    .recipe-total {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-top: 14px; padding-top: 14px;
+      border-top: 1px solid rgba(43,37,35,0.15);
+      font-weight: 600; font-size: 14px;
+    }
+    .recipe-total .v { font-family: 'Space Mono', monospace; font-size: 17px; color: var(--terra-dark); }
+
+    .empty { font-size: 12.5px; color: rgba(43,37,35,0.4); font-style: italic; padding: 14px 0; }
+
+    /* ── PRICING PANEL ── */
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+    .result-band {
+      background: var(--charcoal); border-radius: 6px;
+      padding: 22px 24px; margin-top: 18px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 20px;
+    }
+    .res { }
+    .res-label {
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,253,248,0.45); display: block; margin-bottom: 5px;
+    }
+    .res-value {
+      font-family: 'Space Mono', monospace; font-size: 24px; font-weight: 700; color: var(--paper);
+      line-height: 1.15;
+    }
+    .res-value.hero { color: var(--amber); font-size: 30px; }
+    .res-sub { font-size: 11px; color: rgba(255,253,248,0.45); margin-top: 4px; }
+
+    .flag {
+      display: none; border-radius: 4px; padding: 11px 14px; margin-top: 16px;
+      font-size: 12.5px; line-height: 1.6;
+    }
+    .flag.visible { display: block; }
+    .flag.warn { background: rgba(217,164,65,0.14); border-left: 3px solid var(--amber); color: #6b4d14; }
+    .flag.bad  { background: rgba(166,61,47,0.1);  border-left: 3px solid var(--red);   color: #7a2e23; }
+    .flag.good { background: rgba(110,122,94,0.14); border-left: 3px solid var(--sage);  color: #46503a; }
+
+    /* ── SAVED MENU ── */
+    .menu-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .menu-table th {
+      text-align: left; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(43,37,35,0.5); font-weight: 600; padding: 8px 10px 8px 0;
+      border-bottom: 1px solid rgba(43,37,35,0.15);
+    }
+    .menu-table td {
+      padding: 11px 10px 11px 0; border-bottom: 1px solid rgba(43,37,35,0.07);
+      font-family: 'Space Mono', monospace; font-size: 12.5px;
+    }
+    .menu-table td.name { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 13.5px; }
+    .menu-table th.num, .menu-table td.num { text-align: right; }
+    .pill {
+      display: inline-block; padding: 3px 9px; border-radius: 10px;
+      font-size: 11px; font-weight: 700; font-family: 'Space Mono', monospace;
+    }
+    .pill.ok   { background: rgba(110,122,94,0.18); color: #46503a; }
+    .pill.high { background: rgba(166,61,47,0.12);  color: var(--red); }
+    .pill.low  { background: rgba(217,164,65,0.18); color: #6b4d14; }
+
+    .row-actions { display: flex; gap: 12px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+
+    footer {
+      text-align: center; font-size: 11px; color: rgba(43,37,35,0.4);
+      margin-top: 36px; padding-top: 20px; border-top: 1px solid rgba(43,37,35,0.1); line-height: 1.7;
+    }
+
+    @media (max-width: 780px) {
+      .ing-add { grid-template-columns: 1fr 1fr; }
+      .ing-add > *:last-child { grid-column: 1 / -1; }
+      .recipe-add { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .ing-row { grid-template-columns: 1.6fr 1fr auto; }
+      .ing-row .ing-purchase { display: none; }
+    }
+    @media (max-width: 560px) {
+      body { padding: 20px 14px 60px; }
+      .card { padding: 18px 16px; }
+      .menu-table th.hide-sm, .menu-table td.hide-sm { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <h1>Menu Pricing</h1>
+      <span class="suite-tag">Pop-Up Pizza · Staff Tool</span>
+    </header>
+    <p class="header-sub">Cost a menu item from what you actually pay suppliers, then price it against a target food cost. Enter each ingredient once with its purchase price and pack size, and the tool works out the cost of the amount you actually use.</p>
+
+    <!-- INGREDIENT LIBRARY -->
+    <div class="card">
+      <h2>1. Ingredient Costs</h2>
+      <p class="card-hint">Enter what you pay and the size you buy. For example, mozzarella at $12.80 for 1 kg. The tool converts this to a unit cost so recipes stay accurate when supplier prices change, update it here once and every item reprices.</p>
+
+      <div class="ing-add">
+        <div>
+          <label for="ingName">Ingredient</label>
+          <input type="text" id="ingName" placeholder="Mozzarella" />
+        </div>
+        <div>
+          <label for="ingPrice">Pack price <span class="unit">$</span></label>
+          <input type="number" id="ingPrice" step="0.01" min="0" placeholder="12.80" />
+        </div>
+        <div>
+          <label for="ingQty">Pack size</label>
+          <input type="number" id="ingQty" step="0.01" min="0" placeholder="1" />
+        </div>
+        <div>
+          <label for="ingUnit">Unit</label>
+          <select id="ingUnit">
+            <option value="kg">kg</option>
+            <option value="g">g</option>
+            <option value="L">L</option>
+            <option value="ml">ml</option>
+            <option value="each">each</option>
+          </select>
+        </div>
+        <button type="button" class="btn" id="addIngBtn">Add</button>
+      </div>
+
+      <div class="ing-list" id="ingList"></div>
+    </div>
+
+    <!-- RECIPE BUILDER -->
+    <div class="card">
+      <h2>2. Build the Item</h2>
+      <p class="card-hint">Add each ingredient and how much goes on one item. Quantities are in the base unit, grams for anything bought by weight, millilitres by volume, or units for anything bought individually.</p>
+
+      <div style="margin-bottom:16px">
+        <label for="itemName">Item name</label>
+        <input type="text" id="itemName" placeholder="Pepperoni" />
+      </div>
+
+      <div class="recipe-add">
+        <div>
+          <label for="recipeIng">Ingredient</label>
+          <select id="recipeIng"></select>
+        </div>
+        <div>
+          <label for="recipeQty">Amount used</label>
+          <input type="number" id="recipeQty" step="0.1" min="0" placeholder="120" />
+        </div>
+        <button type="button" class="btn" id="addRecipeBtn">Add</button>
+      </div>
+
+      <div id="recipeList" style="margin-top:18px"></div>
+
+      <div class="recipe-total">
+        <span>Food cost per item</span>
+        <span class="v" id="foodCost">$0.00</span>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="card">
+      <h2>3. Price It</h2>
+      <p class="card-hint">Food cost percentage is the standard lever in food service, it's the ingredient cost expressed as a share of the sell price. Lower percentage means more gross profit per item.</p>
+
+      <div class="pricing-grid">
+        <div>
+          <label for="targetFC">Target food cost <span class="unit">%</span></label>
+          <input type="number" id="targetFC" value="30" min="5" max="90" step="1" />
+        </div>
+        <div>
+          <label for="rounding">Round to</label>
+          <select id="rounding">
+            <option value="0.5">Nearest $0.50</option>
+            <option value="1" selected>Nearest $1.00</option>
+            <option value="0">No rounding</option>
+          </select>
+        </div>
+        <div>
+          <label for="currentPrice">Current menu price <span class="unit">$</span></label>
+          <input type="number" id="currentPrice" step="0.50" min="0" placeholder="optional" />
+        </div>
+      </div>
+
+      <div class="result-band">
+        <div class="res">
+          <span class="res-label">Suggested price</span>
+          <span class="res-value hero" id="outSuggested">$0.00</span>
+          <div class="res-sub" id="outSuggestedSub">at target food cost</div>
+        </div>
+        <div class="res">
+          <span class="res-label">Gross profit</span>
+          <span class="res-value" id="outGP">$0.00</span>
+          <div class="res-sub" id="outGPSub">per item</div>
+        </div>
+        <div class="res">
+          <span class="res-label">Actual food cost</span>
+          <span class="res-value" id="outActualFC">0%</span>
+          <div class="res-sub" id="outActualFCSub">at current price</div>
+        </div>
+        <div class="res">
+          <span class="res-label">Gross margin</span>
+          <span class="res-value" id="outGM">0%</span>
+          <div class="res-sub">of sell price</div>
+        </div>
+      </div>
+
+      <div class="flag" id="priceFlag"></div>
+
+      <div class="row-actions">
+        <button type="button" class="btn" id="saveItemBtn">Save to Menu</button>
+        <button type="button" class="btn-outline" id="clearRecipeBtn">Clear Recipe</button>
+      </div>
+    </div>
+
+    <!-- SAVED MENU -->
+    <div class="card" id="menuCard" style="display:none">
+      <h2>Menu Overview</h2>
+      <p class="card-hint">Everything saved so far, sorted worst food cost first, so anything eroding your margin surfaces at the top.</p>
+      <table class="menu-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th class="num">Cost</th>
+            <th class="num">Price</th>
+            <th class="num">GP</th>
+            <th class="num">Food cost</th>
+            <th class="hide-sm"></th>
+          </tr>
+        </thead>
+        <tbody id="menuBody"></tbody>
+      </table>
+      <div class="row-actions">
+        <button type="button" class="btn-outline" id="copyMenuBtn">Copy Menu Summary</button>
+        <button type="button" class="btn-text" id="clearMenuBtn">Clear all saved items</button>
+      </div>
+    </div>
+
+    <footer>
+      Staff tool. Ingredient costs and saved items are stored in this browser only, they will not follow you to another device.<br>
+      Food cost percentage covers ingredients alone. It does not include labour, gas, packaging overheads or site fees, use the Event Pricing tool for full job costing.
+    </footer>
+  </div>
+
+  <script>
+    "use strict";
+    var el = function (id) { return document.getElementById(id); };
+    var money = function (n) { return "$" + (n || 0).toFixed(2); };
+
+    /* ══════════════════════════════════════════════════════════════
+       UNIT HANDLING
+       Everything normalises to a base unit so a recipe can call for
+       grams while the ingredient was bought by the kilo.
+       ══════════════════════════════════════════════════════════════ */
+    var UNIT_BASE = { kg: "g", g: "g", L: "ml", ml: "ml", each: "each" };
+    var UNIT_MULT = { kg: 1000, g: 1, L: 1000, ml: 1, each: 1 };
+
+    /* ══════════════════════════════════════════════════════════════
+       STATE
+       ══════════════════════════════════════════════════════════════ */
+    var ingredients = [];
+    var recipe = [];
+    var menu = [];
+
+    function load(key, fallback) {
+      try {
+        var v = localStorage.getItem(key);
+        return v ? JSON.parse(v) : fallback;
+      } catch (e) { return fallback; }
+    }
+    function save(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+    }
+
+    ingredients = load("menu-pricing:ingredients", null);
+    menu = load("menu-pricing:menu", []);
+
+    /* Seed the library on first run. These are placeholders sized to be
+       plausible, not quoted supplier prices, replace them with real
+       invoice figures before trusting any output. */
+    if (!ingredients) {
+      ingredients = [
+        { name: "Dough ball (72hr)", price: 0.85, qty: 1,   unit: "each" },
+        { name: "Tomato sauce",      price: 4.20, qty: 1,   unit: "L"    },
+        { name: "Three cheese blend",price: 13.50,qty: 1,   unit: "kg"   },
+        { name: "Pepperoni",         price: 18.00,qty: 1,   unit: "kg"   },
+        { name: "Bacon",             price: 16.00,qty: 1,   unit: "kg"   },
+        { name: "Chorizo",           price: 22.00,qty: 1,   unit: "kg"   },
+        { name: "Fior di latte",     price: 15.00,qty: 1,   unit: "kg"   },
+        { name: "Confit garlic",     price: 9.00, qty: 500, unit: "g"    },
+        { name: "Fresh basil",       price: 3.50, qty: 100, unit: "g"    },
+        { name: "Pizza box",         price: 0.55, qty: 1,   unit: "each" },
+        { name: "Label",             price: 0.06, qty: 1,   unit: "each" }
+      ];
+      save("menu-pricing:ingredients", ingredients);
+    }
+
+    function unitCost(ing) {
+      var totalBase = ing.qty * UNIT_MULT[ing.unit];
+      return totalBase > 0 ? ing.price / totalBase : 0;
+    }
+    function baseUnit(ing) { return UNIT_BASE[ing.unit]; }
+
+    /* ══════════════════════════════════════════════════════════════
+       INGREDIENT LIBRARY
+       ══════════════════════════════════════════════════════════════ */
+    function renderIngredients() {
+      var list = el("ingList");
+      if (!ingredients.length) {
+        list.innerHTML = '<p class="empty">No ingredients yet.</p>';
+      } else {
+        list.innerHTML = ingredients.map(function (ing, i) {
+          var u = baseUnit(ing);
+          var per = unitCost(ing);
+          var display = u === "each"
+            ? money(per) + " each"
+            : "$" + per.toFixed(4) + " / " + u;
+          return '<div class="ing-row">' +
+            '<span class="ing-name">' + esc(ing.name) + '</span>' +
+            '<span class="ing-purchase">' + money(ing.price) + " / " + ing.qty + ing.unit + '</span>' +
+            '<span class="ing-unit-cost">' + display + '</span>' +
+            '<button type="button" class="btn-text" data-del-ing="' + i + '">Remove</button>' +
+          '</div>';
+        }).join("");
+      }
+
+      list.querySelectorAll("[data-del-ing]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var i = parseInt(b.dataset.delIng, 10);
+          var name = ingredients[i].name;
+          var used = recipe.some(function (r) { return r.name === name; });
+          if (used && !confirm(name + " is used in the recipe you're building. Remove it anyway?")) return;
+          ingredients.splice(i, 1);
+          recipe = recipe.filter(function (r) { return r.name !== name; });
+          save("menu-pricing:ingredients", ingredients);
+          renderIngredients(); renderIngredientOptions(); renderRecipe();
+        });
+      });
+    }
+
+    function renderIngredientOptions() {
+      var sel = el("recipeIng");
+      sel.innerHTML = ingredients.map(function (ing) {
+        var u = baseUnit(ing);
+        return '<option value="' + esc(ing.name) + '">' + esc(ing.name) +
+               (u === "each" ? "" : " (" + u + ")") + '</option>';
+      }).join("");
+    }
+
+    el("addIngBtn").addEventListener("click", function () {
+      var name = el("ingName").value.trim();
+      var price = parseFloat(el("ingPrice").value);
+      var qty = parseFloat(el("ingQty").value);
+      var unit = el("ingUnit").value;
+
+      if (!name) { alert("Give the ingredient a name."); return; }
+      if (!(price >= 0)) { alert("Enter what you pay for it."); return; }
+      if (!(qty > 0)) { alert("Enter the pack size."); return; }
+      if (ingredients.some(function (i) { return i.name.toLowerCase() === name.toLowerCase(); })) {
+        alert("There's already an ingredient with that name."); return;
+      }
+
+      ingredients.push({ name: name, price: price, qty: qty, unit: unit });
+      save("menu-pricing:ingredients", ingredients);
+      el("ingName").value = ""; el("ingPrice").value = ""; el("ingQty").value = "";
+      renderIngredients(); renderIngredientOptions();
+    });
+
+    /* ══════════════════════════════════════════════════════════════
+       RECIPE
+       ══════════════════════════════════════════════════════════════ */
+    function findIng(name) {
+      return ingredients.filter(function (i) { return i.name === name; })[0];
+    }
+
+    function recipeCost() {
+      return recipe.reduce(function (sum, r) {
+        var ing = findIng(r.name);
+        return sum + (ing ? unitCost(ing) * r.qty : 0);
+      }, 0);
+    }
+
+    function renderRecipe() {
+      var list = el("recipeList");
+      if (!recipe.length) {
+        list.innerHTML = '<p class="empty">Nothing added yet. Build the item by adding ingredients above.</p>';
+      } else {
+        list.innerHTML = recipe.map(function (r, i) {
+          var ing = findIng(r.name);
+          var u = ing ? baseUnit(ing) : "";
+          var cost = ing ? unitCost(ing) * r.qty : 0;
+          return '<div class="recipe-row">' +
+            '<span>' + esc(r.name) + '</span>' +
+            '<span class="recipe-qty">' + r.qty + (u === "each" ? "" : u) + '</span>' +
+            '<span class="recipe-cost">' + money(cost) + '</span>' +
+            '<button type="button" class="btn-text" data-del-rec="' + i + '">Remove</button>' +
+          '</div>';
+        }).join("");
+      }
+
+      list.querySelectorAll("[data-del-rec]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          recipe.splice(parseInt(b.dataset.delRec, 10), 1);
+          renderRecipe(); price();
+        });
+      });
+
+      el("foodCost").textContent = money(recipeCost());
+    }
+
+    el("addRecipeBtn").addEventListener("click", function () {
+      var name = el("recipeIng").value;
+      var qty = parseFloat(el("recipeQty").value);
+      if (!name) { alert("Add an ingredient to the library first."); return; }
+      if (!(qty > 0)) { alert("Enter how much is used."); return; }
+
+      var existing = recipe.filter(function (r) { return r.name === name; })[0];
+      if (existing) existing.qty += qty; else recipe.push({ name: name, qty: qty });
+
+      el("recipeQty").value = "";
+      renderRecipe(); price();
+    });
+
+    el("clearRecipeBtn").addEventListener("click", function () {
+      recipe = [];
+      el("itemName").value = "";
+      el("currentPrice").value = "";
+      renderRecipe(); price();
+    });
+
+    /* ══════════════════════════════════════════════════════════════
+       PRICING
+       ══════════════════════════════════════════════════════════════ */
+    function roundTo(v, step) {
+      if (!step) return v;
+      return Math.ceil(v / step) * step;
+    }
+
+    function price() {
+      var cost = recipeCost();
+      var targetFC = parseFloat(el("targetFC").value) || 30;
+      var step = parseFloat(el("rounding").value);
+
+      var raw = targetFC > 0 ? cost / (targetFC / 100) : 0;
+      var suggested = roundTo(raw, step);
+
+      var current = parseFloat(el("currentPrice").value);
+      var hasCurrent = !isNaN(current) && current > 0;
+      var effective = hasCurrent ? current : suggested;
+
+      var gp = effective - cost;
+      var actualFC = effective > 0 ? (cost / effective) * 100 : 0;
+      var gm = effective > 0 ? (gp / effective) * 100 : 0;
+
+      el("outSuggested").textContent = money(suggested);
+      el("outSuggestedSub").textContent = step
+        ? "at " + targetFC + "% food cost, rounded up"
+        : "at " + targetFC + "% food cost";
+      el("outGP").textContent = money(gp);
+      el("outGPSub").textContent = hasCurrent ? "at current price" : "at suggested price";
+      el("outActualFC").textContent = actualFC.toFixed(1) + "%";
+      el("outActualFCSub").textContent = hasCurrent ? "at current price" : "at suggested price";
+      el("outGM").textContent = gm.toFixed(1) + "%";
+
+      /* Flags */
+      var f = el("priceFlag");
+      f.className = "flag";
+      var msg = null, tone = "warn";
+
+      if (!recipe.length) {
+        // nothing to say yet
+      } else if (gp < 0) {
+        msg = "<strong>Selling below cost.</strong> This item loses " + money(Math.abs(gp)) + " every time it goes out the door.";
+        tone = "bad";
+      } else if (hasCurrent && actualFC > targetFC + 8) {
+        msg = "<strong>Food cost is well above target.</strong> At " + money(current) + " you're running " +
+              actualFC.toFixed(1) + "% against a " + targetFC + "% target. Target price is " + money(suggested) +
+              ", or trim the recipe.";
+        tone = "bad";
+      } else if (hasCurrent && actualFC > targetFC + 2) {
+        msg = "<strong>Slightly over target.</strong> " + actualFC.toFixed(1) + "% against " + targetFC +
+              "%. Fine on a loss-leader or a high-volume seller, worth watching otherwise.";
+      } else if (hasCurrent && actualFC < targetFC - 8) {
+        msg = "<strong>Comfortably under target</strong> at " + actualFC.toFixed(1) +
+              "%. Priced well, or there may be room to add value rather than cut price.";
+        tone = "good";
+      } else if (hasCurrent) {
+        msg = "<strong>On target.</strong> " + actualFC.toFixed(1) + "% against " + targetFC + "%.";
+        tone = "good";
+      }
+
+      if (msg) { f.innerHTML = msg; f.classList.add("visible", tone); }
+    }
+
+    ["targetFC", "rounding", "currentPrice"].forEach(function (id) {
+      el(id).addEventListener("input", price);
+      el(id).addEventListener("change", price);
+    });
+
+    /* ══════════════════════════════════════════════════════════════
+       SAVED MENU
+       ══════════════════════════════════════════════════════════════ */
+    el("saveItemBtn").addEventListener("click", function () {
+      var name = el("itemName").value.trim();
+      if (!name) { alert("Give the item a name before saving."); return; }
+      if (!recipe.length) { alert("Add at least one ingredient."); return; }
+
+      var cost = recipeCost();
+      var targetFC = parseFloat(el("targetFC").value) || 30;
+      var step = parseFloat(el("rounding").value);
+      var suggested = roundTo(targetFC > 0 ? cost / (targetFC / 100) : 0, step);
+      var current = parseFloat(el("currentPrice").value);
+      var finalPrice = (!isNaN(current) && current > 0) ? current : suggested;
+
+      var entry = {
+        name: name,
+        cost: cost,
+        price: finalPrice,
+        recipe: recipe.slice(),
+        targetFC: targetFC
+      };
+
+      var idx = menu.findIndex(function (m) { return m.name.toLowerCase() === name.toLowerCase(); });
+      if (idx !== -1) {
+        if (!confirm("\"" + name + "\" is already saved. Replace it?")) return;
+        menu[idx] = entry;
+      } else {
+        menu.push(entry);
+      }
+
+      save("menu-pricing:menu", menu);
+      renderMenu();
+    });
+
+    function renderMenu() {
+      var card = el("menuCard");
+      if (!menu.length) { card.style.display = "none"; return; }
+      card.style.display = "block";
+
+      var sorted = menu.slice().sort(function (a, b) {
+        var fa = a.price > 0 ? a.cost / a.price : 1;
+        var fb = b.price > 0 ? b.cost / b.price : 1;
+        return fb - fa;
+      });
+
+      el("menuBody").innerHTML = sorted.map(function (m) {
+        var fc = m.price > 0 ? (m.cost / m.price) * 100 : 0;
+        var gp = m.price - m.cost;
+        var cls = fc > m.targetFC + 8 ? "high" : (fc < m.targetFC - 8 ? "low" : "ok");
+        return "<tr>" +
+          '<td class="name">' + esc(m.name) + "</td>" +
+          '<td class="num">' + money(m.cost) + "</td>" +
+          '<td class="num">' + money(m.price) + "</td>" +
+          '<td class="num">' + money(gp) + "</td>" +
+          '<td class="num"><span class="pill ' + cls + '">' + fc.toFixed(1) + "%</span></td>" +
+          '<td class="hide-sm"><button type="button" class="btn-text" data-load="' + esc(m.name) + '">Load</button></td>' +
+        "</tr>";
+      }).join("");
+
+      el("menuBody").querySelectorAll("[data-load]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var m = menu.filter(function (x) { return x.name === b.dataset.load; })[0];
+          if (!m) return;
+          recipe = m.recipe.slice();
+          el("itemName").value = m.name;
+          el("currentPrice").value = m.price;
+          el("targetFC").value = m.targetFC;
+          renderRecipe(); price();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      });
+    }
+
+    el("clearMenuBtn").addEventListener("click", function () {
+      if (!confirm("Clear every saved menu item? Ingredient costs will be kept.")) return;
+      menu = [];
+      save("menu-pricing:menu", menu);
+      renderMenu();
+    });
+
+    el("copyMenuBtn").addEventListener("click", function () {
+      var lines = ["MENU COSTING, Pop-Up Pizza", ""];
+      menu.slice().sort(function (a, b) { return a.name.localeCompare(b.name); }).forEach(function (m) {
+        var fc = m.price > 0 ? (m.cost / m.price) * 100 : 0;
+        lines.push(
+          m.name.padEnd(26) +
+          "cost " + money(m.cost).padStart(7) +
+          "   price " + money(m.price).padStart(7) +
+          "   GP " + money(m.price - m.cost).padStart(7) +
+          "   FC " + fc.toFixed(1) + "%"
+        );
+      });
+      lines.push("", "Ingredient cost only. Excludes labour, gas and site costs.");
+      var text = lines.join("\n");
+      navigator.clipboard.writeText(text).then(function () {
+        var b = el("copyMenuBtn");
+        b.textContent = "Copied";
+        setTimeout(function () { b.textContent = "Copy Menu Summary"; }, 1600);
+      }).catch(function () { alert(text); });
+    });
+
+    /* ── UTIL ── */
+    function esc(s) {
+      var d = document.createElement("div");
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    /* ── INIT ── */
+    renderIngredients();
+    renderIngredientOptions();
+    renderRecipe();
+    renderMenu();
+    price();
+  </script>
+</body>
+</html>
