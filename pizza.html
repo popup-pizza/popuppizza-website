@@ -1164,10 +1164,10 @@
     }
 
     .event-details-inner {
-      max-width: 1000px;
+      max-width: 700px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 2px;
       background: var(--white);
       border: 1px solid var(--white);
@@ -1228,37 +1228,6 @@
 
     .outside-hours-text strong { color: var(--navy); }
 
-    /* ── PICKUP MAP ── */
-    .pickup-map {
-      max-width: 1000px;
-      margin: 32px auto 0;
-    }
-
-    .pickup-map-frame {
-      width: 100%;
-      height: 340px;
-      border: none;
-      border-radius: 4px;
-      display: block;
-      filter: grayscale(0.15);
-    }
-
-    .pickup-map-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
-    .pickup-map-address {
-      font-size: 13px;
-      color: var(--smoke);
-    }
-
-    .pickup-map-address strong { color: var(--navy); }
-
     .outside-hours-actions {
       display: flex;
       gap: 12px;
@@ -1295,8 +1264,6 @@
 
       .event-details { padding: 40px 24px; }
       .event-details-inner { grid-template-columns: 1fr; }
-      .pickup-map-frame { height: 260px; }
-      .pickup-map-footer { flex-direction: column; align-items: flex-start; }
       .outside-hours { flex-direction: column; align-items: flex-start; text-align: left; margin-top: 20px; }
       .outside-hours-actions { width: 100%; }
       .outside-hours-actions .btn-outline { flex: 1; text-align: center; }
@@ -1351,34 +1318,6 @@
     ]
   }
   </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    "name": "Pop-Up Pizza Take & Bake Pickup, Winter Wonderland Christmas in July Market",
-    "startDate": "2026-07-19T09:30",
-    "endDate": "2026-07-19T14:00",
-    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "eventStatus": "https://schema.org/EventScheduled",
-    "location": {
-      "@type": "Place",
-      "name": "Fitters Workshop",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "21 Wentworth Avenue",
-        "addressLocality": "Kingston",
-        "addressRegion": "ACT",
-        "postalCode": "2604",
-        "addressCountry": "AU"
-      }
-    },
-    "organizer": {
-      "@type": "Organization",
-      "name": "Pop-Up Pizza",
-      "url": "https://pop-uppizza.com.au"
-    }
-  }
-  </script>
 </head>
 <body>
 
@@ -1431,9 +1370,9 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <span class="hero-eyebrow">Sunday 19 July · Winter Wonderland Christmas in July Market</span>
+      <span class="hero-eyebrow">Saturday 22 August</span>
       <h1 class="hero-headline">Take &amp; Bake Pizza<br><em>Next Bake Day</em></h1>
-      <p class="hero-body">We're preparing a limited batch of stone-baked take-and-bake pizzas for pickup at the Winter Wonderland Christmas in July Market, Fitters Workshop, Kingston. Order ahead and collect yours on the day.</p>
+      <p class="hero-body">We're preparing a limited batch of stone-baked take-and-bake pizzas for our next bake day. Order ahead and collect yours on the day.</p>
       <div class="hero-actions">
         <a href="#menu" class="btn-primary">View the Menu</a>
         <a href="#order" class="btn-ghost">Place a Custom Order</a>
@@ -1454,13 +1393,8 @@
   <section class="event-details">
     <div class="event-details-inner">
       <div class="event-detail-card">
-        <span class="event-detail-label">Where</span>
-        <span class="event-detail-value">Fitters Workshop</span>
-        <p class="event-detail-sub">Winter Wonderland Christmas in July Market</p>
-      </div>
-      <div class="event-detail-card">
         <span class="event-detail-label">When</span>
-        <span class="event-detail-value">Sunday 19 July</span>
+        <span class="event-detail-value">Saturday 22 August</span>
         <p class="event-detail-sub">Next bake day</p>
       </div>
       <div class="event-detail-card">
@@ -1470,32 +1404,13 @@
       </div>
     </div>
 
-    <p style="text-align:center; margin-top:20px">
-      <a href="https://facebook.com/events/s/winter-wonderland-christmas-in/1442936073741010/" target="_blank" class="btn-outline">View Event on Facebook</a>
-    </p>
-
     <div class="outside-hours">
       <p class="outside-hours-text">
-        <strong>Need pickup outside 9:30am&ndash;2pm?</strong> Get in touch and we'll do our best to arrange a time that works for you.
+        <strong>Need pickup outside 9:30am&ndash;2pm, or want to know where to collect from?</strong> Get in touch and we'll sort out the details with you directly.
       </p>
       <div class="outside-hours-actions">
         <a href="tel:0429649812" class="btn-outline">Call 0429 649 812</a>
         <a href="https://www.instagram.com/pop_uppizza" target="_blank" class="btn-outline">Message @pop_uppizza</a>
-      </div>
-    </div>
-
-    <div class="pickup-map">
-      <iframe
-        class="pickup-map-frame"
-        loading="lazy"
-        allowfullscreen
-        referrerpolicy="no-referrer-when-downgrade"
-        src="https://maps.google.com/maps?q=Fitters%20Workshop%2C%2021%20Wentworth%20Avenue%2C%20Kingston%20ACT%202604&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        title="Map showing Fitters Workshop pickup location">
-      </iframe>
-      <div class="pickup-map-footer">
-        <p class="pickup-map-address"><strong>Fitters Workshop</strong>, 21 Wentworth Avenue, Kingston ACT 2604</p>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=Fitters+Workshop+21+Wentworth+Avenue+Kingston+ACT+2604" target="_blank" class="btn-outline">Get Directions</a>
       </div>
     </div>
   </section>
@@ -1717,7 +1632,7 @@
     <div class="order-inner">
       <span class="section-label">Checkout</span>
       <h2 class="section-title" style="color:var(--white)">Complete Your Order</h2>
-      <p class="section-body">Pickup is available at the Winter Wonderland Christmas in July Market, Fitters Workshop, Kingston, on Sunday 19 July, between 9:30am and 2:00pm. Review your selection below, or let us know if you have something custom in mind.</p>
+      <p class="section-body">Pickup is available on Saturday 22 August, between 9:30am and 2:00pm. Review your selection below, or let us know if you have something custom in mind.</p>
 
       <div class="order-form" id="orderFormWrap">
 
@@ -1806,7 +1721,7 @@
               <span class="order-code-value" id="menuOrderCode">PZA-0000</span>
             </div>
             <div class="order-receipt" id="menuReceipt"></div>
-            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link. A 1.6% card surcharge applies. Pickup is at the Winter Wonderland Christmas in July Market, Fitters Workshop, Kingston, on Sunday 19 July, between 9:30am and 2:00pm. Need a different time? Call 0429 649 812 or message us at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+            <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll contact you to confirm your order and send a payment link. A 1.6% card surcharge applies. Pickup is on Saturday 22 August, between 9:30am and 2:00pm, we'll confirm the location when we're in touch. Need a different time? Call 0429 649 812 or message us at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
           </div>
         </div>
 
@@ -1944,7 +1859,7 @@
       if (availabilityConfig.isOpen) {
         banner.classList.add('open');
         banner.classList.remove('closed');
-        text.innerHTML = '<strong>Ordering is open</strong>, pickup Sunday 19 July, 9:30am&ndash;2pm, Fitters Workshop, Kingston.';
+        text.innerHTML = '<strong>Ordering is open</strong>, pickup Saturday 22 August, 9:30am&ndash;2pm.';
         cta.style.display = 'inline-block';
 
         switchOrderTab('menu', true);
