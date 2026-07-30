@@ -1,1 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Pricing, Pop-Up Pizza</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --cream:      #F4EEE2;
+      --charcoal:   #2B2523;
+      --terracotta: #C1613F;
+      --terra-dark: #A44E30;
+      --sage:       #6E7A5E;
+      --amber:      #D9A441;
+      --paper:      #FFFDF8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+      padding: 32px 20px 80px;
+    }
+
+    .wrap { max-width: 1000px; margin: 0 auto; }
+
+    header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 36px); }
+    .suite-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); }
+    .header-sub { font-size: 13px; color: rgba(43,37,35,0.65); margin-bottom: 28px; line-height: 1.65; max-width: 660px; }
+
+    .layout { display: grid; grid-template-columns: 1fr 340px; gap: 20px; align-items: start; }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid rgba(43,37,35,0.12);
+      border-radius: 6px;
+      padding: 22px 24px;
+      margin-bottom: 18px;
+    }
+
+    .card h2 {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--terracotta); margin-bottom: 6px;
+    }
+    .card-hint { font-size: 12px; color: rgba(43,37,35,0.55); line-height: 1.6; margin-bottom: 18px; }
+
+    .field-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+    .field label { display: block; font-size: 12px; font-weight: 500; color: rgba(43,37,35,0.7); margin-bottom: 6px; }
+    .field input, .field select {
+      width: 100%; padding: 9px 12px;
+      border: 1px solid rgba(43,37,35,0.25); border-radius: 4px;
+      background: #fff; font-size: 14px; color: var(--charcoal);
+      font-family: 'Space Mono', monospace;
+    }
+    .field select { font-family: 'Inter', sans-serif; cursor: pointer; }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--terracotta); }
+    .field input:disabled { background: rgba(43,37,35,0.05); color: rgba(43,37,35,0.4); }
+    .unit { font-size: 11px; color: rgba(43,37,35,0.45); margin-left: 3px; font-weight: 400; }
+
+    .toggle-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .toggle {
+      position: relative; width: 42px; height: 23px;
+      background: rgba(43,37,35,0.2); border-radius: 12px;
+      cursor: pointer; border: none; transition: background 0.2s; flex-shrink: 0;
+    }
+    .toggle::after {
+      content: ''; position: absolute; top: 3px; left: 3px;
+      width: 17px; height: 17px; border-radius: 50%;
+      background: #fff; transition: transform 0.2s;
+    }
+    .toggle.on { background: var(--sage); }
+    .toggle.on::after { transform: translateX(19px); }
+    .toggle-label { font-size: 13px; color: rgba(43,37,35,0.75); }
+
+    .note {
+      background: rgba(217,164,65,0.12);
+      border-left: 3px solid var(--amber);
+      border-radius: 0 4px 4px 0;
+      padding: 11px 14px; margin-top: 14px;
+      font-size: 12px; line-height: 1.6; color: #6b4d14;
+    }
+    .note strong { color: #4d3809; }
+
+    /* ── RESULTS PANEL ── */
+    .results {
+      background: var(--charcoal);
+      border-radius: 6px;
+      padding: 24px;
+      position: sticky;
+      top: 20px;
+    }
+    .results h2 {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,253,248,0.5); margin-bottom: 18px;
+    }
+
+    .headline-figure { margin-bottom: 20px; }
+    .headline-label {
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,253,248,0.45); display: block; margin-bottom: 4px;
+    }
+    .headline-value {
+      font-family: 'Space Mono', monospace; font-size: 34px; font-weight: 700;
+      color: var(--amber); line-height: 1.1;
+    }
+    .headline-sub { font-size: 12px; color: rgba(255,253,248,0.5); margin-top: 5px; }
+
+    .res-line {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+      padding: 9px 0; border-bottom: 1px solid rgba(255,253,248,0.08);
+      font-size: 13px; color: rgba(255,253,248,0.8);
+    }
+    .res-line:last-of-type { border-bottom: none; }
+    .res-line .v { font-family: 'Space Mono', monospace; color: var(--paper); white-space: nowrap; }
+    .res-line.total {
+      border-top: 1px solid rgba(255,253,248,0.2); margin-top: 8px; padding-top: 14px;
+      font-weight: 600;
+    }
+    .res-line.total .v { font-size: 17px; color: var(--amber); }
+    .res-line.muted { color: rgba(255,253,248,0.45); font-size: 12px; }
+
+    .res-section-label {
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,253,248,0.35); margin: 18px 0 4px;
+    }
+
+    .flag {
+      display: none;
+      border-radius: 4px; padding: 11px 14px; margin-top: 16px;
+      font-size: 12px; line-height: 1.6;
+    }
+    .flag.visible { display: block; }
+    .flag.warn { background: rgba(217,164,65,0.15); border: 1px solid var(--amber); color: #f0d9a8; }
+    .flag.good { background: rgba(110,122,94,0.2); border: 1px solid var(--sage); color: #cbd6bb; }
+
+    .bar-wrap { margin-top: 20px; }
+    .bar {
+      display: flex; height: 10px; border-radius: 5px; overflow: hidden;
+      background: rgba(255,253,248,0.1); margin-bottom: 10px;
+    }
+    .bar span { height: 100%; }
+    .bar-key { display: flex; flex-wrap: wrap; gap: 10px; }
+    .bar-key-item { font-size: 10.5px; color: rgba(255,253,248,0.6); display: flex; align-items: center; gap: 5px; }
+    .bar-key-item i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+
+    .btn {
+      background: var(--terracotta); color: #fff; border: none;
+      padding: 12px 22px; border-radius: 4px; width: 100%;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
+      transition: background 0.2s; margin-top: 18px;
+    }
+    .btn:hover { background: var(--terra-dark); }
+
+    footer {
+      text-align: center; font-size: 11px; color: rgba(43,37,35,0.4);
+      margin-top: 36px; padding-top: 20px; border-top: 1px solid rgba(43,37,35,0.1); line-height: 1.7;
+    }
+
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      .results { position: static; }
+    }
+    @media (max-width: 560px) {
+      body { padding: 20px 14px 60px; }
+      .card, .results { padding: 18px 16px; }
+      .headline-value { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <h1>Event Pricing</h1>
+      <span class="suite-tag">Pop-Up Pizza · Staff Tool</span>
+    </header>
+    <p class="header-sub">Work out what an event actually costs to run, then price it to hit a target margin. Everything recalculates live. Figures are a decision aid, not a quote, sanity-check anything unusual before it goes to a customer.</p>
+
+    <div class="layout">
+      <div>
+
+        <!-- EVENT BASICS -->
+        <div class="card">
+          <h2>Event Basics</h2>
+          <p class="card-hint">Guest count and appetite drive almost everything downstream.</p>
+          <div class="field-grid">
+            <div class="field">
+              <label for="eventName">Event name</label>
+              <input type="text" id="eventName" placeholder="Smith wedding" style="font-family:'Inter',sans-serif" />
+            </div>
+            <div class="field">
+              <label for="guests">Guests</label>
+              <input type="number" id="guests" value="50" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="perHead">Pizzas per head</label>
+              <input type="number" id="perHead" value="1.2" min="0.1" step="0.1" />
+            </div>
+          </div>
+          <div class="note">
+            <strong>On pizzas per head:</strong> around 1 works for a seated meal with sides, 1.5 or more if pizza is the only food and people are grazing over hours. Under-catering an event is far more damaging than a little waste.
+          </div>
+        </div>
+
+        <!-- FOOD COSTS -->
+        <div class="card">
+          <h2>Food &amp; Consumables</h2>
+          <p class="card-hint">Per-pizza costs, plus anything served alongside.</p>
+          <div class="field-grid">
+            <div class="field">
+              <label for="doughCost">Dough per ball <span class="unit">$</span></label>
+              <input type="number" id="doughCost" value="0.85" min="0" step="0.05" />
+            </div>
+            <div class="field">
+              <label for="toppingCost">Toppings per pizza <span class="unit">$</span></label>
+              <input type="number" id="toppingCost" value="4.50" min="0" step="0.10" />
+            </div>
+            <div class="field">
+              <label for="packCost">Packaging per pizza <span class="unit">$</span></label>
+              <input type="number" id="packCost" value="0.60" min="0" step="0.05" />
+            </div>
+            <div class="field">
+              <label for="serveware">Serveware per head <span class="unit">$</span></label>
+              <input type="number" id="serveware" value="0.40" min="0" step="0.05" />
+            </div>
+          </div>
+
+          <div class="toggle-row" style="margin-top:16px">
+            <button type="button" class="toggle" id="grazeToggle" aria-label="Toggle grazing boards"></button>
+            <span class="toggle-label" id="grazeLabel">Grazing boards excluded</span>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label for="grazeCost">Grazing cost per head <span class="unit">$</span></label>
+              <input type="number" id="grazeCost" value="6.00" min="0" step="0.50" disabled />
+            </div>
+          </div>
+
+          <div class="toggle-row" style="margin-top:16px">
+            <button type="button" class="toggle" id="saladToggle" aria-label="Toggle salads"></button>
+            <span class="toggle-label" id="saladLabel">Salads excluded</span>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label for="saladCost">Salad cost per head <span class="unit">$</span></label>
+              <input type="number" id="saladCost" value="2.50" min="0" step="0.25" disabled />
+            </div>
+          </div>
+
+          <div class="field-grid" style="margin-top:16px">
+            <div class="field">
+              <label for="wastage">Wastage allowance <span class="unit">%</span></label>
+              <input type="number" id="wastage" value="8" min="0" step="1" />
+            </div>
+          </div>
+          <div class="note">
+            <strong>Wastage is not optional.</strong> Dough is committed 72 hours ahead, so an over-estimate can't be unwound. Anything under about 5% is optimistic for a catering job.
+          </div>
+        </div>
+
+        <!-- SITE FEES -->
+        <div class="card">
+          <h2>Site &amp; Venue</h2>
+          <p class="card-hint">Some venues charge a flat fee, some take a cut of takings, some do both.</p>
+          <div class="field-grid">
+            <div class="field">
+              <label for="siteFee">Site / stall fee <span class="unit">$</span></label>
+              <input type="number" id="siteFee" value="0" min="0" step="10" />
+            </div>
+            <div class="field">
+              <label for="sitePct">Venue % of takings <span class="unit">%</span></label>
+              <input type="number" id="sitePct" value="0" min="0" max="50" step="0.5" />
+            </div>
+            <div class="field">
+              <label for="permits">Permits / licences <span class="unit">$</span></label>
+              <input type="number" id="permits" value="0" min="0" step="10" />
+            </div>
+            <div class="field">
+              <label for="power">Power / generator <span class="unit">$</span></label>
+              <input type="number" id="power" value="0" min="0" step="10" />
+            </div>
+          </div>
+        </div>
+
+        <!-- STAFF -->
+        <div class="card">
+          <h2>Staff</h2>
+          <p class="card-hint">Count every paid hour, not just the hours you're serving.</p>
+          <div class="field-grid">
+            <div class="field">
+              <label for="staffCount">Staff on site</label>
+              <input type="number" id="staffCount" value="2" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="hourlyRate">Hourly rate <span class="unit">$</span></label>
+              <input type="number" id="hourlyRate" value="38" min="0" step="0.50" />
+            </div>
+            <div class="field">
+              <label for="serviceHrs">Service hours</label>
+              <input type="number" id="serviceHrs" value="3" min="0" step="0.5" />
+            </div>
+            <div class="field">
+              <label for="setupHrs">Setup + pack-down</label>
+              <input type="number" id="setupHrs" value="2" min="0" step="0.5" />
+            </div>
+            <div class="field">
+              <label for="travelHrs">Travel hours</label>
+              <input type="number" id="travelHrs" value="1" min="0" step="0.5" />
+            </div>
+            <div class="field">
+              <label for="loading">Penalty loading <span class="unit">×</span></label>
+              <input type="number" id="loading" value="1.0" min="1" step="0.05" />
+            </div>
+          </div>
+
+          <div class="field-grid" style="margin-top:14px">
+            <div class="field">
+              <label for="prepHrs">Prep hours (total, not per staff)</label>
+              <input type="number" id="prepHrs" value="4" min="0" step="0.5" />
+            </div>
+          </div>
+
+          <div class="note">
+            <strong>Two things that get missed here.</strong> Prep hours cover the dough made three days ahead plus shopping and loading, that's real paid time even though it happens off-site. And penalty loading applies to weekends and public holidays, set it from your current award rate rather than guessing, since it materially changes the number.
+          </div>
+        </div>
+
+        <!-- TRAVEL -->
+        <div class="card">
+          <h2>Travel &amp; Logistics</h2>
+          <p class="card-hint">Running the vehicle and the oven.</p>
+          <div class="field-grid">
+            <div class="field">
+              <label for="km">Return distance <span class="unit">km</span></label>
+              <input type="number" id="km" value="40" min="0" step="5" />
+            </div>
+            <div class="field">
+              <label for="perKm">Vehicle cost <span class="unit">$/km</span></label>
+              <input type="number" id="perKm" value="0.95" min="0" step="0.05" />
+            </div>
+            <div class="field">
+              <label for="gas">Gas <span class="unit">$</span></label>
+              <input type="number" id="gas" value="35" min="0" step="5" />
+            </div>
+            <div class="field">
+              <label for="equipment">Equipment wear <span class="unit">$</span></label>
+              <input type="number" id="equipment" value="25" min="0" step="5" />
+            </div>
+          </div>
+          <div class="note">
+            <strong>Equipment wear</strong> is a per-event set-aside toward replacing the oven, peels, tables and gazebo. Easy to leave out, and leaving it out quietly funds your own depreciation.
+          </div>
+        </div>
+
+        <!-- PRICING -->
+        <div class="card">
+          <h2>Pricing</h2>
+          <p class="card-hint">Set your target and the tool solves for the price. Or enter a price to see what margin it actually returns.</p>
+          <div class="field-grid">
+            <div class="field">
+              <label for="margin">Target margin <span class="unit">%</span></label>
+              <input type="number" id="margin" value="35" min="0" max="90" step="1" />
+            </div>
+            <div class="field">
+              <label for="minCharge">Minimum booking <span class="unit">$</span></label>
+              <input type="number" id="minCharge" value="1200" min="0" step="50" />
+            </div>
+            <div class="field">
+              <label for="overridePrice">Or quote this price <span class="unit">$</span></label>
+              <input type="number" id="overridePrice" placeholder="optional" min="0" step="50" />
+            </div>
+          </div>
+          <div class="note">
+            <strong>Margin here is on the whole job,</strong> after food, staff, site and travel. It is not food-cost margin, which is normally much higher, so don't compare the two directly.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RESULTS -->
+      <div class="results">
+        <h2>Result</h2>
+
+        <div class="headline-figure">
+          <span class="headline-label" id="headlineLabel">Suggested price</span>
+          <span class="headline-value" id="outPrice">$0</span>
+          <div class="headline-sub" id="outPerHead">$0 per head</div>
+        </div>
+
+        <div class="res-section-label">Costs</div>
+        <div class="res-line"><span>Food &amp; consumables</span><span class="v" id="outFood">$0</span></div>
+        <div class="res-line"><span>Staff</span><span class="v" id="outStaff">$0</span></div>
+        <div class="res-line"><span>Site &amp; venue</span><span class="v" id="outSite">$0</span></div>
+        <div class="res-line"><span>Travel &amp; logistics</span><span class="v" id="outTravel">$0</span></div>
+        <div class="res-line total"><span>Total cost</span><span class="v" id="outTotalCost">$0</span></div>
+
+        <div class="res-section-label">Outcome</div>
+        <div class="res-line"><span>Gross profit</span><span class="v" id="outProfit">$0</span></div>
+        <div class="res-line"><span>Actual margin</span><span class="v" id="outMargin">0%</span></div>
+        <div class="res-line muted"><span>Break-even price</span><span class="v" id="outBreakeven">$0</span></div>
+        <div class="res-line muted"><span>Cost per head</span><span class="v" id="outCostPerHead">$0</span></div>
+        <div class="res-line muted"><span>Pizzas to make</span><span class="v" id="outPizzas">0</span></div>
+        <div class="res-line muted"><span>If paying by card</span><span class="v" id="outCard">$0</span></div>
+
+        <div class="bar-wrap">
+          <div class="bar" id="costBar">
+            <span style="background:#C1613F" id="barFood"></span>
+            <span style="background:#D9A441" id="barStaff"></span>
+            <span style="background:#6E7A5E" id="barSite"></span>
+            <span style="background:#8a7f74" id="barTravel"></span>
+          </div>
+          <div class="bar-key">
+            <span class="bar-key-item"><i style="background:#C1613F"></i>Food</span>
+            <span class="bar-key-item"><i style="background:#D9A441"></i>Staff</span>
+            <span class="bar-key-item"><i style="background:#6E7A5E"></i>Site</span>
+            <span class="bar-key-item"><i style="background:#8a7f74"></i>Travel</span>
+          </div>
+        </div>
+
+        <div class="flag" id="flagBox"></div>
+
+        <button type="button" class="btn" id="copyBtn">Copy Summary</button>
+      </div>
+    </div>
+
+    <footer>
+      Staff tool. Runs entirely in your browser, nothing is saved or sent anywhere.<br>
+      Penalty rates and award conditions change, confirm current rates with Fair Work rather than relying on a stored figure.
+    </footer>
+  </div>
+
+  <script>
+    "use strict";
+    var el = function (id) { return document.getElementById(id); };
+    var num = function (id) { return parseFloat(el(id).value) || 0; };
+    var money = function (n) {
+      return "$" + n.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    };
+    var money2 = function (n) {
+      return "$" + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+    var grazeOn = false, saladOn = false;
+
+    /* ── TOGGLES ── */
+    function wireToggle(btnId, labelId, inputId, onText, offText, setter) {
+      el(btnId).addEventListener("click", function () {
+        var on = !el(btnId).classList.contains("on");
+        el(btnId).classList.toggle("on", on);
+        el(labelId).textContent = on ? onText : offText;
+        el(inputId).disabled = !on;
+        setter(on);
+        calc();
+      });
+    }
+    wireToggle("grazeToggle", "grazeLabel", "grazeCost",
+      "Grazing boards included", "Grazing boards excluded",
+      function (v) { grazeOn = v; });
+    wireToggle("saladToggle", "saladLabel", "saladCost",
+      "Salads included", "Salads excluded",
+      function (v) { saladOn = v; });
+
+    /* ══════════════════════════════════════════════════════════════
+       CALCULATION
+
+       A venue percentage is charged on takings, so it can't simply be
+       added to costs, it scales with whatever price we land on. Solving
+       for price directly:
+
+         price - cost - (price x sitePct) = price x margin
+         price (1 - sitePct - margin)     = cost
+         price = cost / (1 - sitePct - margin)
+       ══════════════════════════════════════════════════════════════ */
+    function calc() {
+      var guests   = num("guests");
+      var pizzas   = guests * num("perHead");
+
+      // Food
+      var perPizza = num("doughCost") + num("toppingCost") + num("packCost");
+      var food = pizzas * perPizza + guests * num("serveware");
+      if (grazeOn) food += guests * num("grazeCost");
+      if (saladOn) food += guests * num("saladCost");
+      food *= (1 + num("wastage") / 100);
+
+      // Staff
+      var onSiteHrs = num("serviceHrs") + num("setupHrs") + num("travelHrs");
+      var staff = num("staffCount") * onSiteHrs * num("hourlyRate") * num("loading")
+                + num("prepHrs") * num("hourlyRate");
+
+      // Site (fixed portion only, the percentage is handled in the price solve)
+      var site = num("siteFee") + num("permits") + num("power");
+
+      // Travel
+      var travel = num("km") * num("perKm") + num("gas") + num("equipment");
+
+      var totalCost = food + staff + site + travel;
+
+      var sitePct = Math.min(num("sitePct") / 100, 0.9);
+      var margin  = Math.min(num("margin") / 100, 0.89);
+
+      var denom = 1 - sitePct - margin;
+      var suggested = denom > 0.01 ? totalCost / denom : 0;
+
+      var breakeven = (1 - sitePct) > 0.01 ? totalCost / (1 - sitePct) : totalCost;
+
+      // Override
+      var override = parseFloat(el("overridePrice").value);
+      var usingOverride = !isNaN(override) && override > 0;
+      var price = usingOverride ? override : suggested;
+
+      // Apply minimum booking
+      var minCharge = num("minCharge");
+      var belowMin = price < minCharge && minCharge > 0;
+      if (!usingOverride && belowMin) price = minCharge;
+
+      // Venue percentage on the final price
+      var venueCut = price * sitePct;
+      var trueCost = totalCost + venueCut;
+      var profit = price - trueCost;
+      var actualMargin = price > 0 ? (profit / price) * 100 : 0;
+
+      /* ── RENDER ── */
+      el("headlineLabel").textContent = usingOverride ? "Quoted price" : "Suggested price";
+      el("outPrice").textContent = money(price);
+      el("outPerHead").textContent = guests > 0
+        ? money2(price / guests) + " per head"
+        : "Enter a guest count";
+
+      el("outFood").textContent   = money(food);
+      el("outStaff").textContent  = money(staff);
+      el("outSite").textContent   = money(site + venueCut);
+      el("outTravel").textContent = money(travel);
+      el("outTotalCost").textContent = money(trueCost);
+
+      el("outProfit").textContent = money(profit);
+      el("outMargin").textContent = actualMargin.toFixed(1) + "%";
+      el("outBreakeven").textContent = money(breakeven);
+      el("outCostPerHead").textContent = guests > 0 ? money2(trueCost / guests) : "$0";
+      el("outPizzas").textContent = Math.ceil(pizzas);
+      el("outCard").textContent = money(price * 1.016);
+
+      // Cost split bar
+      var barTotal = food + staff + (site + venueCut) + travel;
+      function pct(v) { return barTotal > 0 ? (v / barTotal * 100) + "%" : "0%"; }
+      el("barFood").style.width   = pct(food);
+      el("barStaff").style.width  = pct(staff);
+      el("barSite").style.width   = pct(site + venueCut);
+      el("barTravel").style.width = pct(travel);
+
+      /* ── FLAGS ── */
+      var flag = el("flagBox");
+      flag.className = "flag";
+      var msg = null, tone = "warn";
+
+      if (denom <= 0.01 && !usingOverride) {
+        msg = "Target margin plus venue percentage leaves nothing to price against. Lower one of them.";
+      } else if (profit < 0) {
+        msg = "<strong>This loses money.</strong> The quoted price sits below what the event costs to run. Break-even is " + money(breakeven) + ".";
+      } else if (actualMargin < 15 && price > 0) {
+        msg = "<strong>Thin margin (" + actualMargin.toFixed(1) + "%).</strong> Little room for anything going wrong on the day.";
+      } else if (!usingOverride && belowMin) {
+        msg = "<strong>Priced up to your " + money(minCharge) + " minimum.</strong> Costs alone would only justify " + money(suggested) + ", so this event clears the minimum on policy rather than on cost.";
+        tone = "good";
+      } else if (staff > food * 1.5 && staff > 0) {
+        msg = "<strong>Staff is the dominant cost here,</strong> not food. For a small event that's normal, but check whether fewer hours or fewer people on site is realistic.";
+      }
+
+      if (msg) {
+        flag.innerHTML = msg;
+        flag.classList.add("visible", tone);
+      }
+    }
+
+    /* ── COPY SUMMARY ── */
+    el("copyBtn").addEventListener("click", function () {
+      var name = el("eventName").value.trim() || "Untitled event";
+      var lines = [
+        "EVENT PRICING, " + name,
+        "Guests: " + num("guests") + "  |  Pizzas: " + el("outPizzas").textContent,
+        "",
+        "Food & consumables: " + el("outFood").textContent,
+        "Staff:              " + el("outStaff").textContent,
+        "Site & venue:       " + el("outSite").textContent,
+        "Travel & logistics: " + el("outTravel").textContent,
+        "TOTAL COST:         " + el("outTotalCost").textContent,
+        "",
+        "Price:        " + el("outPrice").textContent,
+        "Per head:     " + el("outPerHead").textContent,
+        "Gross profit: " + el("outProfit").textContent,
+        "Margin:       " + el("outMargin").textContent,
+        "Break-even:   " + el("outBreakeven").textContent,
+        "",
+        "Internal working only, not a customer quote."
+      ].join("\n");
+
+      navigator.clipboard.writeText(lines).then(function () {
+        var b = el("copyBtn");
+        b.textContent = "Copied";
+        setTimeout(function () { b.textContent = "Copy Summary"; }, 1600);
+      }).catch(function () {
+        alert("Couldn't copy automatically. Summary:\n\n" + lines);
+      });
+    });
+
+    /* ── WIRE UP ── */
+    document.querySelectorAll("input").forEach(function (i) {
+      i.addEventListener("input", calc);
+    });
+
+    calc();
+  </script>
+</body>
+</html>
