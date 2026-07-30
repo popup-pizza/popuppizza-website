@@ -1,1 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flavour Lab, Pop-Up Pizza</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --cream:      #F4EEE2;
+      --charcoal:   #2B2523;
+      --terracotta: #C1613F;
+      --terra-dark: #A44E30;
+      --sage:       #6E7A5E;
+      --amber:      #D9A441;
+      --paper:      #FFFDF8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+      padding: 32px 20px 80px;
+    }
+
+    .wrap { max-width: 940px; margin: 0 auto; }
+
+    header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 36px); }
+    .suite-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); }
+    .header-sub { font-size: 13px; color: rgba(43,37,35,0.65); margin-bottom: 28px; line-height: 1.65; max-width: 640px; }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid rgba(43,37,35,0.12);
+      border-radius: 6px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--terracotta); margin-bottom: 6px;
+    }
+    .card-hint { font-size: 12.5px; color: rgba(43,37,35,0.6); line-height: 1.6; margin-bottom: 18px; }
+
+    /* ── CHIPS ── */
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .chip {
+      background: var(--cream);
+      border: 1px solid rgba(43,37,35,0.18);
+      border-radius: 20px;
+      padding: 9px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--charcoal);
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .chip:hover { border-color: var(--terracotta); color: var(--terracotta); }
+
+    .chip.on {
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+      color: #fff;
+    }
+
+    .chip .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: currentColor; opacity: 0.5;
+    }
+    .chip.on .dot { opacity: 1; }
+
+    .chip-sub {
+      font-size: 11px;
+      color: rgba(43,37,35,0.45);
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    /* ── ACTION ROW ── */
+    .action-row {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .btn {
+      background: var(--terracotta); color: #fff; border: none;
+      padding: 13px 26px; border-radius: 4px;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: var(--terra-dark); }
+    .btn:disabled { background: rgba(43,37,35,0.2); cursor: not-allowed; }
+
+    .btn-outline {
+      background: transparent; color: var(--terracotta);
+      border: 1px solid var(--terracotta);
+      padding: 12px 22px; border-radius: 4px;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { background: var(--terracotta); color: #fff; }
+
+    .btn-text {
+      background: none; border: none; color: rgba(43,37,35,0.5);
+      font-family: 'Inter', sans-serif; font-size: 12px;
+      text-decoration: underline; cursor: pointer; padding: 4px;
+    }
+    .btn-text:hover { color: var(--terracotta); }
+
+    /* ── BALANCE READOUT ── */
+    .balance {
+      display: none;
+      background: rgba(217,164,65,0.12);
+      border-left: 3px solid var(--amber);
+      border-radius: 0 4px 4px 0;
+      padding: 13px 16px;
+      margin-top: 16px;
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: #6b4d14;
+    }
+    .balance.visible { display: block; }
+    .balance strong { color: #4d3809; }
+
+    /* ── RESULTS ── */
+    .results-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px; margin: 36px 0 16px;
+    }
+    .results-head h2 { font-family: 'Playfair Display', serif; font-size: 22px; }
+    .results-count { font-size: 12px; color: rgba(43,37,35,0.5); font-family: 'Space Mono', monospace; }
+
+    .concept {
+      background: var(--paper);
+      border: 1px solid rgba(43,37,35,0.12);
+      border-radius: 6px;
+      padding: 24px 26px;
+      margin-bottom: 14px;
+    }
+
+    .concept-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap; margin-bottom: 12px;
+    }
+
+    .concept-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      line-height: 1.25;
+    }
+
+    .concept-match {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--sage);
+      background: rgba(110,122,94,0.12);
+      padding: 4px 10px;
+      border-radius: 12px;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    .concept-build {
+      font-size: 13.5px;
+      color: rgba(43,37,35,0.8);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .concept-why {
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(43,37,35,0.7);
+      background: var(--cream);
+      border-radius: 4px;
+      padding: 13px 16px;
+      margin-bottom: 14px;
+    }
+    .concept-why strong { color: var(--charcoal); }
+
+    .concept-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .tag {
+      font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+      background: var(--cream); color: rgba(43,37,35,0.6);
+      padding: 4px 10px; border-radius: 3px; font-weight: 600;
+    }
+    .tag.format { background: rgba(193,97,63,0.1); color: var(--terra-dark); }
+
+    .concept-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+      border-top: 1px solid rgba(43,37,35,0.08);
+      padding-top: 14px;
+    }
+    .concept-note { font-size: 12px; color: rgba(43,37,35,0.5); line-height: 1.55; flex: 1; min-width: 200px; }
+
+    .shortlist-btn {
+      background: none; border: 1px solid rgba(43,37,35,0.25);
+      border-radius: 3px; padding: 7px 14px;
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      color: rgba(43,37,35,0.65); cursor: pointer; transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .shortlist-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+    .shortlist-btn.saved { background: var(--sage); border-color: var(--sage); color: #fff; }
+
+    .empty {
+      font-size: 13px; color: rgba(43,37,35,0.45); font-style: italic;
+      padding: 24px 0; text-align: center;
+    }
+
+    /* ── SHORTLIST ── */
+    .shortlist-panel { margin-top: 40px; }
+    .shortlist-item {
+      background: var(--paper); border: 1px solid rgba(43,37,35,0.12);
+      border-radius: 4px; padding: 14px 18px; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .shortlist-item-name { font-size: 14px; font-weight: 500; }
+    .shortlist-item-tags { font-size: 11px; color: rgba(43,37,35,0.5); margin-top: 3px; }
+
+    footer {
+      text-align: center; font-size: 11px; color: rgba(43,37,35,0.4);
+      margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(43,37,35,0.1);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 20px 14px 60px; }
+      .card, .concept { padding: 18px 16px; }
+      .concept-head { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <h1>Flavour Lab</h1>
+      <span class="suite-tag">Pop-Up Pizza · Staff Tool</span>
+    </header>
+    <p class="header-sub">A starting point for building new pizzas, worked from flavour rather than ingredients. Pick the tastes you want in the room, and this will suggest combinations that balance, with the reasoning behind each one so you can adapt rather than just copy.</p>
+
+    <!-- FLAVOUR SELECTOR -->
+    <div class="card">
+      <h2>1. What Should It Taste Like?</h2>
+      <p class="card-hint">Choose the flavours you want to lead with. Two or three works better than everything at once, the tool will tell you if a selection is likely to feel unbalanced.</p>
+      <div class="chip-row" id="flavourChips"></div>
+      <p class="chip-sub" id="flavourHint">Nothing selected yet.</p>
+      <div class="balance" id="balanceNote"></div>
+    </div>
+
+    <!-- DIRECTION -->
+    <div class="card">
+      <h2>2. How Far To Push It</h2>
+      <p class="card-hint">Optional. Filters results toward a familiarity level. Leave blank to see everything.</p>
+      <div class="chip-row" id="styleChips"></div>
+    </div>
+
+    <!-- FORMAT -->
+    <div class="card">
+      <h2>3. Where It's Being Served</h2>
+      <p class="card-hint">Optional. Some combinations hold up better on a market stall than in a take-and-bake box, this weights results accordingly.</p>
+      <div class="chip-row" id="formatChips"></div>
+    </div>
+
+    <div class="action-row">
+      <button type="button" class="btn" id="generateBtn">Suggest Pizzas</button>
+      <button type="button" class="btn-outline" id="surpriseBtn">Surprise Me</button>
+      <button type="button" class="btn-text" id="resetBtn">Reset</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-head" id="resultsHead" style="display:none">
+      <h2>Suggestions</h2>
+      <span class="results-count" id="resultsCount"></span>
+    </div>
+    <div id="results"></div>
+
+    <!-- SHORTLIST -->
+    <div class="shortlist-panel" id="shortlistPanel" style="display:none">
+      <div class="results-head">
+        <h2>Shortlist</h2>
+        <button type="button" class="btn-text" id="clearShortlistBtn">Clear all</button>
+      </div>
+      <div id="shortlistList"></div>
+    </div>
+
+    <footer>
+      Suggestions are a starting point, not a recipe. Test, adjust, and trust the palate in the room.<br>
+      Everything runs locally in your browser. Your shortlist is saved to this device only.
+    </footer>
+  </div>
+
+  <script>
+    "use strict";
+    var el = function (id) { return document.getElementById(id); };
+
+    /* ══════════════════════════════════════════════════════════════
+       FLAVOUR AXES
+       Each concept is scored 0-3 on each axis. Selection matching is
+       weighted by these scores rather than simple tag presence, so a
+       pizza that leads with heat outranks one that merely contains it.
+       ══════════════════════════════════════════════════════════════ */
+    var FLAVOURS = [
+      { id: "rich",   label: "Rich & creamy",     note: "fat, dairy, softness" },
+      { id: "bright", label: "Bright & acidic",   note: "lemon, tomato, pickle, vinegar" },
+      { id: "spicy",  label: "Spicy & hot",       note: "chilli, pepper, heat" },
+      { id: "sweet",  label: "Sweet",             note: "fruit, honey, caramelised" },
+      { id: "salty",  label: "Salty & savoury",   note: "cured meat, anchovy, hard cheese" },
+      { id: "fresh",  label: "Fresh & herbaceous",note: "green, leafy, just-picked" },
+      { id: "smoky",  label: "Smoky & charred",   note: "grill marks, bacon, blistered" },
+      { id: "earthy", label: "Earthy",            note: "mushroom, root veg, truffle" }
+    ];
+
+    var STYLES = [
+      { id: "familiar", label: "Crowd-pleaser",  note: "safe, sells itself" },
+      { id: "elevated", label: "Elevated",       note: "familiar but considered" },
+      { id: "bold",     label: "Talking point",  note: "unusual, memorable" }
+    ];
+
+    var FORMATS = [
+      { id: "market",   label: "Market stall",   note: "fast, handheld, holds heat" },
+      { id: "catering", label: "Event catering", note: "shares well, looks good on a board" },
+      { id: "takebake", label: "Take & bake",    note: "survives travel and a home oven" }
+    ];
+
+    /* ══════════════════════════════════════════════════════════════
+       CONCEPT LIBRARY
+       scores: rich, bright, spicy, sweet, salty, fresh, smoky, earthy
+       ══════════════════════════════════════════════════════════════ */
+    var CONCEPTS = [
+      {
+        name: "Hot Honey & Soppressata",
+        build: "Tomato base, three cheese blend, soppressata, chilli, hot honey finished after the bake.",
+        why: "The classic sweet-heat pairing. Honey doesn't cancel the chilli, it stretches it out, so the heat arrives late and lingers rather than hitting hard. The cured meat's salt keeps the sweetness from tipping into dessert territory.",
+        scores: { rich: 1, bright: 0, spicy: 3, sweet: 3, salty: 3, fresh: 0, smoky: 1, earthy: 0 },
+        style: "elevated", formats: ["market", "catering", "takebake"],
+        note: "Add the honey after the bake, it burns on the stone."
+      },
+      {
+        name: "Fig, Prosciutto & Gorgonzola",
+        build: "White base, mozzarella, gorgonzola, fig, prosciutto and rocket added after the bake.",
+        why: "Three strong flavours held together by fat. The fig's sweetness softens the blue cheese's edge, and the prosciutto's salt cuts through both. Rocket at the end adds a peppery lift that stops it feeling heavy.",
+        scores: { rich: 3, bright: 1, spicy: 0, sweet: 3, salty: 3, fresh: 2, smoky: 0, earthy: 1 },
+        style: "elevated", formats: ["catering"],
+        note: "Prosciutto and rocket go on after the oven, never before."
+      },
+      {
+        name: "Potato, Rosemary & Taleggio",
+        build: "No tomato. Thinly sliced potato, taleggio, rosemary, olive oil, sea salt.",
+        why: "A bianca that works because it doesn't try to do too much. Potato on potato-adjacent dough sounds like a mistake but the starch crisps against the stone, and taleggio brings enough funk and fat to carry it. Rosemary is the whole aromatic backbone.",
+        scores: { rich: 3, bright: 0, spicy: 0, sweet: 0, salty: 2, fresh: 1, smoky: 0, earthy: 3 },
+        style: "bold", formats: ["market", "catering"],
+        note: "Slice potato paper-thin or it won't cook through."
+      },
+      {
+        name: "Zucchini, Lemon & Ricotta",
+        build: "White base, ricotta, shaved zucchini, lemon zest, mint, olive oil.",
+        why: "Built entirely around brightness. Ricotta gives you creaminess without weight, and the lemon zest does the work a tomato base normally would, cutting the fat and keeping each bite fresh. Mint is the surprise that makes people ask.",
+        scores: { rich: 2, bright: 3, spicy: 0, sweet: 1, salty: 1, fresh: 3, smoky: 0, earthy: 1 },
+        style: "elevated", formats: ["catering"],
+        note: "Best eaten immediately, doesn't reheat well."
+      },
+      {
+        name: "'Nduja, Fennel & Honey",
+        build: "Tomato base, mozzarella, 'nduja, shaved fennel, honey drizzle.",
+        why: "'Nduja melts into the base and spreads its heat everywhere rather than sitting in spots. Fennel's aniseed sweetness is the unusual move here, it cools the palate between bites in a way that plain vegetables don't.",
+        scores: { rich: 2, bright: 1, spicy: 3, sweet: 2, salty: 3, fresh: 1, smoky: 1, earthy: 0 },
+        style: "bold", formats: ["market", "catering"],
+        note: "'Nduja is very salty, pull back on other salt."
+      },
+      {
+        name: "Mushroom, Truffle & Thyme",
+        build: "White base, mozzarella, mixed mushrooms, thyme, truffle oil after the bake.",
+        why: "Deeply savoury without any meat. Mushrooms roasted before they hit the pizza concentrate their flavour rather than steaming on the base. Truffle is the accent, not the theme, too much and it flattens everything underneath.",
+        scores: { rich: 3, bright: 0, spicy: 0, sweet: 0, salty: 2, fresh: 1, smoky: 1, earthy: 3 },
+        style: "elevated", formats: ["market", "catering", "takebake"],
+        note: "Pre-roast the mushrooms to drive off moisture."
+      },
+      {
+        name: "Charred Broccolini, Chilli & Anchovy",
+        build: "White base, mozzarella, charred broccolini, chilli flakes, anchovy, lemon.",
+        why: "The most savoury thing on this list. Anchovy dissolves and reads as depth rather than fish. Charring the broccolini first adds bitterness that stands up to the salt, and lemon at the end stops the whole thing being one dense note.",
+        scores: { rich: 1, bright: 2, spicy: 2, sweet: 0, salty: 3, fresh: 2, smoky: 3, earthy: 2 },
+        style: "bold", formats: ["market", "catering"],
+        note: "Divisive. Great for a specials board, risky as a staple."
+      },
+      {
+        name: "Pumpkin, Sage & Brown Butter",
+        build: "White base, roast pumpkin, mozzarella, crisp sage, brown butter, parmesan.",
+        why: "Autumn on a base. Roasting the pumpkin caramelises its sugar so it reads as sweet without adding any. Brown butter brings a nutty depth that plain oil can't, and fried sage adds both crunch and a savoury herb note.",
+        scores: { rich: 3, bright: 0, spicy: 0, sweet: 3, salty: 2, fresh: 1, smoky: 1, earthy: 3 },
+        style: "elevated", formats: ["catering", "takebake"],
+        note: "Seasonal. Strong autumn and winter event pizza."
+      },
+      {
+        name: "Smoked Ham, Pineapple & Jalapeño",
+        build: "Tomato base, three cheese blend, smoked ham, pineapple, pickled jalapeño.",
+        why: "The Hawaiian argument, settled by adding acid and heat. Pickled jalapeño does two jobs, its vinegar cuts the pineapple's sweetness and its heat gives the whole thing a reason to exist beyond nostalgia.",
+        scores: { rich: 1, bright: 2, spicy: 2, sweet: 3, salty: 2, fresh: 0, smoky: 3, earthy: 0 },
+        style: "familiar", formats: ["market", "catering", "takebake"],
+        note: "Pickled, not fresh, jalapeño. The vinegar is the point."
+      },
+      {
+        name: "Beetroot, Goat Cheese & Honey",
+        build: "White base, roast beetroot, goat cheese, honey, walnut, thyme.",
+        why: "Earthy and tangy pulling against each other, with honey as the bridge. Goat cheese's acidity is what makes this work, a milder cheese would let the beetroot dominate and turn it muddy. Walnut adds texture that the soft toppings need.",
+        scores: { rich: 2, bright: 2, spicy: 0, sweet: 3, salty: 1, fresh: 1, smoky: 0, earthy: 3 },
+        style: "bold", formats: ["catering"],
+        note: "Visually striking. Photographs extremely well."
+      },
+      {
+        name: "Cacio e Pepe",
+        build: "White base, pecorino, parmesan, heavy cracked black pepper, olive oil.",
+        why: "Four ingredients and nowhere to hide. The pepper isn't a seasoning here, it's the main flavour, so grind it coarse and use more than feels sensible. Works because the dough itself becomes part of the taste rather than a vehicle.",
+        scores: { rich: 3, bright: 0, spicy: 2, sweet: 0, salty: 3, fresh: 0, smoky: 0, earthy: 0 },
+        style: "elevated", formats: ["market", "takebake"],
+        note: "Only as good as the dough. Showcases a well-fermented base."
+      },
+      {
+        name: "Marinara (No Cheese)",
+        build: "Tomato base, confit garlic, oregano, olive oil, sea salt. No cheese at all.",
+        why: "The oldest pizza there is, and a genuine test of the tomato. Without cheese to soften it, everything rides on the acidity and sweetness of the sauce. Confit garlic instead of raw removes the harshness and leaves sweetness.",
+        scores: { rich: 0, bright: 3, spicy: 0, sweet: 1, salty: 1, fresh: 2, smoky: 0, earthy: 0 },
+        style: "bold", formats: ["market", "takebake"],
+        note: "Naturally dairy-free. Useful for dietary requirements."
+      },
+      {
+        name: "Confit Garlic, Cream & Parmesan",
+        build: "White base, cream, whole confit garlic cloves, parmesan, parsley.",
+        why: "Confit garlic loses all its bite and becomes sweet and almost buttery, so you can use far more of it than seems reasonable. Cream and parmesan give it depth. Parsley at the end is doing more work than it looks, it's the only fresh note.",
+        scores: { rich: 3, bright: 0, spicy: 0, sweet: 2, salty: 2, fresh: 1, smoky: 0, earthy: 1 },
+        style: "familiar", formats: ["market", "catering", "takebake"],
+        note: "Already a house favourite, an easy upsell from the standard cheese."
+      },
+      {
+        name: "Prawn, Chilli & Lemon",
+        build: "White base, light mozzarella, prawns, chilli, garlic, lemon, parsley.",
+        why: "Delicate protein needs a light hand everywhere else. Too much cheese buries the prawns entirely. The lemon goes on after the bake so it stays sharp rather than cooking down into something dull.",
+        scores: { rich: 1, bright: 3, spicy: 2, sweet: 1, salty: 1, fresh: 3, smoky: 0, earthy: 0 },
+        style: "bold", formats: ["catering"],
+        note: "Cook prawns lightly, they finish in the oven."
+      },
+      {
+        name: "Caramelised Onion, Bacon & Thyme",
+        build: "White base, mozzarella, slow-caramelised onion, bacon, thyme.",
+        why: "Sweet and smoky, and almost impossible to dislike. The onions need real time, anything less than properly caramelised and you get sharpness instead of sweetness. Thyme keeps it from being one flat savoury note.",
+        scores: { rich: 3, bright: 0, spicy: 0, sweet: 3, salty: 3, fresh: 1, smoky: 3, earthy: 1 },
+        style: "familiar", formats: ["market", "catering", "takebake"],
+        note: "Caramelise the onions the day before, it's a slow job."
+      },
+      {
+        name: "Roast Capsicum, Feta & Oregano",
+        build: "Tomato base, mozzarella, roast capsicum, feta, olives, oregano.",
+        why: "Mediterranean and vegetarian without feeling like a compromise. Roasting the capsicum concentrates its sweetness, and feta's salt and tang do the job that cured meat would otherwise. Olives add the briny depth.",
+        scores: { rich: 1, bright: 2, spicy: 0, sweet: 2, salty: 3, fresh: 2, smoky: 2, earthy: 1 },
+        style: "familiar", formats: ["market", "catering", "takebake"],
+        note: "Solid vegetarian option that doesn't read as an afterthought."
+      },
+      {
+        name: "Chorizo, Corn & Coriander",
+        build: "Tomato base, mozzarella, chorizo, charred corn, red onion, coriander, lime.",
+        why: "Chorizo renders its paprika oil across the whole base as it cooks, which is why it works better than plain salami here. Charred corn's sweetness plays against that, and lime and coriander at the end keep it lively.",
+        scores: { rich: 2, bright: 2, spicy: 2, sweet: 2, salty: 3, fresh: 2, smoky: 3, earthy: 0 },
+        style: "elevated", formats: ["market", "catering"],
+        note: "Coriander divides people. Offer it on the side at events."
+      },
+      {
+        name: "Eggplant, Tomato & Basil",
+        build: "Tomato base, mozzarella, roast eggplant, parmesan, basil.",
+        why: "Parmigiana logic on a base. Eggplant must be roasted first or it turns spongy and wet. Once it is, it soaks up the tomato and turns silky, and basil added at the end gives you the fresh top note the whole thing needs.",
+        scores: { rich: 2, bright: 2, spicy: 0, sweet: 1, salty: 2, fresh: 3, smoky: 1, earthy: 2 },
+        style: "familiar", formats: ["market", "catering", "takebake"],
+        note: "Salt and drain the eggplant before roasting."
+      },
+      {
+        name: "Pancetta, Egg & Black Pepper",
+        build: "White base, mozzarella, pancetta, egg cracked on midway through the bake, black pepper.",
+        why: "Carbonara without the pasta. Timing is everything, the egg goes on partway through so the white sets while the yolk stays loose. When someone cuts it and the yolk runs, that's the whole pizza working.",
+        scores: { rich: 3, bright: 0, spicy: 2, sweet: 0, salty: 3, fresh: 0, smoky: 2, earthy: 0 },
+        style: "bold", formats: ["market"],
+        note: "Serve immediately. Does not travel, does not reheat."
+      },
+      {
+        name: "Lamb, Yoghurt & Mint",
+        build: "Tomato base, spiced lamb, red onion, yoghurt drizzle and mint after the bake.",
+        why: "Borrowed from a lahmacun rather than a pizzeria. The lamb wants spice, cumin and paprika, and the cool yoghurt at the end is what makes it work, cutting the fat and the heat in the same mouthful. Mint sharpens it further.",
+        scores: { rich: 3, bright: 2, spicy: 2, sweet: 1, salty: 2, fresh: 3, smoky: 1, earthy: 1 },
+        style: "bold", formats: ["catering"],
+        note: "Yoghurt after the bake only, it splits in the oven."
+      },
+      {
+        name: "Apple, Fennel Salami & Provolone",
+        build: "White base, provolone, thin apple, fennel salami, black pepper, rocket.",
+        why: "Apple and pork is old logic applied sideways. Thin apple slices soften but keep their tartness, which is exactly what the rich salami needs. Fennel in the salami echoes the sweetness, so it doesn't feel like two separate ideas.",
+        scores: { rich: 2, bright: 2, spicy: 1, sweet: 3, salty: 3, fresh: 2, smoky: 0, earthy: 0 },
+        style: "bold", formats: ["catering", "takebake"],
+        note: "Use a firm, tart apple. Soft varieties collapse."
+      },
+      {
+        name: "Salami, Olive & Chilli",
+        build: "Tomato base, three cheese blend, salami, kalamata olives, chilli.",
+        why: "Straightforward and dependable. Olives bring a briny salt that's different in character to the meat's, so the two don't compete. Chilli lifts what would otherwise be a fairly flat savoury profile.",
+        scores: { rich: 1, bright: 1, spicy: 2, sweet: 0, salty: 3, fresh: 0, smoky: 1, earthy: 0 },
+        style: "familiar", formats: ["market", "catering", "takebake"],
+        note: "Reliable seller. Good default for a mixed catering order."
+      },
+      {
+        name: "Pear, Blue Cheese & Walnut",
+        build: "White base, mozzarella, blue cheese, pear, walnut, honey, rocket.",
+        why: "Blue cheese needs something sweet or it dominates everything. Pear is gentler than fig and lets the cheese stay the lead. Walnuts matter here for texture, without them it's soft on soft all the way through.",
+        scores: { rich: 3, bright: 1, spicy: 0, sweet: 3, salty: 3, fresh: 2, smoky: 0, earthy: 2 },
+        style: "bold", formats: ["catering"],
+        note: "Go lighter on blue cheese than you think you need."
+      },
+      {
+        name: "Margherita, Properly Made",
+        build: "Tomato base, fior di latte, basil, olive oil, sea salt.",
+        why: "The benchmark. Nothing to hide behind, so it's the truest test of the dough, the sauce, and the oven. If this one is right, everything else on the menu is likely right too.",
+        scores: { rich: 2, bright: 3, spicy: 0, sweet: 1, salty: 1, fresh: 3, smoky: 1, earthy: 0 },
+        style: "familiar", formats: ["market", "catering", "takebake"],
+        note: "Basil after the bake, or it blackens."
+      }
+    ];
+
+    /* ══════════════════════════════════════════════════════════════
+       STATE
+       ══════════════════════════════════════════════════════════════ */
+    var selectedFlavours = [];
+    var selectedStyle = null;
+    var selectedFormat = null;
+    var shortlist = [];
+
+    try {
+      var saved = localStorage.getItem("flavour-lab:shortlist");
+      if (saved) shortlist = JSON.parse(saved);
+    } catch (e) { shortlist = []; }
+
+    function saveShortlist() {
+      try { localStorage.setItem("flavour-lab:shortlist", JSON.stringify(shortlist)); } catch (e) {}
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       CHIP RENDERING
+       ══════════════════════════════════════════════════════════════ */
+    function buildChips(container, items, isMulti, onChange) {
+      container.innerHTML = "";
+      items.forEach(function (item) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "chip";
+        b.dataset.id = item.id;
+        b.innerHTML = '<span class="dot"></span>' + item.label;
+        b.title = item.note;
+        b.addEventListener("click", function () { onChange(item.id, b); });
+        container.appendChild(b);
+      });
+    }
+
+    buildChips(el("flavourChips"), FLAVOURS, true, function (id, btn) {
+      var i = selectedFlavours.indexOf(id);
+      if (i === -1) selectedFlavours.push(id); else selectedFlavours.splice(i, 1);
+      btn.classList.toggle("on");
+      updateFlavourHint();
+    });
+
+    buildChips(el("styleChips"), STYLES, false, function (id, btn) {
+      var wasOn = btn.classList.contains("on");
+      el("styleChips").querySelectorAll(".chip").forEach(function (c) { c.classList.remove("on"); });
+      selectedStyle = wasOn ? null : id;
+      if (!wasOn) btn.classList.add("on");
+    });
+
+    buildChips(el("formatChips"), FORMATS, false, function (id, btn) {
+      var wasOn = btn.classList.contains("on");
+      el("formatChips").querySelectorAll(".chip").forEach(function (c) { c.classList.remove("on"); });
+      selectedFormat = wasOn ? null : id;
+      if (!wasOn) btn.classList.add("on");
+    });
+
+    /* ══════════════════════════════════════════════════════════════
+       BALANCE GUIDANCE
+       Flags selections likely to feel one-note, based on the classic
+       fat/acid/salt tension. Advisory only, never blocks.
+       ══════════════════════════════════════════════════════════════ */
+    function updateFlavourHint() {
+      var hint = el("flavourHint");
+      var balance = el("balanceNote");
+
+      if (!selectedFlavours.length) {
+        hint.textContent = "Nothing selected yet.";
+        balance.classList.remove("visible");
+        return;
+      }
+
+      var labels = selectedFlavours.map(function (id) {
+        return FLAVOURS.filter(function (f) { return f.id === id; })[0].label;
+      });
+      hint.textContent = "Selected: " + labels.join(", ");
+
+      var heavy = ["rich", "sweet", "salty", "smoky", "earthy"];
+      var lifting = ["bright", "fresh"];
+      var heavyCount = selectedFlavours.filter(function (f) { return heavy.indexOf(f) !== -1; }).length;
+      var liftCount = selectedFlavours.filter(function (f) { return lifting.indexOf(f) !== -1; }).length;
+
+      var msg = null;
+
+      if (heavyCount >= 3 && liftCount === 0) {
+        msg = "<strong>Watch the balance.</strong> That's a lot of weight with nothing to cut it. Consider adding <em>bright</em> or <em>fresh</em>, or plan to finish the pizza with lemon, rocket or a herb after the bake.";
+      } else if (selectedFlavours.length >= 5) {
+        msg = "<strong>That's a wide net.</strong> Five or more flavours will match almost everything, which makes the results less useful. Two or three gives sharper suggestions.";
+      } else if (selectedFlavours.length === 1 && selectedFlavours[0] === "spicy") {
+        msg = "<strong>Heat alone rarely carries a pizza.</strong> It usually needs sweetness or fat alongside it to land properly. Worth adding one.";
+      }
+
+      if (msg) {
+        balance.innerHTML = msg;
+        balance.classList.add("visible");
+      } else {
+        balance.classList.remove("visible");
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       MATCHING
+       ══════════════════════════════════════════════════════════════ */
+    function scoreConcept(c) {
+      if (!selectedFlavours.length) return 0;
+      var total = 0, max = 0;
+      selectedFlavours.forEach(function (f) {
+        total += c.scores[f] || 0;
+        max += 3;
+      });
+      return max ? Math.round((total / max) * 100) : 0;
+    }
+
+    function matchLabel(pct) {
+      if (pct >= 80) return "Strong match";
+      if (pct >= 60) return "Good match";
+      if (pct >= 40) return "Partial match";
+      return "Loose match";
+    }
+
+    function isShortlisted(name) {
+      return shortlist.some(function (s) { return s.name === name; });
+    }
+
+    function renderConcepts(list, showMatch) {
+      var out = el("results");
+      el("resultsHead").style.display = "flex";
+      el("resultsCount").textContent = list.length + (list.length === 1 ? " result" : " results");
+
+      if (!list.length) {
+        out.innerHTML = '<p class="empty">Nothing matched that combination. Try removing a filter, or fewer flavours.</p>';
+        return;
+      }
+
+      out.innerHTML = list.map(function (item) {
+        var c = item.concept;
+        var pct = item.pct;
+        var styleLabel = STYLES.filter(function (s) { return s.id === c.style; })[0].label;
+        var formatTags = c.formats.map(function (fid) {
+          return '<span class="tag format">' + FORMATS.filter(function (f) { return f.id === fid; })[0].label + '</span>';
+        }).join("");
+
+        var topFlavours = Object.keys(c.scores)
+          .filter(function (k) { return c.scores[k] >= 2; })
+          .map(function (k) { return FLAVOURS.filter(function (f) { return f.id === k; })[0].label; })
+          .map(function (l) { return '<span class="tag">' + l + '</span>'; })
+          .join("");
+
+        var matchBadge = showMatch
+          ? '<span class="concept-match">' + matchLabel(pct) + " · " + pct + "%</span>"
+          : "";
+
+        var saved = isShortlisted(c.name);
+
+        return '<div class="concept">' +
+          '<div class="concept-head">' +
+            '<div class="concept-name">' + c.name + '</div>' +
+            matchBadge +
+          '</div>' +
+          '<p class="concept-build">' + c.build + '</p>' +
+          '<div class="concept-why"><strong>Why it works.</strong> ' + c.why + '</div>' +
+          '<div class="concept-tags"><span class="tag">' + styleLabel + '</span>' + topFlavours + formatTags + '</div>' +
+          '<div class="concept-foot">' +
+            '<span class="concept-note">' + c.note + '</span>' +
+            '<button type="button" class="shortlist-btn ' + (saved ? "saved" : "") + '" data-name="' + c.name + '">' +
+              (saved ? "Shortlisted" : "Shortlist") +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      }).join("");
+
+      out.querySelectorAll(".shortlist-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var name = btn.dataset.name;
+          var c = CONCEPTS.filter(function (x) { return x.name === name; })[0];
+          if (isShortlisted(name)) {
+            shortlist = shortlist.filter(function (s) { return s.name !== name; });
+            btn.classList.remove("saved");
+            btn.textContent = "Shortlist";
+          } else {
+            shortlist.push({ name: c.name, build: c.build });
+            btn.classList.add("saved");
+            btn.textContent = "Shortlisted";
+          }
+          saveShortlist();
+          renderShortlist();
+        });
+      });
+    }
+
+    function generate() {
+      if (!selectedFlavours.length) {
+        alert("Pick at least one flavour first.");
+        return;
+      }
+
+      var pool = CONCEPTS.filter(function (c) {
+        if (selectedStyle && c.style !== selectedStyle) return false;
+        if (selectedFormat && c.formats.indexOf(selectedFormat) === -1) return false;
+        return true;
+      });
+
+      var scored = pool.map(function (c) {
+        return { concept: c, pct: scoreConcept(c) };
+      }).filter(function (x) { return x.pct > 0; });
+
+      scored.sort(function (a, b) { return b.pct - a.pct; });
+      renderConcepts(scored.slice(0, 6), true);
+      el("resultsHead").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function surprise() {
+      var pool = CONCEPTS.slice();
+      // Fisher-Yates, then take three.
+      for (var i = pool.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
+      }
+      renderConcepts(pool.slice(0, 3).map(function (c) {
+        return { concept: c, pct: 0 };
+      }), false);
+      el("resultsHead").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       SHORTLIST
+       ══════════════════════════════════════════════════════════════ */
+    function renderShortlist() {
+      var panel = el("shortlistPanel");
+      var list = el("shortlistList");
+
+      if (!shortlist.length) {
+        panel.style.display = "none";
+        return;
+      }
+
+      panel.style.display = "block";
+      list.innerHTML = shortlist.map(function (s, i) {
+        return '<div class="shortlist-item">' +
+          '<div>' +
+            '<div class="shortlist-item-name">' + s.name + '</div>' +
+            '<div class="shortlist-item-tags">' + s.build + '</div>' +
+          '</div>' +
+          '<button type="button" class="btn-text" data-idx="' + i + '">Remove</button>' +
+        '</div>';
+      }).join("");
+
+      list.querySelectorAll("[data-idx]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          shortlist.splice(parseInt(btn.dataset.idx, 10), 1);
+          saveShortlist();
+          renderShortlist();
+          // Re-sync any visible shortlist buttons.
+          document.querySelectorAll(".shortlist-btn").forEach(function (b) {
+            var on = isShortlisted(b.dataset.name);
+            b.classList.toggle("saved", on);
+            b.textContent = on ? "Shortlisted" : "Shortlist";
+          });
+        });
+      });
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       WIRING
+       ══════════════════════════════════════════════════════════════ */
+    el("generateBtn").addEventListener("click", generate);
+    el("surpriseBtn").addEventListener("click", surprise);
+
+    el("resetBtn").addEventListener("click", function () {
+      selectedFlavours = [];
+      selectedStyle = null;
+      selectedFormat = null;
+      document.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("on"); });
+      el("results").innerHTML = "";
+      el("resultsHead").style.display = "none";
+      updateFlavourHint();
+    });
+
+    el("clearShortlistBtn").addEventListener("click", function () {
+      if (!confirm("Clear the whole shortlist?")) return;
+      shortlist = [];
+      saveShortlist();
+      renderShortlist();
+      document.querySelectorAll(".shortlist-btn").forEach(function (b) {
+        b.classList.remove("saved");
+        b.textContent = "Shortlist";
+      });
+    });
+
+    renderShortlist();
+  </script>
+</body>
+</html>
