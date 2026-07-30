@@ -125,8 +125,8 @@
       answer: "We take custom and bulk orders for pizza and dough balls. Use the <strong>Custom Order</strong> tab on the <a href='pizza.html#order'>Take &amp; Bake page</a>, or the <strong>Bulk / Custom Order</strong> tab on the <a href='dough.html#order'>Dough Balls page</a>, and we'll get back to you directly."
     },
     {
-      keywords: ["catering", "cater my event", "event catering", "book you for", "book pop-up pizza", "wedding", "corporate event", "function", "party catering"],
-      answer: "We cater events of all sizes, bringing our stone oven on site to cook fresh pizza for your guests. Packages start from $1,200 for up to 30 guests. Visit our <a href='catering.html'>Catering page</a> to see pricing and enquire. Prefer to self-cater instead? Our <a href='pizza.html'>Take &amp; Bake pizzas</a> start from just $8.50."
+      keywords: ["catering", "cater my event", "event catering", "book you for", "book pop-up pizza", "wedding", "corporate event", "function", "party catering", "bacciata", "grazing board", "grazing table", "salads"],
+      answer: "We cater events of all sizes, bringing our stone oven on site to cook fresh pizza for your guests. Our range includes stone-baked pizza, bacciata, grazing boards and salads, we design the menu to suit each event rather than working from a fixed package. Visit our <a href='catering.html'>Catering page</a> to see the full range and enquire. Prefer to self-cater instead? Our <a href='pizza.html'>Take &amp; Bake pizzas</a> start from just $8.50."
     },
     {
       keywords: ["loyalty", "stamp", "reward", "free pizza"],
