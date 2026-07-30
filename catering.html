@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catering, Pop-Up Pizza</title>
-  <meta name="description" content="Book Pop-Up Pizza to cater your next event. Fresh, stone-baked pizza made on site for parties, corporate functions and celebrations across Canberra. Or self-cater with our take-and-bake pizzas." />
+  <meta name="description" content="Book Pop-Up Pizza to cater your next event. Stone-baked pizza, bacciata, grazing boards and salads, cooked and designed around your event, for parties, corporate functions and celebrations across Canberra." />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -48,54 +48,35 @@
 
     /* ── MOBILE MENU ── */
     .nav-mobile-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 22px;
-      line-height: 1;
-      color: var(--navy);
-      cursor: pointer;
-      padding: 6px 10px;
-      letter-spacing: 2px;
+      display: none; background: none; border: none; font-size: 22px; line-height: 1;
+      color: var(--navy); cursor: pointer; padding: 6px 10px; letter-spacing: 2px;
     }
-
     .nav-mobile-dropdown {
-      display: none;
-      position: absolute;
-      top: 100%;
-      right: 16px;
-      background: var(--white);
-      border: 1px solid rgba(34,32,29,0.1);
-      border-radius: 6px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      min-width: 200px;
-      padding: 8px 0;
-      z-index: 200;
+      display: none; position: absolute; top: 100%; right: 16px;
+      background: var(--white); border: 1px solid rgba(34,32,29,0.1); border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12); min-width: 200px; padding: 8px 0; z-index: 200;
     }
-
     .nav-mobile-dropdown.open { display: block; }
-
     .nav-mobile-dropdown a {
-      display: block;
-      padding: 12px 20px;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--navy);
-      text-decoration: none;
-      transition: background 0.15s;
+      display: block; padding: 12px 20px; font-size: 13px; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: uppercase; color: var(--navy);
+      text-decoration: none; transition: background 0.15s;
     }
-
     .nav-mobile-dropdown a:hover { background: var(--ash); }
     .nav-mobile-dropdown a.nav-cta-mobile { color: var(--ember); font-weight: 700; }
+    @media (max-width: 900px) { .nav-mobile-toggle { display: block; } }
 
     /* ── HERO ── */
     .hero {
-      min-height: 66vh;
+      min-height: 78vh;
       background: var(--navy);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden; padding-top: 72px; text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 72px;
+      text-align: center;
     }
 
     .hero-rings { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 760px; height: 760px; pointer-events: none; }
@@ -104,13 +85,19 @@
     .ring:nth-child(2) { width: 400px; height: 400px; border-color: rgba(168,83,47,0.22); }
     .ring:nth-child(3) { width: 580px; height: 580px; border-color: rgba(168,83,47,0.12); }
 
-    .hero-content { position: relative; z-index: 2; max-width: 680px; padding: 0 32px; }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      padding: 0 32px;
+    }
+
     .hero-eyebrow {
       display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.22em;
       text-transform: uppercase; color: var(--ember); margin-bottom: 20px;
     }
     .hero-headline {
-      font-family: 'Playfair Display', serif; font-size: clamp(38px, 5.5vw, 60px);
+      font-family: 'Playfair Display', serif; font-size: clamp(36px, 4.5vw, 56px);
       font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 20px;
     }
     .hero-headline em { font-style: italic; color: #c98a68; }
@@ -143,8 +130,46 @@
     }
     .section-body { font-size: 16px; line-height: 1.75; color: var(--smoke); max-width: 680px; }
 
-    /* ── HOW CATERING WORKS ── */
-    .how-it-works { background: var(--white); }
+    /* ── PRODUCT RANGE ── */
+    .products { background: var(--white); }
+
+    .products-intro { max-width: 720px; margin-bottom: 56px; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--ash);
+      border: 1px solid var(--ash);
+    }
+
+    .product-card {
+      background: var(--white);
+      padding: 40px 36px;
+      position: relative;
+    }
+
+    .product-card-accent {
+      width: 36px;
+      height: 3px;
+      background: var(--ember);
+      margin-bottom: 24px;
+    }
+
+    .product-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ember); display: block; margin-bottom: 10px;
+    }
+
+    .product-card h3 {
+      font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700;
+      color: var(--navy); margin-bottom: 12px;
+    }
+
+    .product-card p { font-size: 14px; line-height: 1.7; color: var(--smoke); }
+
+    /* ── HOW IT WORKS ── */
+    .how-it-works { background: var(--ash); }
 
     .steps-grid {
       display: grid;
@@ -153,101 +178,60 @@
       margin-top: 48px;
     }
 
-    .step-card { background: var(--ash); padding: 36px 32px; position: relative; }
+    .step-card { background: var(--white); padding: 36px 32px; position: relative; }
     .step-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 48px;
-      font-weight: 700;
-      color: var(--white);
-      display: block;
-      margin-bottom: 16px;
+      font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700;
+      color: var(--ash); display: block; margin-bottom: 16px;
     }
     .step-card h3 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
     .step-card p { font-size: 14px; line-height: 1.7; color: var(--smoke); }
 
-    /* ── PRICING ── */
-    .pricing { background: var(--ash); }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-top: 48px;
-    }
-
-    .price-card {
-      background: var(--white);
-      padding: 40px 32px;
-    }
-
-    .price-card.featured { background: var(--navy); }
-    .price-card.featured .price-qty,
-    .price-card.featured .price-desc { color: var(--white); }
-    .price-card.featured .price-amount { color: #c98a68; }
-    .price-card.featured .price-per,
-    .price-card.featured .price-includes li { color: rgba(255,255,255,0.65); }
-
-    .price-badge {
-      display: inline-block; background: var(--ember); color: var(--white);
-      font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 5px 12px; border-radius: 20px; margin-bottom: 20px;
-    }
-
-    .price-qty {
-      font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
-      color: var(--navy); margin-bottom: 4px;
-    }
-    .price-desc { font-size: 13px; color: var(--smoke); margin-bottom: 20px; }
-    .price-amount {
-      font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: var(--ember);
-    }
-    .price-per { font-size: 12px; color: var(--smoke); display: block; margin-top: 4px; margin-bottom: 20px; }
-
-    .price-includes {
-      list-style: none;
-      font-size: 13px;
-      line-height: 2;
-      color: var(--smoke);
-      border-top: 1px solid var(--ash);
-      padding-top: 16px;
-    }
-    .price-card.featured .price-includes { border-top-color: rgba(255,255,255,0.15); }
-    .price-includes li::before { content: '✓ '; color: var(--ember); font-weight: 700; }
-
-    .pricing-note {
-      font-size: 13px;
-      color: var(--smoke);
-      font-style: italic;
-      margin-top: 28px;
+    /* ── TAILORED MENU BANNER ── */
+    .tailored {
+      background: var(--navy);
+      padding: 90px 80px;
       text-align: center;
     }
 
-    /* ── WHAT'S INCLUDED ── */
-    .included { background: var(--white); }
+    .tailored-content { max-width: 680px; margin: 0 auto; }
+    .tailored-content .section-label { color: rgba(255,255,255,0.6); }
+    .tailored-content .section-title { color: var(--white); }
+    .tailored-content .section-body { color: rgba(255,255,255,0.8); margin: 0 auto; }
 
-    .included-grid {
+    /* ── OUR STORY ── */
+    .story { background: var(--white); }
+
+    .story-body {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .story-body p {
+      font-size: 16px; line-height: 1.8; color: var(--smoke);
+      margin-bottom: 20px; text-align: left;
+    }
+
+    .story-body p:first-of-type {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-style: italic; color: var(--navy);
+      text-align: center;
+    }
+
+    .story-stats {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 32px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
       margin-top: 48px;
+      background: var(--ash);
+      border: 1px solid var(--ash);
     }
-
-    .included-list { list-style: none; }
-    .included-list li {
-      font-size: 15px;
-      line-height: 1.8;
-      color: var(--smoke);
-      padding-left: 26px;
-      position: relative;
-      margin-bottom: 10px;
+    .story-stat { background: var(--white); padding: 28px 16px; text-align: center; }
+    .story-stat-num {
+      font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700;
+      color: var(--ember); display: block; margin-bottom: 4px;
     }
-    .included-list li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--ember);
-      font-weight: 700;
-    }
+    .story-stat-label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--smoke); }
 
     /* ── SELF-CATERING PROMO ── */
     .self-cater {
@@ -271,33 +255,12 @@
     }
 
     .self-cater-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      color: var(--white);
-      margin-bottom: 14px;
+      font-family: 'Playfair Display', serif; font-size: 22px; color: var(--white); margin-bottom: 14px;
     }
-
-    .self-cater-card p {
-      font-size: 14px;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.85);
-      margin-bottom: 20px;
-    }
-
-    .self-cater-price {
-      font-size: 13px;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 20px;
-    }
-
-    .self-cater-price strong { color: var(--white); font-family: 'Playfair Display', serif; font-size: 18px; }
+    .self-cater-card p { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.85); margin-bottom: 24px; }
 
     /* ── ENQUIRY FORM ── */
-    .enquiry {
-      background: var(--navy);
-      padding: 100px 80px;
-    }
-
+    .enquiry { background: var(--navy); padding: 100px 80px; }
     .enquiry-inner { max-width: 700px; margin: 0 auto; text-align: center; }
     .enquiry-inner .section-label { display: block; margin-bottom: 12px; }
     .enquiry-inner .section-title { color: var(--white); margin-bottom: 16px; }
@@ -355,30 +318,18 @@
     .btn-submit:disabled { background: rgba(255,255,255,0.15); cursor: not-allowed; transform: none; }
 
     .privacy-note {
-      font-size: 11px;
-      color: rgba(255,255,255,0.35);
-      line-height: 1.6;
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 11px; color: rgba(255,255,255,0.35); line-height: 1.6;
+      margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08);
     }
     .privacy-note a { color: rgba(255,255,255,0.5); text-decoration: underline; }
     .privacy-note a:hover { color: #c98a68; }
 
-    .enquiry-confirmation {
-      display: none;
-      text-align: center;
-      padding: 20px 0;
-    }
+    .enquiry-confirmation { display: none; text-align: center; padding: 20px 0; }
     .enquiry-confirmation.visible { display: block; }
 
     .enquiry-code-badge {
-      display: inline-block;
-      background: rgba(168,83,47,0.15);
-      border: 1px solid var(--ember);
-      border-radius: 4px;
-      padding: 20px 40px;
-      margin: 24px 0;
+      display: inline-block; background: rgba(168,83,47,0.15); border: 1px solid var(--ember);
+      border-radius: 4px; padding: 20px 40px; margin: 24px 0;
     }
     .enquiry-code-label {
       font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
@@ -391,11 +342,8 @@
 
     /* ── CONTACT ── */
     .contact {
-      background: var(--ash);
-      padding: 80px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+      background: var(--ash); padding: 80px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
     }
     .contact-card { background: var(--white); padding: 40px 36px; }
     .contact-card-label {
@@ -409,11 +357,9 @@
     .contact-card a:hover { color: var(--ember); }
 
     footer {
-      background: var(--navy);
-      padding: 32px 80px;
+      background: var(--navy); padding: 32px 80px;
       display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 16px;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap; gap: 16px; border-top: 1px solid rgba(255,255,255,0.08);
     }
     .footer-logo svg { height: 26px; width: auto; }
     footer p { font-size: 12px; color: rgba(255,255,255,0.35); }
@@ -424,11 +370,12 @@
     @media (max-width: 900px) {
       nav { padding: 16px 24px; position: fixed; }
       .nav-links { display: none; }
-      .nav-mobile-toggle { display: block; }
       .hero-content { padding: 0 20px; }
       .section, .enquiry { padding: 64px 24px; }
-      .steps-grid, .pricing-grid { grid-template-columns: 1fr; }
-      .included-grid { grid-template-columns: 1fr; gap: 8px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .tailored { padding: 56px 24px; }
+      .story-stats { grid-template-columns: 1fr 1fr; }
       .self-cater { grid-template-columns: 1fr; padding: 56px 24px; gap: 32px; }
       .enquiry-form { padding: 32px 24px; }
       .form-row { grid-template-columns: 1fr; }
@@ -478,7 +425,7 @@
     <div class="hero-content">
       <span class="hero-eyebrow">Book Us For Your Event</span>
       <h1 class="hero-headline">Stone-Baked Pizza,<br><em>Cooked at Your Event</em></h1>
-      <p class="hero-body">We bring our oven, our dough, and our ingredients to you, cooking fresh, stone-baked pizza on site for parties, corporate functions, and celebrations of all sizes.</p>
+      <p class="hero-body">We bring our oven, our dough, and our ingredients to you, cooking fresh, stone-baked pizza on site for parties, corporate functions, and celebrations of all sizes. From pizza alone to a full spread, we design the menu around your event.</p>
       <div class="hero-actions">
         <a href="#enquire" class="btn-primary">Enquire About Catering</a>
         <a href="#self-cater" class="btn-ghost">Or Self-Cater Instead</a>
@@ -486,93 +433,92 @@
     </div>
   </section>
 
+  <!-- PRODUCT RANGE -->
+  <section class="section products">
+    <div class="products-intro">
+      <span class="section-label">What We Bring</span>
+      <h2 class="section-title">A Range Built Around Your Event</h2>
+      <p class="section-body">Every event is different, so we don't work from a fixed package. Tell us what you're after and we'll design a menu to suit, drawing from stone-baked pizza, bacciata, grazing boards, and fresh salads.</p>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-card-accent"></div>
+        <span class="product-tag">Cooked On Site</span>
+        <h3>Stone-Baked Pizza</h3>
+        <p>Our signature offering, hand-stretched dough cooked fresh in front of your guests. Choose from our house menu or work with us on custom toppings for the occasion.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-card-accent"></div>
+        <span class="product-tag">Folded &amp; Filled</span>
+        <h3>Bacciata</h3>
+        <p>A stone-baked, folded parcel packed with fillings, hearty, handheld, and easy to serve to a crowd without losing any of the quality of a full pizza.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-card-accent"></div>
+        <span class="product-tag">Share Style</span>
+        <h3>Grazing Boards</h3>
+        <p>A beautifully laid spread to open your event or accompany the main course, built from quality ingredients and finished to match your table.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-card-accent"></div>
+        <span class="product-tag">Fresh &amp; Seasonal</span>
+        <h3>Salads</h3>
+        <p>Fresh, seasonal salads that round out the table, designed to complement the pizza and bacciata rather than sit as an afterthought.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- HOW IT WORKS -->
   <section class="section how-it-works">
     <span class="section-label">How It Works</span>
-    <h2 class="section-title">Book, confirm, enjoy</h2>
-    <p class="section-body">Booking Pop-Up Pizza for your event is straightforward, from first enquiry to the last slice.</p>
+    <h2 class="section-title">Book, design, enjoy</h2>
+    <p class="section-body">Booking Pop-Up Pizza for your event is straightforward, from first enquiry to the last bite.</p>
     <div class="steps-grid">
       <div class="step-card">
         <span class="step-num">01</span>
         <h3>Tell Us About Your Event</h3>
-        <p>Send us your date, guest numbers, and location using the form below. We'll get back to you within 48 hours with availability and a quote.</p>
+        <p>Send us your date, guest numbers, and location using the form below. We'll get back to you within 48 hours to talk through what might suit.</p>
       </div>
       <div class="step-card">
         <span class="step-num">02</span>
-        <h3>Confirm the Details</h3>
-        <p>Once you're happy with the quote, we'll confirm your booking with a deposit and lock in your date, menu, and any dietary requirements.</p>
+        <h3>We Design Your Menu</h3>
+        <p>Together we'll put together a menu drawn from pizza, bacciata, grazing boards and salads, built around your event, your guests, and any dietary requirements.</p>
       </div>
       <div class="step-card">
         <span class="step-num">03</span>
-        <h3>We Bring the Oven</h3>
-        <p>On the day, we set up on site and cook fresh, stone-baked pizza for your guests, hot, fresh, and made to order.</p>
+        <h3>We Bring It to Life</h3>
+        <p>On the day, we set up on site and serve your guests fresh, made to order, exactly as planned.</p>
       </div>
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section class="section pricing">
-    <span class="section-label">Pricing</span>
-    <h2 class="section-title">Catering Packages</h2>
-    <p class="section-body">Pricing below is a guide only, every event is quoted individually based on guest numbers, location, and requirements. A minimum booking value of $1,200 applies to all catering bookings.</p>
-
-    <div class="pricing-grid">
-      <div class="price-card">
-        <span class="price-qty">Small Gathering</span>
-        <p class="price-desc">Up to 30 guests</p>
-        <span class="price-amount">From $1,200</span>
-        <span class="price-per">Approx. $40 per head</span>
-        <ul class="price-includes">
-          <li>Unlimited pizza, cooked fresh on site</li>
-          <li>Choice from our set menu</li>
-          <li>Oven, staffing, and setup included</li>
-        </ul>
-      </div>
-      <div class="price-card featured">
-        <span class="price-badge">Most Popular</span>
-        <span class="price-qty">Medium Event</span>
-        <p class="price-desc">31–60 guests</p>
-        <span class="price-amount">From $1,800</span>
-        <span class="price-per">Approx. $30–$36 per head</span>
-        <ul class="price-includes">
-          <li>Unlimited pizza, cooked fresh on site</li>
-          <li>Choice from our set menu, plus one custom option</li>
-          <li>Oven, staffing, and setup included</li>
-        </ul>
-      </div>
-      <div class="price-card">
-        <span class="price-qty">Large Event</span>
-        <p class="price-desc">61–100 guests</p>
-        <span class="price-amount">From $2,600</span>
-        <span class="price-per">Approx. $26–$30 per head</span>
-        <ul class="price-includes">
-          <li>Unlimited pizza, cooked fresh on site</li>
-          <li>Full menu, including custom toppings</li>
-          <li>Oven, staffing, and setup included</li>
-        </ul>
-      </div>
+  <!-- TAILORED MENU BANNER -->
+  <section class="tailored">
+    <div class="tailored-content">
+      <span class="section-label">Every Event Is Different</span>
+      <h2 class="section-title">We Design the Menu to Suit</h2>
+      <p class="section-body">Rather than a fixed catering package, we work with you to build a menu that fits your event, whether that's pizza alone, a full spread with bacciata and grazing boards, or something in between. Guest numbers, dietary requirements, and the occasion itself all shape what we bring.</p>
     </div>
-    <p class="pricing-note">More than 100 guests, or a smaller, more intimate event? Get in touch, we're happy to quote outside these ranges. Travel fees may apply outside the Canberra region.</p>
   </section>
 
-  <!-- WHAT'S INCLUDED -->
-  <section class="section included">
-    <span class="section-label">What's Included</span>
-    <h2 class="section-title">Everything We Bring</h2>
-    <p class="section-body">Our catering packages are designed to be genuinely all-inclusive, no hidden extras, no surprises on the day.</p>
-    <div class="included-grid">
-      <ul class="included-list">
-        <li>Our own gas-fired stone oven, set up on site</li>
-        <li>Fresh, hand-stretched dough, made from our 72 hr fermented recipe</li>
-        <li>Unlimited pizza for the duration of your event</li>
-        <li>A choice of our house menu varieties</li>
-      </ul>
-      <ul class="included-list">
-        <li>On-site cooking staff for the full event</li>
-        <li>Full setup and pack-down</li>
-        <li>Gluten-free and dietary options on request</li>
-        <li>Public liability insurance</li>
-      </ul>
+  <!-- OUR STORY -->
+  <section class="section story">
+    <div class="story-body">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">Small Batch, Cooked Properly</h2>
+      <p>Pop-Up Pizza started with a simple idea: bring genuinely good, stone-baked pizza to people wherever they happen to be, rather than asking them to come to us.</p>
+      <p>Brett and Fiona built Pop-Up Pizza from the ground up, a gas-fired stone oven, a dough recipe fermented for 72 hours at 8°C, and a belief that catering doesn't need to mean compromise. Every event we cater gets the same base, the same care, and the same attention to detail as the pizzas we sell from our stall.</p>
+      <p>We started out at markets around Canberra, cooking one pizza at a time in front of people who'd never seen a stone oven up close. That's still the heart of what we do at events, pizza made fresh, in front of your guests, not reheated or trucked in from somewhere else.</p>
+      <p>As we've grown, so has what we bring to the table, literally. Bacciata, grazing boards and salads now sit alongside the pizza, each one built with the same ingredients and the same standards, so a full spread feels as considered as a single pizza off the stall.</p>
+      <p>When you book us for an event, you're getting the same two people who started this, still hands-on, still cooking, still designing every menu around the people eating it.</p>
+
+      <div class="story-stats">
+        <div class="story-stat"><span class="story-stat-num">72</span><span class="story-stat-label">Hour Ferment</span></div>
+        <div class="story-stat"><span class="story-stat-num">4</span><span class="story-stat-label">Product Ranges</span></div>
+        <div class="story-stat"><span class="story-stat-num">100%</span><span class="story-stat-label">Cooked On Site</span></div>
+        <div class="story-stat"><span class="story-stat-num">2</span><span class="story-stat-label">Owners, Hands-On</span></div>
+      </div>
     </div>
   </section>
 
@@ -581,12 +527,11 @@
     <div>
       <span class="section-label">A Simpler Option</span>
       <h2 class="section-title">Prefer to Self-Cater?</h2>
-      <p class="section-body">Not every event needs an on-site oven. Our take-and-bake pizzas give you the same handcrafted, stone-baked quality, ready to finish in your own oven in around 10 minutes, at a fraction of the cost and with none of the booking lead time.</p>
+      <p class="section-body">Not every event needs us on site. Our take-and-bake pizzas give you the same handcrafted, stone-baked quality, ready to finish in your own oven in around 10 minutes, at a fraction of the cost and with none of the booking lead time.</p>
     </div>
     <div class="self-cater-card">
       <h3>Take &amp; Bake Pizza</h3>
-      <p>Order ahead, pick up on our next bake day, and bake to perfection at home. Ideal for smaller gatherings, office lunches, or whenever hiring a full catering setup isn't necessary.</p>
-      <p class="self-cater-price">From <strong>$8.50</strong> per base</p>
+      <p>Order ahead, pick up on our next bake day, and bake to perfection at home. Ideal for smaller gatherings, office lunches, or whenever a full on-site setup isn't necessary.</p>
       <a href="pizza.html" class="btn-primary">Order Take &amp; Bake Pizza</a>
     </div>
   </section>
@@ -596,7 +541,7 @@
     <div class="enquiry-inner">
       <span class="section-label">Book Your Event</span>
       <h2 class="section-title">Enquire About Catering</h2>
-      <p class="section-body">Tell us about your event and we'll get back to you within 48 hours with availability and a quote.</p>
+      <p class="section-body">Tell us about your event, guest numbers, and what you have in mind, we'll get back to you within 48 hours to start designing your menu.</p>
 
       <div class="enquiry-form" id="enquiryFormWrap">
         <form
@@ -649,15 +594,27 @@
           </div>
           <div class="form-row">
             <div class="form-group full">
+              <label for="interest">What Are You Interested In?</label>
+              <select id="interest" name="interest">
+                <option value="Not sure yet">Not sure yet, help me decide</option>
+                <option value="Pizza only">Pizza only</option>
+                <option value="Pizza and bacciata">Pizza and bacciata</option>
+                <option value="Full spread">Full spread, pizza, bacciata, grazing boards and salads</option>
+                <option value="Grazing boards only">Grazing boards only</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
               <label for="details">Tell Us About Your Event</label>
               <textarea id="details" name="message" placeholder="Event type, dietary requirements, timing, or anything else we should know..."></textarea>
             </div>
           </div>
           <div class="form-submit">
-            <p class="form-note">We'll respond within 48 hours with availability and a quote. A minimum booking value of $1,200 applies.</p>
+            <p class="form-note">We'll respond within 48 hours to talk through your event and put together a menu.</p>
             <button type="submit" class="btn-submit">Send Enquiry</button>
           </div>
-          <p class="privacy-note">We only collect what's needed to prepare your quote and confirm your booking. Your details are used solely for that purpose and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
+          <p class="privacy-note">We only collect what's needed to plan your event and confirm your booking. Your details are used solely for that purpose and are never sold or shared with third parties. Request deletion at any time via <a href="mailto:popup.pizza.au@gmail.com">popup.pizza.au@gmail.com</a>.</p>
         </form>
 
         <div class="enquiry-confirmation" id="enquiryConfirmation">
@@ -666,7 +623,7 @@
             <span class="enquiry-code-label">Your Reference Code</span>
             <span class="enquiry-code-value" id="enquiryCode">CAT-0000</span>
           </div>
-          <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll be in touch within 48 hours with availability and a quote, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
+          <p class="form-note" style="margin-top:20px">Please keep this code for reference. We'll be in touch within 48 hours to talk through your event, or message us directly at <strong style="color:#c98a68">@pop_uppizza</strong>.</p>
         </div>
       </div>
     </div>
